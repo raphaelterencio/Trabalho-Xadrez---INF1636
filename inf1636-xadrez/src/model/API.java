@@ -39,7 +39,7 @@ public class API
 		return piece.getColor();
 	}
 	
-	// Board and piece
+	// Board e piece
 	
 	public void movePiece(int row, int column, int target_row, int target_column)
 	{

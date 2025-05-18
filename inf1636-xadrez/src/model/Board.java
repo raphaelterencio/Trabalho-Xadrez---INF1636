@@ -121,4 +121,45 @@ class Board {
 		return false;
 	}
 	
+	protected boolean isCheck(int color)
+	{
+		// Procura o rei
+		int king_row = -1, king_column = -1;
+		for(int row=0; row<8; row++)
+		{
+			for(int column=0; column<8; column++)
+			{
+				Piece piece = houses[row][column];
+				if(piece instanceof King && piece.getColor() == color)
+				{
+					king_row = row;
+					king_column = column;
+					break;
+				}
+			}
+		}
+		// Se o rei não for encontrado
+		if (king_row == -1) return false;
+		
+		// Obtém a cor do oponente
+		char opponent_color = (color == 'W') ? 'B' : 'W';
+	
+		// Verifica se o oponente consegue chegar no rei
+		for(int row=0; row<8; row++)
+		{
+			for(int column=0; column<8; column++)
+			{
+				Piece piece = houses[row][column];
+				if(piece != null && piece.getColor() == opponent_color)
+				{
+					if (piece.canMove(king_row, king_column))
+						return true;
+				}
+					
+			}
+		}
+		
+		return false;
+	}
+	
 } 
