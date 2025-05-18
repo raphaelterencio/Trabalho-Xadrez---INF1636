@@ -15,7 +15,6 @@ class Board {
 		captured_blacks = new Piece[16];
 		count_captured_whites = 0;
 		count_captured_blacks = 0;
-		launch();
 	}
 	
 	// Coloca as peças no tabuleiro
@@ -35,7 +34,7 @@ class Board {
 		
 		// Reis
 		houses[0][4] = new King('B', 0, 4);
-		houses[7][4] = new King('B', 7, 4);
+		houses[7][4] = new King('W', 7, 4);
 		
 		// Peões
 		for(int column=0; column<8; column++)
@@ -103,6 +102,7 @@ class Board {
 	
 	protected void movePiece(int row, int column, int target_row, int target_column)
 	{
+		houses[row][column].setPos(target_row, target_column);
 		houses[target_row][target_column] = houses[row][column];
 		houses[row][column] = null;
 	}
@@ -121,7 +121,7 @@ class Board {
 		return false;
 	}
 	
-	protected boolean isCheck(int color)
+	protected boolean isCheck(char color)
 	{
 		// Procura o rei
 		int king_row = -1, king_column = -1;
