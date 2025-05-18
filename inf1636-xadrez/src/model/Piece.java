@@ -28,6 +28,11 @@ abstract class Piece
 		return symbol; 
 	}
 	
+	protected int[] getPos()
+	{
+		return new int[] {row, column};
+	}
+	
 	protected void setPos(int row, int column) 
 	{
 		this.row = row;

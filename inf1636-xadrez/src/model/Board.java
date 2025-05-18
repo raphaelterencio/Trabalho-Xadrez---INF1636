@@ -101,4 +101,24 @@ class Board {
 		return houses[row][column]; 
 	}
 	
+	protected void movePiece(int row, int column, int target_row, int target_column)
+	{
+		houses[target_row][target_column] = houses[row][column];
+		houses[row][column] = null;
+	}
+	
+	protected void capturePiece(int row, int column)
+	{
+		if(houses[row][column].getColor() == 'W')
+			captured_whites[count_captured_whites++] = houses[row][column];
+		else 
+			captured_blacks[count_captured_blacks++] = houses[row][column];
+	}
+	
+	protected boolean isThereAPiece(int row, int column)
+	{
+		if (houses[row][column] != null) return true;
+		return false;
+	}
+	
 } 
