@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 abstract class Piece 
 {
 
@@ -24,7 +26,9 @@ abstract class Piece
 		this.column = column;
 	}
 	
-	abstract boolean canMove(int target_row, int target_column, Piece[][] houses);
+	abstract boolean canMove(int target_row, int target_column);
 	// Nota: conferir se tem alguma peça na casa de destino fica a cargo de Board
 	// OBS: menos no movimento vertical do peão
+	
+	abstract List<int[]> getPath(int target_row, int target_column);
 }

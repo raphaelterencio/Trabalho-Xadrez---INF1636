@@ -1,5 +1,8 @@
 package model;
 
+import java.util.List;
+import java.util.ArrayList;
+
 class Horse extends Piece{
 
 	Horse(char color, int row, int column)
@@ -10,20 +13,31 @@ class Horse extends Piece{
 	
 	@Override
 	// Movimento em L
-	boolean canMove(int target_row, int target_column, Piece[][] houses) 
+	boolean canMove(int target_row, int target_column) 
 	{
-		// Confere se a posição de destino é válida
-		int diff_x = Math.abs(row - target_row);
-		int diff_y = Math.abs(column - target_column);
-		if ( !(diff_x == 2 && diff_y == 1) && !(diff_x == 1 && diff_y == 2) ) return false;
+		int diff_row = Math.abs(row - target_row);
+		int diff_column = Math.abs(column - target_column);
+		if ( (diff_row == 2 && diff_column == 1) || (diff_row == 1 && diff_column == 2) ) return true;
 
-		// Confere se a única casa que o cavalo pisa antes do destino está ocupada
-		int middle_row = row + (target_row - row) / 2;
-		int middle_column = column + (target_column - column) / 2;
-		if (houses[middle_row][middle_column] != null) return false;
+		return false;
+	}
+	
+	List<int[]> getPath(int target_row, int target_column)
+	{
+		List<int[]> path = new ArrayList<>();
 		
-		// Caso não tenha nenhuma peça no caminho
-		return true;
+		int diff_row = Math.abs(row - target_row);
+		
+		int step_row = 0, step_column = 0;
+		
+		if (diff_row == 2) step_row = (target_row > row) ? 2 : -2; // 2 (para baixo) -2 (para cima)
+		else step_column = (target_column > column) ? 2 : -2; // 2 (direta) -2 (esquerda)
+		
+	    int current_row = row + step_row;
+	    int current_column = column + step_column;
+	   
+		path.add(new int[] {current_row, current_column});
+		return path;
 	}
 	
 }
