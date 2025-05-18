@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 class Queen extends Piece{
 
-	Queen(char color, int row, int column)
+	protected Queen(char color, int row, int column)
 	{ 
 		super(color, row, column); 
 		symbol = 'Q';
@@ -13,7 +13,7 @@ class Queen extends Piece{
 	
 	@Override
 	// Frente/trás, esquerda/direita e diagonais
-	boolean canMove(int target_row, int target_column) 
+	protected boolean canMove(int target_row, int target_column) 
 	{
 		// Confere se a posição de destino é válida
 		int diff_row = Math.abs(row - target_row);
@@ -23,7 +23,7 @@ class Queen extends Piece{
 		return false;
 	}
 	
-	List<int[]> getPath(int target_row, int target_column)
+	protected List<int[]> getPath(int target_row, int target_column)
 	{
 		List<int[]> path = new ArrayList<>();
 		

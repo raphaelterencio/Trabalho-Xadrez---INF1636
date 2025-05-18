@@ -5,21 +5,21 @@ import java.util.ArrayList;
 
 class Rook extends Piece{
 
-	Rook(char color, int row, int column){
+	protected Rook(char color, int row, int column){
 		super(color, row, column); 
 		symbol = 'T';
 	}
 	
 	@Override
 	// Frente/trás, esquerda/direita
-	boolean canMove(int target_row, int target_column) 
+	protected boolean canMove(int target_row, int target_column) 
 	{
 		if (row == target_row && column == target_column) return true;
 
 		return false;
 	}
 	
-	List<int[]> getPath(int target_row, int target_column)
+	protected List<int[]> getPath(int target_row, int target_column)
 	{	
 		List<int[]> path = new ArrayList<>();
 		

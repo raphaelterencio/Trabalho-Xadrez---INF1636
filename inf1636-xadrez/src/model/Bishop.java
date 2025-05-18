@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 class Bishop extends Piece{
 
-	Bishop(char color, int row, int column)
+	protected Bishop(char color, int row, int column)
 	{ 
 		super(color, row, column); 
 		symbol = 'B';
@@ -13,7 +13,7 @@ class Bishop extends Piece{
 	
 	@Override
 	// Movimento diagonal
-	boolean canMove(int target_row, int target_column) 
+	protected boolean canMove(int target_row, int target_column) 
 	{
 		int diff_row = Math.abs(row - target_row);
 		int diff_column = Math.abs(column - target_column);
@@ -23,7 +23,7 @@ class Bishop extends Piece{
 		return false;
 	}
 	
-	List<int[]> getPath(int target_row, int target_column)
+	protected List<int[]> getPath(int target_row, int target_column)
 	{	
 		List<int[]> path = new ArrayList<>();
 		

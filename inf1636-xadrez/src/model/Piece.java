@@ -10,7 +10,7 @@ abstract class Piece
 	protected int column;
 	protected char symbol; // Identifica o tipo de peça
 	
-	Piece(char color, int row, int column)
+	protected Piece(char color, int row, int column)
 	{
 		this.color = color; 
 		this.row = row; 
@@ -18,17 +18,23 @@ abstract class Piece
 		this.symbol = '-';
 	}
 	
-	char getColor() { return color; }
-	char getSymbol() { return symbol; }
+	protected char getColor()
+	{ 
+		return color; 
+	}
 	
-	void setPos(int row, int column) {
+	protected char getSymbol() 
+	{ 
+		return symbol; 
+	}
+	
+	protected void setPos(int row, int column) 
+	{
 		this.row = row;
 		this.column = column;
 	}
 	
-	abstract boolean canMove(int target_row, int target_column);
-	// Nota: conferir se tem alguma peça na casa de destino fica a cargo de Board
-	// OBS: menos no movimento vertical do peão
+	protected abstract boolean canMove(int target_row, int target_column);
 	
-	abstract List<int[]> getPath(int target_row, int target_column);
+	protected abstract List<int[]> getPath(int target_row, int target_column);
 }

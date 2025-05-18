@@ -5,7 +5,7 @@ import java.util.List;
 
 class Pawn extends Piece{
 
-	Pawn(char color, int row, int column)
+	protected Pawn(char color, int row, int column)
 	{ 
 		super(color, row, column);
 		symbol = 'P';
@@ -13,12 +13,33 @@ class Pawn extends Piece{
 	
 	@Override
 	// Move pra frente e come na diagonal
-	boolean canMove(int target_row, int target_column) 
+	protected boolean canMove(int target_row, int target_column) 
 	{
 		if (canVerticalMove(target_row, target_column)) return true;
 		if (canDiagonalMove(target_row, target_column)) return true;
 		
 		return false;
+	}
+	
+	protected List<int[]> getPath(int target_row, int target_column)
+	{
+		// Não passa em nenhuma casa caso se mova diagonal
+		if (canDiagonalMove(target_row, target_column)) return null;
+		
+		// Confere se é a primeira jogada
+		// OBS: Não é efetivo, pode ser que o usuário só não mova a peça
+		if( (color == 'W' && row != 6) || (color == 'B' && row != 1) ) return null;
+		
+		// Obtém a direção que o peão deve andar
+		int direction; 
+		direction = (color == 'W') ? -1 : 1; // -1 (para cima) 1 (para baixo)
+		
+		List<int[]> path = new ArrayList<>();
+		
+		int current_row = row + direction;
+		
+		path.add(new int[] {current_row, column});
+		return path;
 	}
 	
 	// Movimento reto para frente - 2 casas na 1a rodada, 1 casa nas demais
@@ -57,27 +78,5 @@ class Pawn extends Piece{
 		if (diff_row == diff_column && target_row == row + direction) return true;
 		
 		return false;
-	}
-	
-	
-	List<int[]> getPath(int target_row, int target_column)
-	{
-		// Não passa em nenhuma casa caso se mova diagonal
-		if (canDiagonalMove(target_row, target_column)) return null;
-		
-		// Confere se é a primeira jogada
-		// OBS: Não é efetivo, pode ser que o usuário só não mova a peça
-		if( (color == 'W' && row != 6) || (color == 'B' && row != 1) ) return null;
-		
-		// Obtém a direção que o peão deve andar
-		int direction; 
-		direction = (color == 'W') ? -1 : 1; // -1 (para cima) 1 (para baixo)
-		
-		List<int[]> path = new ArrayList<>();
-		
-		int current_row = row + direction;
-		
-		path.add(new int[] {current_row, column});
-		return path;
 	}
 }

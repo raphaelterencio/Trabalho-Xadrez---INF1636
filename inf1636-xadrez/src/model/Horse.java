@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 class Horse extends Piece{
 
-	Horse(char color, int row, int column)
+	protected Horse(char color, int row, int column)
 	{ 
 		super(color, row, column);
 		symbol = 'H';
@@ -13,7 +13,7 @@ class Horse extends Piece{
 	
 	@Override
 	// Movimento em L
-	boolean canMove(int target_row, int target_column) 
+	protected boolean canMove(int target_row, int target_column) 
 	{
 		int diff_row = Math.abs(row - target_row);
 		int diff_column = Math.abs(column - target_column);
@@ -22,7 +22,7 @@ class Horse extends Piece{
 		return false;
 	}
 	
-	List<int[]> getPath(int target_row, int target_column)
+	protected List<int[]> getPath(int target_row, int target_column)
 	{
 		List<int[]> path = new ArrayList<>();
 		
