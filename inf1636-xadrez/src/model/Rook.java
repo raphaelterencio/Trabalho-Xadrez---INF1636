@@ -14,7 +14,7 @@ class Rook extends Piece{
 	// Frente/trás, esquerda/direita
 	protected boolean canMove(int target_row, int target_column) 
 	{
-		if (row == target_row && column == target_column) return true;
+		if (row == target_row || column == target_column) return true;
 
 		return false;
 	}
