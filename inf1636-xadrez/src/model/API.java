@@ -9,6 +9,8 @@ public class API
 	
 	// Board
 	
+	public API() {}
+	
 	public void startGame() { board = new Board(); }
 	
 	public void printBoard() { board.print(); }
