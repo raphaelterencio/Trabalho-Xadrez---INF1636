@@ -1,8 +1,8 @@
 package model;
 
-class Tower extends Piece{
+class Rook extends Piece{
 
-	Tower(char color, int row, int column){
+	Rook(char color, int row, int column){
 		super(color, row, column); 
 		symbol = 'T';
 	}

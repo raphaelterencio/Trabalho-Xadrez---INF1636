@@ -1,7 +1,5 @@
 package model;
 
-import java.util.Scanner;
-
 class Board {
 
 	private Piece[][] houses;
@@ -32,10 +30,10 @@ class Board {
 		}
 		
 		// Torres
-		houses[0][0] = new Tower('B', 0, 0);
-		houses[0][7] = new Tower('B', 0, 7);
-		houses[7][0] = new Tower('W', 7, 0);
-		houses[7][7] = new Tower('W', 7, 7);
+		houses[0][0] = new Rook('B', 0, 0);
+		houses[0][7] = new Rook('B', 0, 7);
+		houses[7][0] = new Rook('W', 7, 0);
+		houses[7][7] = new Rook('W', 7, 7);
 		
 		// Cavalos
 		houses[0][1] = new Horse('B', 0, 1);
@@ -107,56 +105,6 @@ class Board {
 		else return false;
 	}
 	
-	// Confere se o peão chegou à alguma ponta e deve ser promovido
-	private void PawnPromotion(int row, int column, int target_row, int target_column)
-	{
-		// Se a peça não for um peão, acaba por aqui
-		if (!(houses[row][column] instanceof Pawn)) return;
-		
-		// Confere se o peão chegou na última linha
-		boolean hasAchieved = false;
-		if ( (houses[row][column].color == 'W' && target_row == 0) || (houses[row][column].color == 'B' && target_row == 7) ) hasAchieved = true;
-		if(!hasAchieved) return;
-		
-		Scanner scanner = new Scanner(System.in);
-		boolean flag = true;
-		Piece substitute = null;
-		
-		// Pede a nova peça para substituir o peão
-		while(flag)
-		{
-			System.out.print("Parabéns! Seu chegou ao limite vertical do tabuleiro e foi promovido. Você deseja que ele vire um bispo (B), um cavalo (H), uma rainha (Q) ou uma torre (T)? ");
-			String new_type = scanner.next().toUpperCase();
-			
-			switch(new_type) 
-			{
-				case "B":
-					substitute = new Bishop(houses[row][column].getColor(), target_row, target_column);
-					flag = false;
-					break;
-				case "H":
-					substitute = new Horse(houses[row][column].getColor(), target_row, target_column);	
-					flag = false;
-					break;
-				case "Q":
-					substitute = new Queen(houses[row][column].getColor(), target_row, target_column);	
-					flag = false;
-					break;
-				case "T":
-					substitute = new Tower(houses[row][column].getColor(), target_row, target_column);	
-					flag = false;
-					break;
-				default:
-					System.out.println("Escolha inválida.");
-					break;
-			}
-		
-		}
-		
-		houses[target_row][target_column] = substitute;
-		scanner.close();
-	}
-	
 	boolean movePiece(int row, int column, int target_row, int target_column, char turn_color) {
 		
 		Piece origin = houses[row][column];
@@ -188,9 +136,6 @@ class Board {
 		houses[target_row][target_column] = houses[row][column];
 		houses[row][column].setPos(target_row, target_column);
 		houses[row][column] = null;
-		
-		// Avalia se o peão foi promovido
-		PawnPromotion(row, column, target_row, target_column);
 		
 		return true;
 	}
