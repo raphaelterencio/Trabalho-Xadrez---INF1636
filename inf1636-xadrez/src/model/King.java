@@ -4,10 +4,7 @@ import java.util.List;
 
 class King extends Piece{
 
-	protected King(char color, int row, int column){ 
-		super(color, row, column); 
-		symbol = 'K';
-	}
+	protected King(char color, int row, int column){ super(color, row, column); }
 	
 	@Override
 	// Frente/trás, esquerda/direita e diagonais mas apenas a 1 casa de distância

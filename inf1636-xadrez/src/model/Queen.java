@@ -5,11 +5,7 @@ import java.util.ArrayList;
 
 class Queen extends Piece{
 
-	protected Queen(char color, int row, int column)
-	{ 
-		super(color, row, column); 
-		symbol = 'Q';
-	}
+	protected Queen(char color, int row, int column){ super(color, row, column); }
 	
 	@Override
 	// Frente/trás, esquerda/direita e diagonais

@@ -5,11 +5,7 @@ import java.util.ArrayList;
 
 class Horse extends Piece{
 
-	protected Horse(char color, int row, int column)
-	{ 
-		super(color, row, column);
-		symbol = 'H';
-	}
+	protected Horse(char color, int row, int column){ super(color, row, column); }
 	
 	@Override
 	// Movimento em L

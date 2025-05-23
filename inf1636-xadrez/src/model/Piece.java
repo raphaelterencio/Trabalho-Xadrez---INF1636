@@ -9,14 +9,12 @@ abstract class Piece
 	protected char color; // ('B' Black) ou ('W' White)
 	protected int row;
 	protected int column;
-	protected char symbol; // Identifica o tipo de peça
 	
 	protected Piece(char color, int row, int column)
 	{
 		this.color = color; 
 		this.row = row; 
 		this.column = column;
-		this.symbol = '-';
 	}
 	
 	protected char getColor()
@@ -24,10 +22,6 @@ abstract class Piece
 		return color; 
 	}
 	
-	protected char getSymbol() 
-	{ 
-		return symbol; 
-	}
 	
 	protected int[] getPos()
 	{

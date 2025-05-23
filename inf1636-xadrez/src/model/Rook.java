@@ -5,10 +5,7 @@ import java.util.ArrayList;
 
 class Rook extends Piece{
 
-	protected Rook(char color, int row, int column){
-		super(color, row, column); 
-		symbol = 'T';
-	}
+	protected Rook(char color, int row, int column){ super(color, row, column); }
 	
 	@Override
 	// Frente/trás, esquerda/direita

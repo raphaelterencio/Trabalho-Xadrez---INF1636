@@ -5,11 +5,7 @@ import java.util.List;
 
 class Pawn extends Piece{
 
-	protected Pawn(char color, int row, int column)
-	{ 
-		super(color, row, column);
-		symbol = 'P';
-	}
+	protected Pawn(char color, int row, int column){ super(color, row, column); }
 	
 	@Override
 	// Move pra frente e come na diagonal
