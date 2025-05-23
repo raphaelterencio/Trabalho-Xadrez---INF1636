@@ -13,8 +13,6 @@ public class API
 	
 	public void startGame() { board.launch(); }
 	
-	public void printBoard() { board.print(); }
-	
 	public boolean isThereAPiece(int row, int column) { return board.isThereAPiece(row, column); }
 	
 	public void capturePiece(int row, int column) { board.capturePiece(row, column); }

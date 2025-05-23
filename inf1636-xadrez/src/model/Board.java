@@ -53,47 +53,7 @@ class Board {
 		houses[7][0] = new Rook('W', 7, 0);
 		houses[7][7] = new Rook('W', 7, 7);
 	}
-	
-	protected void print()
-	{
-		// Imprime a letra das colunas
-		System.out.println("  a b c d e f g h");
-		
-		for(int row=0; row<8; row++) 
-		{
-			// Imprime o número das linhas
-			System.out.print(row + " ");
-			
-			// Imprime peças/quadrados
-			for(int column=0; column<8; column++)
-			{
-				if (houses[row][column] == null) System.out.print("- ");
-				else System.out.print(houses[row][column].getSymbol() + " ");
-			}
-			
-			// Quebra a linha ao final
-			System.out.println();
-		}
-		
-		// Imprime as peças capturadas
-		
-		if (count_captured_whites > 0)
-		{
-			System.out.println();
-			System.out.print("Peças brancas capturadas: ");
-		    for (int i = 0; i < count_captured_whites; i++) System.out.print(captured_whites[i].getSymbol() + " ");
-		}
-		
-		if (count_captured_blacks > 0)
-		{
-			System.out.println();
-			System.out.print("Peças pretas capturadas: ");
-		    for (int i = 0; i < count_captured_blacks; i++) System.out.print(captured_blacks[i].getSymbol() + " ");
-		}
-		
-		// Quebra a linha ao final
-		System.out.println();
-	}
+
 	
 	protected Piece getPiece(int row, int column) 
 	{ 
