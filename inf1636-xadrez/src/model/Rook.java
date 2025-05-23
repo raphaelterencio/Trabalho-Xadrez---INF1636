@@ -3,28 +3,24 @@ package model;
 import java.util.List;
 import java.util.ArrayList;
 
-class Queen extends Piece{
+class Rook extends Piece{
 
-	protected Queen(char color, int row, int column)
-	{ 
+	protected Rook(char color, int row, int column){
 		super(color, row, column); 
-		symbol = 'Q';
+		symbol = 'T';
 	}
 	
 	@Override
-	// Frente/trás, esquerda/direita e diagonais
+	// Frente/trás, esquerda/direita
 	protected boolean canMove(int target_row, int target_column) 
 	{
-		// Confere se a posição de destino é válida
-		int diff_row = Math.abs(row - target_row);
-		int diff_column = Math.abs(column - target_column);
-		if (row == target_row || column == target_column || diff_row == diff_column) return true;
+		if (row == target_row || column == target_column) return true;
 
 		return false;
 	}
 	
 	protected List<int[]> getPath(int target_row, int target_column)
-	{
+	{	
 		List<int[]> path = new ArrayList<>();
 		
 		// Auxiliares para percorrer o caminho da peça
@@ -37,7 +33,7 @@ class Queen extends Piece{
 		if (target_column > column) step_column = 1; // Para direita
 		else if (target_column < column) step_column = -1; // Para esquerda
 		else step_column = 0; // Se mantém na mesma coluna
-	
+		
 		int current_row = row + step_row; 
 		int current_column = column + step_column;
 		
@@ -47,7 +43,7 @@ class Queen extends Piece{
 			current_row += step_row;
 			current_column += step_column;
 		}
-		
+
 		return path;
 	}
 }

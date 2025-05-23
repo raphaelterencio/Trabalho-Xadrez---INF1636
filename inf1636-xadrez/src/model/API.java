@@ -1,41 +1,51 @@
 package model;
 
+import java.util.List;
+
 // Restringe o acesso do usuário a comandos estratégicos
 public class API
 {
-	private static API object = null;
 	private Board board;
-	private char turn_color;
 	
-	// Inicializa o jogo
-	private API() { board = new Board(); turn_color = 'W'; }
+	// Board
 	
-	public char getTurnColor() { return turn_color; }
+	public API() { board = new Board(); }
+	
+	public void startGame() { board.launch(); }
+	
 	public void printBoard() { board.print(); }
 	
-	// "Construtor" que pode ser acessado pelo usuário
-	public static API getObject() {
-		if (object == null) object = new API();
-		return object;
+	public boolean isThereAPiece(int row, int column) { return board.isThereAPiece(row, column); }
+	
+	public void capturePiece(int row, int column) { board.capturePiece(row, column); }
+	
+	// Piece
+	
+	public boolean canMovePiece(int row, int column, int target_row, int target_column)
+	{
+		Piece piece = board.getPiece(row, column);
+		return piece.canMove(target_row, target_column);
 	}
 	
-	// Cria um novo jogo
-	public void restart()
+	public List<int[]> getPiecePath(int row, int column, int target_row, int target_column)
 	{
-		board = new Board();
-		turn_color = 'W';
+		Piece piece = board.getPiece(row, column);
+		return piece.getPath(target_row, target_column);
 	}
 	
-	public boolean movePeca(int row, int column, int target_row, int target_column)
+	public char getPieceColor(int row, int column)
 	{
-		boolean flag = board.movePiece(row, column, target_row, target_column, turn_color);
-		if (flag)
-		{
-			if (turn_color == 'W') turn_color = 'B';
-			else turn_color = 'W';
-		}
-		return flag;
-		
+		Piece piece = board.getPiece(row, column);
+		return piece.getColor();
+	}
+	
+	// Board e piece
+	
+	public void movePiece(int row, int column, int target_row, int target_column)
+	{
+		Piece piece = board.getPiece(row, column);
+		piece.setPos(target_row, target_column);
+		board.movePiece(row, column, target_row, target_column);
 	}
 	
 }

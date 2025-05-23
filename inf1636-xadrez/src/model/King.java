@@ -1,15 +1,17 @@
 package model;
 
+import java.util.List;
+
 class King extends Piece{
 
-	King(char color, int row, int column){ 
+	protected King(char color, int row, int column){ 
 		super(color, row, column); 
 		symbol = 'K';
 	}
 	
 	@Override
 	// Frente/trás, esquerda/direita e diagonais mas apenas a 1 casa de distância
-	boolean canMove(int target_row, int target_column, Piece[][] houses) 
+	protected boolean canMove(int target_row, int target_column) 
 	{
 		// Confere se a posição de destino é válida
 		int diff_x = Math.abs(row - target_row);
@@ -19,4 +21,8 @@ class King extends Piece{
 		return false;
 	}
 	
+	protected List<int[]> getPath(int target_row, int target_column)
+	{ 
+		return null; 
+	}
 }
