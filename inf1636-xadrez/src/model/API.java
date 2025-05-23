@@ -25,11 +25,6 @@ public class API
 		return piece.canMove(target_row, target_column);
 	}
 	
-	public List<int[]> getPiecePath(int row, int column, int target_row, int target_column)
-	{
-		Piece piece = board.getPiece(row, column);
-		return piece.getPath(target_row, target_column);
-	}
 	
 	public char getPieceColor(int row, int column)
 	{

@@ -54,6 +54,4 @@ abstract class Piece
 	}
 	
 	protected abstract boolean canMove(int target_row, int target_column);
-	
-	protected abstract List<int[]> getPath(int target_row, int target_column);
 }
