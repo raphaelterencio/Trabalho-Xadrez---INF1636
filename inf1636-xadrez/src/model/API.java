@@ -19,12 +19,11 @@ public class API
 	
 	// Piece
 	
-	public boolean canMovePiece(int row, int column, int target_row, int target_column)
+	public List<int[]> getPossibleMoves(int row, int column)
 	{
 		Piece piece = board.getPiece(row, column);
-		return piece.canMove(target_row, target_column);
+		return piece.getPossibleMoves();
 	}
-	
 	
 	public char getPieceColor(int row, int column)
 	{
