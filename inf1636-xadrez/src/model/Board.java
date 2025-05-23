@@ -162,4 +162,21 @@ class Board {
 		return false;
 	}
 	
+	protected boolean checkPawnPromotion(int row, int column)
+	{
+		Piece piece = houses[row][column];
+		
+		// Confere se a peça é um peão
+		if( !(piece instanceof Pawn) ) return false;
+		
+		// Pega a cor a peça
+		char color = piece.getColor();
+		
+		// Confere se o peão alcançou a última fileira
+		if (color == 'W' && row == 0) return true;
+		if (color == 'B' && row == 7) return true;
+		
+		return false;
+	}
+	
 } 
