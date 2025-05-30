@@ -13,24 +13,16 @@ public class API
 	
 	public void startGame() { board.launch(); }
 	
-	public void printBoard() { board.print(); }
-	
 	public boolean isThereAPiece(int row, int column) { return board.isThereAPiece(row, column); }
 	
 	public void capturePiece(int row, int column) { board.capturePiece(row, column); }
 	
 	// Piece
 	
-	public boolean canMovePiece(int row, int column, int target_row, int target_column)
+	public List<int[]> getPossibleMoves(int row, int column)
 	{
 		Piece piece = board.getPiece(row, column);
-		return piece.canMove(target_row, target_column);
-	}
-	
-	public List<int[]> getPiecePath(int row, int column, int target_row, int target_column)
-	{
-		Piece piece = board.getPiece(row, column);
-		return piece.getPath(target_row, target_column);
+		return piece.getPossibleMoves();
 	}
 	
 	public char getPieceColor(int row, int column)

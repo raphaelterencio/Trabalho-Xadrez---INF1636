@@ -1,6 +1,7 @@
 package model;
 
 import java.util.List;
+import java.util.ArrayList;
 
 abstract class Piece 
 {
@@ -8,14 +9,12 @@ abstract class Piece
 	protected char color; // ('B' Black) ou ('W' White)
 	protected int row;
 	protected int column;
-	protected char symbol; // Identifica o tipo de peça
 	
 	protected Piece(char color, int row, int column)
 	{
 		this.color = color; 
 		this.row = row; 
 		this.column = column;
-		this.symbol = '-';
 	}
 	
 	protected char getColor()
@@ -23,10 +22,6 @@ abstract class Piece
 		return color; 
 	}
 	
-	protected char getSymbol() 
-	{ 
-		return symbol; 
-	}
 	
 	protected int[] getPos()
 	{
@@ -39,7 +34,24 @@ abstract class Piece
 		this.column = column;
 	}
 	
-	protected abstract boolean canMove(int target_row, int target_column);
+	protected List<int[]> getPossibleMoves() 
+	{
+	    List<int[]> possibleMoves = new ArrayList<>();
+
+	    for (int target_row = 0; target_row < 8; target_row++) {
+	        for (int target_column = 0; target_column < 8; target_column++) 
+	        {
+	            // Ignora a posição atual da peça
+	            if (target_row == this.row && target_column == this.column) continue;
+
+	            if (canMove(target_row, target_column)) {
+	                possibleMoves.add(new int[]{target_row, target_column});
+	            }
+	        }
+	    }
+
+	    return possibleMoves;
+	}
 	
-	protected abstract List<int[]> getPath(int target_row, int target_column);
+	protected abstract boolean canMove(int target_row, int target_column);
 }

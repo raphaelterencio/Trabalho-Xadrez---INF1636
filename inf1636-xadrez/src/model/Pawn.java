@@ -1,15 +1,8 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 class Pawn extends Piece{
 
-	protected Pawn(char color, int row, int column)
-	{ 
-		super(color, row, column);
-		symbol = 'P';
-	}
+	protected Pawn(char color, int row, int column){ super(color, row, column); }
 	
 	@Override
 	// Move pra frente e come na diagonal
@@ -19,27 +12,6 @@ class Pawn extends Piece{
 		if (canDiagonalMove(target_row, target_column)) return true;
 		
 		return false;
-	}
-	
-	protected List<int[]> getPath(int target_row, int target_column)
-	{
-		// Não passa em nenhuma casa caso se mova diagonal
-		if (canDiagonalMove(target_row, target_column)) return null;
-		
-		// Confere se é a primeira jogada
-		// OBS: Não é efetivo, pode ser que o usuário só não mova a peça
-		if( (color == 'W' && row != 6) || (color == 'B' && row != 1) ) return null;
-		
-		// Obtém a direção que o peão deve andar
-		int direction; 
-		direction = (color == 'W') ? -1 : 1; // -1 (para cima) 1 (para baixo)
-		
-		List<int[]> path = new ArrayList<>();
-		
-		int current_row = row + direction;
-		
-		path.add(new int[] {current_row, column});
-		return path;
 	}
 	
 	// Movimento reto para frente - 2 casas na 1a rodada, 1 casa nas demais
