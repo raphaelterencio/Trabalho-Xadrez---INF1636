@@ -47,5 +47,8 @@ public class API
 		piece.setPos(target_row, target_column);
 		board.movePiece(row, column, target_row, target_column);
 	}
+	public Piece getPiece(int row, int column) {
+	    return board.getPiece(row, column);
+	}
 	
 }

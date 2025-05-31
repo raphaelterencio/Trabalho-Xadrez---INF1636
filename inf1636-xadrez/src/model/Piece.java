@@ -2,7 +2,7 @@ package model;
 
 import java.util.List;
 
-abstract class Piece 
+public abstract class Piece 
 {
 
 	protected char color; // ('B' Black) ou ('W' White)
@@ -18,12 +18,12 @@ abstract class Piece
 		this.symbol = '-';
 	}
 	
-	protected char getColor()
+	public  char getColor()
 	{ 
 		return color; 
 	}
 	
-	protected char getSymbol() 
+	public  char getSymbol() 
 	{ 
 		return symbol; 
 	}
