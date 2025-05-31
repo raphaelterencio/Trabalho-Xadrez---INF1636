@@ -3,13 +3,13 @@ package model;
 import java.util.List;
 
 // Restringe o acesso do usuário a comandos estratégicos
-public class API
+public class ModelAPI
 {
 	private Board board;
 	
 	// Board
 	
-	public API() { board = new Board(); }
+	public ModelAPI() { board = new Board(); }
 	
 	public void startGame() { board.launch(); }
 	
