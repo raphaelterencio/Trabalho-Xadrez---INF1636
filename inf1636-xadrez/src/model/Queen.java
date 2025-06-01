@@ -2,7 +2,10 @@ package model;
 
 class Queen extends Piece{
 
-	protected Queen(char color, int row, int column){ super(color, row, column); }
+	protected Queen(char color, int row, int column){ 
+		super(color, row, column);
+		this.symbol = 'Q';
+		}
 	
 	@Override
 	// Frente/trás, esquerda/direita e diagonais
