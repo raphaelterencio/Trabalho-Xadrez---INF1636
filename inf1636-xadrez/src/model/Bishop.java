@@ -2,7 +2,10 @@ package model;
 
 class Bishop extends Piece{
 
-	protected Bishop(char color, int row, int column){ super(color, row, column); }
+	protected Bishop(char color, int row, int column){ 
+		super(color, row, column);
+		this.symbol = 'B';
+		}
 	
 	@Override
 	// Movimento diagonal

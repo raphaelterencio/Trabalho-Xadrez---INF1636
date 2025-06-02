@@ -2,7 +2,10 @@ package model;
 
 class Rook extends Piece{
 
-	protected Rook(char color, int row, int column){ super(color, row, column); }
+	protected Rook(char color, int row, int column){ 
+		super(color, row, column); 
+		this.symbol = 'T';
+		}
 	
 	@Override
 	// Frente/trás, esquerda/direita

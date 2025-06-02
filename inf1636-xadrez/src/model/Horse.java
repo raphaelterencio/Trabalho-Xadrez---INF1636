@@ -2,7 +2,10 @@ package model;
 
 class Horse extends Piece{
 
-	protected Horse(char color, int row, int column){ super(color, row, column); }
+	protected Horse(char color, int row, int column){ 
+		super(color, row, column);
+		this.symbol = 'H';
+		}
 	
 	@Override
 	// Movimento em L

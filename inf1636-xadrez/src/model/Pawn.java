@@ -2,7 +2,10 @@ package model;
 
 class Pawn extends Piece{
 
-	protected Pawn(char color, int row, int column){ super(color, row, column); }
+	protected Pawn(char color, int row, int column){ 
+		super(color, row, column); 
+		this.symbol = 'P';
+		}
 	
 	@Override
 	// Move pra frente e come na diagonal

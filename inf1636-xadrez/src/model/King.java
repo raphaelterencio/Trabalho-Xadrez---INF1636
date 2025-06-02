@@ -2,7 +2,10 @@ package model;
 
 class King extends Piece{
 
-	protected King(char color, int row, int column){ super(color, row, column); }
+	protected King(char color, int row, int column){ 
+		super(color, row, column);
+		this.symbol = 'K';
+		}
 	
 	@Override
 	// Frente/trás, esquerda/direita e diagonais mas apenas a 1 casa de distância
