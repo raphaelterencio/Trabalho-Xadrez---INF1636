@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 class Board {
 
 	private Piece[][] houses;
@@ -120,6 +122,176 @@ class Board {
 		}
 		
 		return false;
+	}
+	
+	protected boolean isCheckMate(char color)
+	{
+		// Se não estiver em xeque, não pode ser xeque-mate
+		if (!isCheck(color)) return false;
+		
+		// Procura todas as peças da cor
+		for(int row=0; row<8; row++)
+		{
+			for(int column=0; column<8; column++)
+			{
+				Piece piece = houses[row][column];
+				if(piece != null && piece.getColor() == color)
+				{
+					// Tenta todos os movimentos possíveis da peça
+					List<int[]> possibleMoves = piece.getPossibleMoves();
+					for(int[] move : possibleMoves)
+					{
+						int targetRow = move[0];
+						int targetColumn = move[1];
+						
+						// Salva o estado atual
+						Piece originalPiece = houses[targetRow][targetColumn];
+						
+						// Faz o movimento
+						houses[targetRow][targetColumn] = piece;
+						houses[row][column] = null;
+						piece.setPos(targetRow, targetColumn);
+						
+						// Verifica se ainda está em xeque
+						boolean stillInCheck = isCheck(color);
+						
+						// Desfaz o movimento
+						houses[row][column] = piece;
+						houses[targetRow][targetColumn] = originalPiece;
+						piece.setPos(row, column);
+						
+						// Se encontrou um movimento que tira do xeque, não é xeque-mate
+						if (!stillInCheck) return false;
+					}
+				}
+			}
+		}
+		
+		
+		return true;
+	}
+	
+	protected boolean isStalemate(char color)
+	{
+		// Se estiver em xeque, não pode ser congelamento
+		if (isCheck(color)) return false;
+		
+		// Procura todas as peças da cor
+		for(int row=0; row<8; row++)
+		{
+			for(int column=0; column<8; column++)
+			{
+				Piece piece = houses[row][column];
+				if(piece != null && piece.getColor() == color)
+				{
+					// Tenta todos os movimentos possíveis da peça
+					List<int[]> possibleMoves = piece.getPossibleMoves();
+					for(int[] move : possibleMoves)
+					{
+						int targetRow = move[0];
+						int targetColumn = move[1];
+						
+						// Salva o estado atual
+						Piece originalPiece = houses[targetRow][targetColumn];
+						
+						// Faz o movimento
+						houses[targetRow][targetColumn] = piece;
+						houses[row][column] = null;
+						piece.setPos(targetRow, targetColumn);
+						
+						// Verifica se o movimento coloca o rei em xeque
+						boolean putsInCheck = isCheck(color);
+						
+						// Desfaz o movimento
+						houses[row][column] = piece;
+						houses[targetRow][targetColumn] = originalPiece;
+						piece.setPos(row, column);
+						
+						// Se encontrou um movimento legal, não é congelamento
+						if (!putsInCheck) return false;
+					}
+				}
+			}
+		}
+		
+		return true;
+	}
+
+	// Verifica se o rei pode realizar um roque
+	protected boolean canCastle(char color, boolean isKingside) {
+		// Verifica se o rei está em xeque
+		if (isCheck(color)) return false;
+		
+		int row = (color == 'W') ? 7 : 0;
+		int kingCol = 4;
+		int rookCol = isKingside ? 7 : 0;
+		
+		// Verifica se o rei e a torre estão nas posições iniciais
+		Piece king = houses[row][kingCol];
+		Piece rook = houses[row][rookCol];
+		
+		if (!(king instanceof King) || !(rook instanceof Rook) || 
+			king.getColor() != color || rook.getColor() != color) {
+			return false;
+		}
+		
+		// Verifica se há peças entre o rei e a torre
+		int start = isKingside ? kingCol + 1 : kingCol - 1;
+		int end = isKingside ? rookCol - 1 : rookCol + 1;
+		int step = isKingside ? 1 : -1;
+		
+		for (int col = start; col != end; col += step) {
+			if (houses[row][col] != null) {
+				return false;
+			}
+		}
+		
+		// Verifica se o rei não passa por casas em xeque
+		int targetKingCol = isKingside ? kingCol + 2 : kingCol - 2;
+		for (int col = kingCol; col != targetKingCol; col += step) {
+			// Salva o estado atual
+			Piece originalKing = houses[row][kingCol];
+			Piece originalTarget = houses[row][col];
+			
+			// Move o rei temporariamente
+			houses[row][col] = king;
+			houses[row][kingCol] = null;
+			king.setPos(row, col);
+			
+			// Verifica se está em xeque
+			boolean inCheck = isCheck(color);
+			
+			// Desfaz o movimento
+			houses[row][kingCol] = originalKing;
+			houses[row][col] = originalTarget;
+			king.setPos(row, kingCol);
+			
+			if (inCheck) return false;
+		}
+		
+		return true;
+	}
+	
+	// Realiza um roque curto = true ou longo = false
+	protected void performCastle(char color, boolean isKingside) {
+		int row = (color == 'W') ? 7 : 0;
+		int kingCol = 4;
+		int rookCol = isKingside ? 7 : 0;
+		
+		Piece king = houses[row][kingCol];
+		Piece rook = houses[row][rookCol];
+		
+		// Move o rei
+		int targetKingCol = isKingside ? kingCol + 2 : kingCol - 2;
+		houses[row][targetKingCol] = king;
+		houses[row][kingCol] = null;
+		king.setPos(row, targetKingCol);
+		
+		// Move a torre
+		int targetRookCol = isKingside ? targetKingCol - 1 : targetKingCol + 1;
+		houses[row][targetRookCol] = rook;
+		houses[row][rookCol] = null;
+		rook.setPos(row, targetRookCol);
 	}
 	
 	protected boolean checkPawnPromotion(int row, int column)
