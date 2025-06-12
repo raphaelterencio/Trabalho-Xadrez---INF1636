@@ -45,5 +45,10 @@ public class ModelAPI
 	public boolean isCheck(char color) {
 	    return board.isCheck(color);
 	}
-	
+	public boolean isCheckMate(char color) {
+	    return board.isCheckMate(color);
+	}
+	public boolean isStalemate(char color) {
+	    return board.isStalemate(color);
+	}
 }
