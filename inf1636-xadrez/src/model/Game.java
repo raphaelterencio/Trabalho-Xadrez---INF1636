@@ -273,4 +273,16 @@ class Game{
 		tiles[row][targetRookCol] = rook;
 		tiles[row][rookCol] = null;
 	}
+	
+	// 
+	
+	protected char getPieceColor(int row, int column) { return tiles[row][column].getColor(); }
+	
+	protected boolean isThereAPiece(int row, int column) 
+	{ 
+		if (tiles[row][column] != null) return true;
+		return false;
+	}
+	
+	protected char getPieceSymbol(int row, int column) { return tiles[row][column].getSymbol(); }
 }

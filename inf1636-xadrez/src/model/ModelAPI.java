@@ -27,4 +27,13 @@ public class ModelAPI
 	public void testGame(char round_color) { game.testMode(round_color); }
 	
 	public void setPiece(char type, char color, int row, int column) { game.setPiece(type, color, row, column); } 
+	
+	// 
+	
+	public char getPieceColor(int row, int column) { return game.getPieceColor(row, column); }
+	
+	public boolean isThereAPiece(int row, int column) { return game.isThereAPiece(row, column); }
+	
+	public char getPieceSymbol(int row, int column) { return game.getPieceSymbol(row, column); }
+
 }
