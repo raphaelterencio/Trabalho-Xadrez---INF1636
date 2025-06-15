@@ -6,20 +6,19 @@ import view.ViewAPI;
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.List;
-import java.awt.event.MouseListener;
 
 public class Main {
 
     private static int selectedRow = -1;
     private static int selectedCol = -1;
-    private static char currentTurn = 'W'; 
+    private static char currentTurn = 'W';
+
     public static void main(String[] args) {
         JFrame frame = new JFrame("Jogo de Xadrez");
         Interface tabuleiro = new Interface();
-        ViewAPI api = tabuleiro.getApi();
+        ViewAPI api = new ViewAPI(tabuleiro);
 
-        tabuleiro.adicionarClickListener(new MouseAdapter() {
+        api.adicionarClickListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int col = e.getX() / 64;
@@ -29,15 +28,15 @@ public class Main {
                     if (api.isThereAPiece(row, col) && api.getPieceColor(row, col) == currentTurn) {
                         selectedRow = row;
                         selectedCol = col;
-                        tabuleiro.setMovimentos(api.getPossibleMoves(row, col));
-                        tabuleiro.setSelecionado(row, col);
+                        api.setMovimentos(api.getPossibleMoves(row, col));
+                        api.setSelecionado(row, col);
                         tabuleiro.repaint();
                     }
                 } else {
                     if (selectedRow == row && selectedCol == col) {
                         selectedRow = -1;
                         selectedCol = -1;
-                        tabuleiro.clearMovimentos();
+                        api.clearMovimentos();
                         tabuleiro.repaint();
                         return;
                     }
@@ -46,7 +45,6 @@ public class Main {
                         api.movePiece(selectedRow, selectedCol, row, col);
                         currentTurn = (currentTurn == 'W') ? 'B' : 'W';
 
-                        // alerta de xeque
                         if (api.isCheckMate(currentTurn)) {
                             JOptionPane.showMessageDialog(null, "Xeque-mate nas " + (currentTurn == 'W' ? "brancas" : "pretas") + "!");
                         } else if (api.isStalemate(currentTurn)) {
@@ -54,14 +52,12 @@ public class Main {
                         } else if (api.isCheck(currentTurn)) {
                             JOptionPane.showMessageDialog(null, "Xeque em " + (currentTurn == 'W' ? "brancas" : "pretas") + "!");
                         }
-
-
                     }
 
                     selectedRow = -1;
                     selectedCol = -1;
-                    tabuleiro.clearMovimentos();
-                    tabuleiro.setSelecionado(-1, -1);
+                    api.clearMovimentos();
+                    api.setSelecionado(-1, -1);
                     tabuleiro.repaint();
                 }
             }
@@ -69,7 +65,7 @@ public class Main {
 
         frame.add(tabuleiro);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(8 * 64 + 16, 8 * 64 + 39); 
+        frame.setSize(8 * 64 + 16, 8 * 64 + 39);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
