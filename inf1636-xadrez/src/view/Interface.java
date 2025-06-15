@@ -9,13 +9,14 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import javax.imageio.ImageIO;
+import model.ModelAPI;
 
 public class Interface extends Canvas {
 
     private static final int TILE_SIZE = 64;
     private static final int BOARD_SIZE = 8;
 
-    private final ViewAPI api;
+    private final ModelAPI api;
     private final HashMap<String, BufferedImage> imageMap;
 
     private int selectedRow = -1;
@@ -23,8 +24,9 @@ public class Interface extends Canvas {
     private List<int[]> movimentosPossiveis = new java.util.ArrayList<>();
 
     public Interface() {
-        this.api = new ViewAPI();
+        this.api = new ModelAPI();
         this.imageMap = loadImages();
+        this.api.newGame(); 
         setSize(BOARD_SIZE * TILE_SIZE, BOARD_SIZE * TILE_SIZE);
     }
 
@@ -103,24 +105,21 @@ public class Interface extends Canvas {
         }
     }
 
-    public void setMovimentos(List<int[]> movimentos) {
+    protected void setMovimentos(List<int[]> movimentos) {
         this.movimentosPossiveis = movimentos;
     }
 
-    public void clearMovimentos() {
+    protected void clearMovimentos() {
         this.movimentosPossiveis.clear();
     }
 
-    public void setSelecionado(int row, int col) {
+    protected void setSelecionado(int row, int col) {
         this.selectedRow = row;
         this.selectedCol = col;
     }
 
-    public ViewAPI getApi() {
-        return api;
-    }
 
-    public void adicionarClickListener(MouseListener listener) {
+    protected void adicionarClickListener(MouseListener listener) {
         addMouseListener(listener);
     }
 }
