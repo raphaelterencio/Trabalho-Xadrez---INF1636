@@ -1,24 +1,31 @@
 package testes;
 
+import model.ModelAPI;
 import static org.junit.Assert.*;
 import org.junit.Test;
-
-import model.Bishop;
+import org.junit.Before;
 
 public class BishopTest {
 
-	Bishop bishop = new Bishop('W', 4, 4); // Centro do tabuleiro
+	ModelAPI model_api = new ModelAPI();
+	
+	@Before
+	public void setUpOnce()
+	{
+		model_api.newGame();
+		model_api.testGame('W');
+		model_api.setPiece('B', 'W', 4, 4); // Centro do tabuleiro
+	}
 	
 	@Test
 	public void testBishopValidMove() 
 	{
-		assertTrue(bishop.canMove(5, 5));
+		assertTrue(model_api.movePiece(4, 4, 5, 5));
 	}
 	
 	@Test
 	public void testBishopInvalidMove()
 	{
-		assertFalse(bishop.canMove(4,5));
+		assertFalse(model_api.movePiece(4, 4, 4, 5));
 	}
-
 }

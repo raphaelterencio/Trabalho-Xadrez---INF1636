@@ -24,22 +24,28 @@ class Pawn extends Piece{
 	@Override
 	protected List<int[]> getPath(int row, int column, int target_row, int target_column)
 	{
-		// Não passa em nenhuma casa caso se mova diagonal
-		if (canDiagonalMove(row, column, target_row, target_column)) return null;
+		List<int[]> path = new ArrayList<>();
+		
+		// Não confere se o movimento for impossível
+		if( !canMove(row,column, target_row, target_column) ) 
+			return path;
+		
+		// Só passa em uma casa se for movimento na diagonal
+		if (canDiagonalMove(row, column, target_row, target_column)) 
+			path.add(new int[] {target_row, target_column});
 		
 		// Confere se é a primeira jogada
-		// OBS: Não é efetivo, pode ser que o usuário só não mova a peça
-		if( (this.getColor() == 'W' && row != 6) || (this.getColor() == 'B' && row != 1) ) return null;
+		if( (this.getColor() == 'W' && row != 6) || (this.getColor() == 'B' && row != 1) )
+			path.add(new int[] {target_row, target_column});
 		
 		// Obtém a direção que o peão deve andar
 		int direction; 
 		direction = (this.getColor() == 'W') ? -1 : 1; // -1 (para cima) 1 (para baixo)
 		
-		List<int[]> path = new ArrayList<>();
-		
 		int current_row = row + direction;
 		
 		path.add(new int[] {current_row, column});
+		
 		return path;
 	}
 	

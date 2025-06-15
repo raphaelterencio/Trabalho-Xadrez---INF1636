@@ -1,24 +1,33 @@
 package testes;
 
+import model.ModelAPI;
 import static org.junit.Assert.*;
-
 import org.junit.Test;
-
-import model.Queen;
+import org.junit.Before;
 
 public class QueenTest {
 
-	Queen queen = new Queen('W', 4, 4); // Centro do tabuleiro
+	ModelAPI model_api = new ModelAPI();
+	
+	@Before
+	public void setUp()
+	{
+		model_api.newGame();
+		model_api.testGame('W');
+		model_api.setPiece('Q', 'W', 4, 4); // Centro do tabuleiro
+	}
 	
 	@Test
 	public void testQueenValidMove() 
 	{
-		assertTrue(queen.canMove(3, 4));
+		System.out.println("\n> Teste movimento válido");
+		assertTrue(model_api.movePiece(4, 4, 3, 4));
 	}
 	
 	@Test
 	public void testQueenInvalidMove()
 	{
-		assertFalse(queen.canMove(2, 5));
+		System.out.println("\n> Teste movimento inválido");
+		assertFalse(model_api.movePiece(4, 4, 2, 5));
 	}
 }

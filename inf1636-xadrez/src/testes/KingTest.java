@@ -1,25 +1,31 @@
 package testes;
 
+import model.ModelAPI;
 import static org.junit.Assert.*;
-
 import org.junit.Test;
-
-import model.King;
+import org.junit.Before;
 
 public class KingTest {
-
-	King king = new King('W', 4, 4); // Centro do tabuleiro
+	
+	ModelAPI model_api = new ModelAPI();
+	
+	@Before
+	public void setUpOnce()
+	{
+		model_api.newGame();
+		model_api.testGame('W');
+		model_api.setPiece('K', 'W', 4, 4); // Centro do tabuleiro
+	}
 	
 	@Test
 	public void testKingValidMove() 
 	{
-		assertTrue(king.canMove(5, 5));
+		assertTrue(model_api.movePiece(4, 4, 5, 5));
 	}
 	
 	@Test
 	public void testKingInvalidMove()
 	{
-		assertFalse(king.canMove(2, 5));
+		assertFalse(model_api.movePiece(4, 4, 2, 5));
 	}
-
 }

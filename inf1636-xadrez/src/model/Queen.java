@@ -28,6 +28,10 @@ class Queen extends Piece{
 	{
 		List<int[]> path = new ArrayList<>();
 		
+		// Não confere se o movimento for impossível
+		if( !canMove(row,column, target_row, target_column) ) 
+			return path;
+		
 		// Auxiliares para percorrer o caminho da peça
 		int step_row, step_column;
 		
@@ -42,12 +46,17 @@ class Queen extends Piece{
 		int current_row = row + step_row; 
 		int current_column = column + step_column;
 		
+		System.out.println("Entrando no loop pra obter o caminho");
+		
 		while(current_row != target_row || current_column != target_column)
 		{
 			path.add(new int[] {current_row, current_column});
 			current_row += step_row;
 			current_column += step_column;
 		}
+		path.add(new int[] {current_row, current_column});
+		
+		System.out.println("Saindo do loop pra obter o caminho");
 		
 		return path;
 	}

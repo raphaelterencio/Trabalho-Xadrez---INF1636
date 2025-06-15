@@ -47,7 +47,7 @@ class Board
 			tiles[row][column] = new Rook(color);
 			break;
 		}
-	}
+}
 	
 	protected void setUp()
 	{
@@ -86,7 +86,7 @@ class Board
 	}
 
 	protected boolean movePiece(int row, int column, int target_row, int target_column)
-	{
+	{		
 		if ( isValidMove(row, column, target_row, target_column) ) 
 		{
 			Piece piece = tiles[row][column];
@@ -98,7 +98,7 @@ class Board
 				
 			tiles[target_row][target_column] = tiles[row][column];
 			tiles[row][column] = null;
-			
+						
 			return true;
 		}
 		
@@ -109,7 +109,7 @@ class Board
 	{
 		// Obtém o caminho até a posição desejada
 		List<int[]> list = getFixedPath(row, column, target_row, target_column);
-		
+				
 		// Confere se é possível chegar até a posição desejada
 	    for (int[] coords : list) 
 	    {
@@ -124,11 +124,11 @@ class Board
 	{
 		Piece piece = tiles[row][column]; 
 		Piece cmp_piece;
-		
+				
 		// Obtém o caminho a ser percorrido desconsiderando colisão
 		List<int[]> path = piece.getPath(row, column, target_row, target_column);
 		List<int[]> fixed_path = new ArrayList<>();
-		
+				
 		// Percorre o caminho até a posição
 		for(int[] coords : path) 
 		{	

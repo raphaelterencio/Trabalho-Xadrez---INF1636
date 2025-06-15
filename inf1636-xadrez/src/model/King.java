@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 class King extends Piece{
@@ -25,7 +26,15 @@ class King extends Piece{
 	@Override
 	protected List<int[]> getPath(int row, int column, int target_row, int target_column)
 	{ 
-		return null; 
+		List<int[]> path = new ArrayList<>();
+		
+		// Não confere se o movimento for impossível
+		if( !canMove(row,column, target_row, target_column) ) 
+			return path;
+		
+		path.add(new int[] {target_row, target_column});
+		
+		return path;
 	}
 	
 	@Override

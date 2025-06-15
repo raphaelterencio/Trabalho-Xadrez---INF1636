@@ -27,6 +27,10 @@ class Horse extends Piece{
 	{
 		List<int[]> path = new ArrayList<>();
 		
+		// Não confere se o movimento for impossível
+		if( !canMove(row,column, target_row, target_column) ) 
+			return path;
+		
 		int diff_row = Math.abs(row - target_row);
 		
 		int step_row = 0, step_column = 0;

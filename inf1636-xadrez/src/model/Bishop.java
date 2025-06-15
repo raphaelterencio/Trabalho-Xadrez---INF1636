@@ -28,6 +28,10 @@ class Bishop extends Piece{
 	{	
 		List<int[]> path = new ArrayList<>();
 		
+		// Não confere se o movimento for impossível
+		if( !canMove(row,column, target_row, target_column) ) 
+			return path;
+		
 		// Auxiliares para percorrer o caminho da peça
 	    int step_row = (target_row > row) ? 1 : -1; // 1 (para baixo) -1 (para cima)
 	    int step_column = (target_column > column) ? 1 : -1; // 1 (direta) -1 (esquerda)
@@ -40,6 +44,7 @@ class Bishop extends Piece{
 	        current_row += step_row;
 	        current_column += step_column;
 	    }
+	    path.add(new int[] {current_row, current_column});
 		
 		return path;
 	}

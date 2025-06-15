@@ -25,6 +25,10 @@ class Rook extends Piece{
 	{	
 		List<int[]> path = new ArrayList<>();
 		
+		// Não confere se o movimento for impossível
+		if( !canMove(row,column, target_row, target_column) ) 
+			return path;
+		
 		// Auxiliares para percorrer o caminho da peça
 		int step_row, step_column;
 		
@@ -45,6 +49,7 @@ class Rook extends Piece{
 			current_row += step_row;
 			current_column += step_column;
 		}
+		path.add(new int[] {current_row, current_column});
 
 		return path;
 	}
