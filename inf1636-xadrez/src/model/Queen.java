@@ -8,7 +8,7 @@ class Queen extends Piece{
 	protected Queen(char color)
 	{ 
 		super(color);
-		this.symbol = 'Q';
+		this.setColor('Q');
 	}
 	
 	@Override
@@ -55,7 +55,7 @@ class Queen extends Piece{
 	@Override
 	protected Piece clone()
 	{
-		Queen copy = new Queen(this.color);
+		Queen copy = new Queen(this.getColor());
 		return copy;
 	}
 }

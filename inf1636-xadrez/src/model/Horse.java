@@ -8,7 +8,7 @@ class Horse extends Piece{
 	protected Horse(char color)
 	{ 
 		super(color);
-		this.symbol = 'H';
+		this.setColor('H');
 	}
 	
 	@Override
@@ -44,7 +44,7 @@ class Horse extends Piece{
 	@Override
 	protected Piece clone()
 	{
-		Horse copy = new Horse(this.color);
+		Horse copy = new Horse(this.getColor());
 		return copy;
 	}
 }

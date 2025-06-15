@@ -8,7 +8,7 @@ class Rook extends Piece{
 	protected Rook(char color)
 	{ 
 		super(color); 
-		this.symbol = 'T';
+		this.setColor('T');
 	}
 	
 	@Override
@@ -52,7 +52,7 @@ class Rook extends Piece{
 	@Override
 	protected Piece clone()
 	{
-		Rook copy = new Rook(this.color);
+		Rook copy = new Rook(this.getColor());
 		return copy;
 	}
 }

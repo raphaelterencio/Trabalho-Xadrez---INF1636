@@ -4,8 +4,8 @@ import java.util.List;
 
 abstract class Piece 
 {
-    protected char color;
-    protected char symbol;
+    private char color;
+    private char symbol;
     
     protected Piece(char color) 
     {
@@ -14,6 +14,8 @@ abstract class Piece
     }
     
     protected char getColor() { return color; }
+    
+    protected void setColor(char color) { this.color = color; }
     
     protected char getSymbol() { return this.symbol; }
     

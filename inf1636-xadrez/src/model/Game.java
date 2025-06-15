@@ -13,6 +13,7 @@ class Game {
 	{
 		board = new Board();
 		tiles = board.getTiles();
+		board.setUp();
 		round = 1;
 		round_color = 'W';
 	}
@@ -20,6 +21,10 @@ class Game {
 	protected int getRound() { return this.round; }
 
 	protected char getRoundColor() { return this.round_color; }
+	
+	protected boolean movePiece(int row, int column, int target_row, int target_column) { return board.movePiece(row, column, target_row, target_column); }
+	
+	protected List<int[]> getPossibleMoves(int row, int column){ return board.getPossibleMoves(row, column); }
 	
 	protected boolean isCheck(char color)
 	{
@@ -107,20 +112,28 @@ class Game {
 		return true;
 	}
 	
-	protected boolean checkPawnPromotion(int row, int column)
+	protected boolean checkPawnPromotion()
 	{
-		Piece piece = tiles[row][column];
-		
-		// Confere se a peça é um peão
-		if( !(piece instanceof Pawn) ) return false;
-		
-		// Pega a cor a peça
-		char color = piece.getColor();
-		
-		// Confere se o peão alcançou a última fileira
-		if (color == 'W' && row == 0) return true;
-		if (color == 'B' && row == 7) return true;
-		
+	    for (int row = 0; row < 8; row++) {
+	        for (int column = 0; column < 8; column++) 
+	        {
+				Piece piece = tiles[row][column];
+				
+				// Confere se a peça é um peão
+				if( piece instanceof Pawn )
+				{
+					// Pega a cor a peça
+					char color = piece.getColor();
+					
+					// Confere se o peão alcançou a última fileira
+					if (color == 'W' && row == 0) return true;
+					if (color == 'B' && row == 7) return true;
+				}
+				
+				
+	        }
+	    }
+	    
 		return false;
 	}
 

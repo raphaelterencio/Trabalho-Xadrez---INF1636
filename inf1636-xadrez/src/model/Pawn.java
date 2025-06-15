@@ -8,7 +8,7 @@ class Pawn extends Piece{
 	protected Pawn(char color)
 	{ 
 		super(color); 
-		this.symbol = 'P';	
+		this.setColor('P');	
 	}
 	
 	@Override
@@ -29,11 +29,11 @@ class Pawn extends Piece{
 		
 		// Confere se é a primeira jogada
 		// OBS: Não é efetivo, pode ser que o usuário só não mova a peça
-		if( (color == 'W' && row != 6) || (color == 'B' && row != 1) ) return null;
+		if( (this.getColor() == 'W' && row != 6) || (this.getColor() == 'B' && row != 1) ) return null;
 		
 		// Obtém a direção que o peão deve andar
 		int direction; 
-		direction = (color == 'W') ? -1 : 1; // -1 (para cima) 1 (para baixo)
+		direction = (this.getColor() == 'W') ? -1 : 1; // -1 (para cima) 1 (para baixo)
 		
 		List<int[]> path = new ArrayList<>();
 		
@@ -51,11 +51,11 @@ class Pawn extends Piece{
 		
 		// Obtém a direção que o peão deve andar
 		int direction; 
-		direction = (color == 'W') ? -1 : 1; // -1 (para cima) 1 (para baixo)
+		direction = (this.getColor() == 'W') ? -1 : 1; // -1 (para cima) 1 (para baixo)
 		
 		// Confere se é a primeira jogada
 		boolean isFirstRound = false;
-		if( (color == 'W' && row == 6) || (color == 'B' && row == 1) ) isFirstRound = true;
+		if( (this.getColor() == 'W' && row == 6) || (this.getColor() == 'B' && row == 1) ) isFirstRound = true;
 		
 		// Movimento de 2 casas
 		if( isFirstRound && target_row == row + (2*direction) ) return true;
@@ -74,7 +74,7 @@ class Pawn extends Piece{
 		
 		// Obtém a direção que o peão deve andar
 		int direction; 
-		direction = (color == 'W') ? -1 : 1; // -1 (para cima) 1 (para baixo)
+		direction = (this.getColor() == 'W') ? -1 : 1; // -1 (para cima) 1 (para baixo)
 		
 		if (diff_row == diff_column && target_row == row + direction) return true;
 		
@@ -84,7 +84,7 @@ class Pawn extends Piece{
 	@Override
 	protected Piece clone()
 	{
-		Pawn copy = new Pawn(this.color);
+		Pawn copy = new Pawn(this.getColor());
 		return copy;
 	}
 }

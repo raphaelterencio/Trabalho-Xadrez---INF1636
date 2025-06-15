@@ -8,7 +8,7 @@ class Bishop extends Piece{
 	protected Bishop(char color)
 	{ 
 		super(color);
-		this.symbol = 'B';
+		this.setColor('B');
 	}
 	
 	@Override
@@ -47,7 +47,7 @@ class Bishop extends Piece{
 	@Override
 	protected Piece clone()
 	{
-		Bishop copy = new Bishop(this.color);
+		Bishop copy = new Bishop(this.getColor());
 		return copy;
 	}
 } 

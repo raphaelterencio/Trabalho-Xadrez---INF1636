@@ -7,7 +7,7 @@ class King extends Piece{
 	protected King(char color)
 	{ 
 		super(color);
-		this.symbol = 'K';
+		this.setColor('K');
 	}
 	
 	@Override
@@ -31,7 +31,7 @@ class King extends Piece{
 	@Override
 	protected King clone()
 	{
-		King copy = new King(this.color);
+		King copy = new King(this.getColor());
 		return copy;
 	}
 }
