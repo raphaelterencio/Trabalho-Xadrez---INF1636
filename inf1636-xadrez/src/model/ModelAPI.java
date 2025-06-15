@@ -2,53 +2,29 @@ package model;
 
 import java.util.List;
 
-// Restringe o acesso do usuário a comandos estratégicos
 public class ModelAPI
 {
-	private Board board;
+	Game game;
 	
-	// Board
+	public ModelAPI() {}
 	
-	public ModelAPI() { board = new Board(); }
+	public void newGame() { game = new Game(); }
 	
-	public void startGame() { board.launch(); }
+	public char getRoundColor() { return game.getRoundColor(); }
 	
-	public boolean isThereAPiece(int row, int column) { return board.isThereAPiece(row, column); }
+	public boolean movePiece(int row, int column, int target_row, int target_column){ return game.movePiece(row, column, target_row, target_column); }
 	
-	public void capturePiece(int row, int column) { board.capturePiece(row, column); }
+	public List<int[]> getPossibleMoves(int row, int column){ return game.getPossibleMoves(row, column); }
 	
-	// Piece
+	public boolean isCheck() { return game.isCheck(game.getRoundColor()); } 
 	
-	public List<int[]> getPossibleMoves(int row, int column)
-	{
-		Piece piece = board.getPiece(row, column);
-		return piece.getPossibleMoves();
-	}
+	public boolean isCheckMate() { return game.isCheckMate(game.getRoundColor()); } 
 	
-	public char getPieceColor(int row, int column)
-	{
-		Piece piece = board.getPiece(row, column);
-		return piece.getColor();
-	}
+	public boolean checkPawnPromotion() { return game.checkPawnPromotion(); }
 	
-	// Board e piece
+	public boolean isStalemate() { return game.isStalemate(getRoundColor()); } 
 	
-	public void movePiece(int row, int column, int target_row, int target_column)
-	{
-		Piece piece = board.getPiece(row, column);
-		piece.setPos(target_row, target_column);
-		board.movePiece(row, column, target_row, target_column);
-	}
-	public char getPieceSymbol(int row, int column) {
-	    return board.getPiece(row, column).getSymbol();
-	}
-	public boolean isCheck(char color) {
-	    return board.isCheck(color);
-	}
-	public boolean isCheckMate(char color) {
-	    return board.isCheckMate(color);
-	}
-	public boolean isStalemate(char color) {
-	    return board.isStalemate(color);
-	}
+	public void testGame(char round_color) { game.testMode(round_color); }
+	
+	public void setPiece(char type, char color, int row, int column) { game.setPiece(type, color, row, column); } 
 }
