@@ -35,4 +35,5 @@ public class ModelAPI
 	public boolean isThereAPiece(int row, int column) { return game.isThereAPiece(row, column); }
 	
 	public char getPieceSymbol(int row, int column) { return game.getPieceSymbol(row, column); }
+
 }

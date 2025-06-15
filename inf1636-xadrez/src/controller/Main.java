@@ -47,9 +47,15 @@ public class Main {
                         currentTurn = (currentTurn == 'W') ? 'B' : 'W';
 
                         // alerta de xeque
-                        if (api.isCheck(currentTurn)) {
+                        if (api.isCheckMate(currentTurn)) {
+                            JOptionPane.showMessageDialog(null, "Xeque-mate nas " + (currentTurn == 'W' ? "brancas" : "pretas") + "!");
+                        } else if (api.isStalemate(currentTurn)) {
+                            JOptionPane.showMessageDialog(null, "Congelamento! As " + (currentTurn == 'W' ? "brancas" : "pretas") + " não têm movimentos válidos.");
+                        } else if (api.isCheck(currentTurn)) {
                             JOptionPane.showMessageDialog(null, "Xeque em " + (currentTurn == 'W' ? "brancas" : "pretas") + "!");
                         }
+
+
                     }
 
                     selectedRow = -1;
@@ -65,6 +71,7 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(8 * 64 + 16, 8 * 64 + 39); 
         frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 }

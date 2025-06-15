@@ -37,5 +37,13 @@ public class ViewAPI {
     public boolean isCheck(char color) {
         return model.isCheck(color);
     }
+    public boolean isCheckMate(char color) {
+        return model.isCheckMate(color);
+    }
+    public boolean isStalemate(char color) {
+        return model.isStalemate(color);
+    }
+
+
 
 }
