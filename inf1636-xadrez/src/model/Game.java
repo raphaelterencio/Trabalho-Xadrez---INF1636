@@ -6,12 +6,20 @@ class Game {
 	
 	private Board board;
 	private Piece[][] tiles;
+	private int round;
+	private char round_color;
 	
 	protected Game()
 	{
 		board = new Board();
 		tiles = board.getTiles();
+		round = 1;
+		round_color = 'W';
 	}
+	
+	protected int getRound() { return this.round; }
+
+	protected char getRoundColor() { return this.round_color; }
 	
 	protected boolean isCheck(char color)
 	{

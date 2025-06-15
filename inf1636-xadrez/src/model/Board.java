@@ -110,8 +110,20 @@ class Board
 			cmp_piece = getPiece(coords[0], coords[1]);
 			
 			// Se não houver uma peça no caminho
-			if(cmp_piece == null) 
+			if(cmp_piece == null)
+			{
+				// Confere se o movimento é um peão tentando andar na diagonal sem comer ninguém
+				if( piece instanceof Pawn)
+				{
+					int row_diff = Math.abs(coords[0] - row);
+					int column_diff = Math.abs(coords[1] - column);
+					
+					if (row_diff == 1 && column_diff == 1)
+						continue;
+				}
+				
 				fixed_path.add(new int[] { coords[0], coords[1] });
+			}
 			
 			// Se houver uma peça no caminho
 			else 
