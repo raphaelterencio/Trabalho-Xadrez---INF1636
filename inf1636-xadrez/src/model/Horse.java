@@ -31,17 +31,8 @@ class Horse extends Piece{
 		if( !canMove(row,column, target_row, target_column) ) 
 			return path;
 		
-		int diff_row = Math.abs(row - target_row);
+		path.add(new int[] {target_row, target_column});
 		
-		int step_row = 0, step_column = 0;
-		
-		if (diff_row == 2) step_row = (target_row > row) ? 2 : -2; // 2 (para baixo) -2 (para cima)
-		else step_column = (target_column > column) ? 2 : -2; // 2 (direta) -2 (esquerda)
-		
-	    int current_row = row + step_row;
-	    int current_column = column + step_column;
-	   
-		path.add(new int[] {current_row, current_column});
 		return path;
 	}
 	
