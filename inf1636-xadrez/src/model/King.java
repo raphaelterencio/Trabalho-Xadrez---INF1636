@@ -7,7 +7,7 @@ class King extends Piece{
 	protected King(char color)
 	{ 
 		super(color);
-		this.setColor('K');
+		this.setSymbol('K');
 	}
 	
 	@Override

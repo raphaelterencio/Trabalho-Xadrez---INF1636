@@ -8,7 +8,7 @@ class Bishop extends Piece{
 	protected Bishop(char color)
 	{ 
 		super(color);
-		this.setColor('B');
+		this.setSymbol('B');
 	}
 	
 	@Override

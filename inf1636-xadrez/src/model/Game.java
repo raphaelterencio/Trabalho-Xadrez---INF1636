@@ -2,7 +2,7 @@ package model;
 
 import java.util.List;
 
-class Game {
+class Game{
 	
 	private Board board;
 	private Piece[][] tiles;
@@ -22,7 +22,27 @@ class Game {
 
 	protected char getRoundColor() { return this.round_color; }
 	
-	protected boolean movePiece(int row, int column, int target_row, int target_column) { return board.movePiece(row, column, target_row, target_column); }
+	protected void testMode(char round_color)
+	{
+		board = new Board();
+		tiles = board.getTiles();
+		this.round_color = round_color;
+	}
+	
+	protected void setPiece(char type, char color, int row, int column) { board.setPiece(type, color, row, column); } 
+	
+	protected boolean movePiece(int row, int column, int target_row, int target_column) 
+	{ 
+		boolean flag = board.movePiece(row, column, target_row, target_column); 
+		
+		if (flag) 
+		{
+			round++;
+			round_color = (round_color == 'W') ? 'B' : 'W';
+		}
+		
+		return flag;
+	}
 	
 	protected List<int[]> getPossibleMoves(int row, int column){ return board.getPossibleMoves(row, column); }
 	

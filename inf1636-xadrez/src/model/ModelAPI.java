@@ -22,6 +22,10 @@ public class ModelAPI
 	
 	public boolean checkPawnPromotion() { return game.checkPawnPromotion(); }
 	
-	protected boolean isStalemate() { return game.isStalemate(getRoundColor()); } 
+	public boolean isStalemate() { return game.isStalemate(getRoundColor()); } 
+	
+	public void testGame(char round_color) { game.testMode(round_color); }
+	
+	public void setPiece(char type, char color, int row, int column) { game.setPiece(type, color, row, column); } 
 	
 }

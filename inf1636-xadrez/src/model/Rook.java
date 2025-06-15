@@ -8,7 +8,7 @@ class Rook extends Piece{
 	protected Rook(char color)
 	{ 
 		super(color); 
-		this.setColor('T');
+		this.setSymbol('R');
 	}
 	
 	@Override

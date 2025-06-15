@@ -8,7 +8,7 @@ class Pawn extends Piece{
 	protected Pawn(char color)
 	{ 
 		super(color); 
-		this.setColor('P');	
+		this.setSymbol('P');	
 	}
 	
 	@Override

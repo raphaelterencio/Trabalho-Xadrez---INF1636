@@ -24,6 +24,31 @@ class Board
 	
 	protected Piece[][] getTiles() { return tiles; }
 	
+	protected void setPiece(char type, char color, int row, int column)
+	{	
+		switch (type)
+		{
+		case 'B':
+			tiles[row][column] = new Bishop(color);
+			break;
+		case 'H':
+			tiles[row][column] = new Horse(color);
+			break;
+		case 'K':
+			tiles[row][column] = new King(color);
+			break;
+		case 'P':
+			tiles[row][column] = new Pawn(color);
+			break;
+		case 'Q':
+			tiles[row][column] = new Queen(color);
+			break;
+		case 'R':
+			tiles[row][column] = new Rook(color);
+			break;
+		}
+	}
+	
 	protected void setUp()
 	{
 		// Bispos

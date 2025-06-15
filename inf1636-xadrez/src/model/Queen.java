@@ -8,7 +8,7 @@ class Queen extends Piece{
 	protected Queen(char color)
 	{ 
 		super(color);
-		this.setColor('Q');
+		this.setSymbol('Q');
 	}
 	
 	@Override

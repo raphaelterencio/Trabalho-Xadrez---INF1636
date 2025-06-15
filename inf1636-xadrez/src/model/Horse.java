@@ -8,7 +8,7 @@ class Horse extends Piece{
 	protected Horse(char color)
 	{ 
 		super(color);
-		this.setColor('H');
+		this.setSymbol('H');
 	}
 	
 	@Override

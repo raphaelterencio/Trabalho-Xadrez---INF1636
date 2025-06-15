@@ -19,6 +19,8 @@ abstract class Piece
     
     protected char getSymbol() { return this.symbol; }
     
+    protected void setSymbol(char symbol) { this.symbol = symbol; }
+    
     protected abstract boolean canMove(int row, int column, int target_row, int target_column);
     
     protected abstract List<int[]> getPath(int row, int column, int target_row, int target_column);
