@@ -39,9 +39,11 @@ public class ModelAPI
 		piece.setPos(target_row, target_column);
 		board.movePiece(row, column, target_row, target_column);
 	}
+	
 	public char getPieceSymbol(int row, int column) {
 	    return board.getPiece(row, column).getSymbol();
 	}
+	
 	public boolean isCheck(char color) {
 	    return board.isCheck(color);
 	}

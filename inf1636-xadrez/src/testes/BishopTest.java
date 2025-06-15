@@ -1,7 +1,9 @@
-package model;
+package testes;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
+
+import model.Bishop;
 
 public class BishopTest {
 

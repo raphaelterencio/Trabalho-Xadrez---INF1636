@@ -1,7 +1,12 @@
-package model;
+package testes;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
+
+import model.Board;
+import model.King;
+import model.Rook;
+
 import org.junit.After;
 import org.junit.Before;
 
