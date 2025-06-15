@@ -4,32 +4,14 @@ import java.util.List;
 
 class Game {
 	
-	private Piece[] captured_whites;
-	private Piece[] captured_blacks;
-	private int count_captured_whites;
-	private int count_captured_blacks;
-	
-	// Construtor
+	private Board board;
+	private Piece[][] tiles;
 	
 	protected Game()
 	{
-		captured_whites = new Piece[16];
-		captured_blacks = new Piece[16];
-		count_captured_whites = 0;
-		count_captured_blacks = 0;
+		board = new Board();
+		tiles = board.getTiles();
 	}
-	
-	// Captura de peças
-	
-	protected void capturePiece(int row, int column)
-	{
-		if(houses[row][column].getColor() == 'W')
-			captured_whites[count_captured_whites++] = houses[row][column];
-		else 
-			captured_blacks[count_captured_blacks++] = houses[row][column];
-	}
-	
-	// Xeque e xeque-mate
 	
 	protected boolean isCheck(char color)
 	{
@@ -39,7 +21,7 @@ class Game {
 		{
 			for(int column=0; column<8; column++)
 			{
-				Piece piece = houses[row][column];
+				Piece piece = tiles[row][column];
 				if(piece instanceof King && piece.getColor() == color)
 				{
 					king_row = row;
@@ -59,10 +41,10 @@ class Game {
 		{
 			for(int column=0; column<8; column++)
 			{
-				Piece piece = houses[row][column];
+				Piece piece = tiles[row][column];
 				if(piece != null && piece.getColor() == opponent_color)
 				{
-					if (piece.canMove(king_row, king_column))
+					if (piece.canMove(row, column, king_row, king_column))
 						return true;
 				}
 					
@@ -82,31 +64,29 @@ class Game {
 		{
 			for(int column=0; column<8; column++)
 			{
-				Piece piece = houses[row][column];
+				Piece piece = tiles[row][column];
 				if(piece != null && piece.getColor() == color)
 				{
 					// Tenta todos os movimentos possíveis da peça
-					List<int[]> possibleMoves = piece.getPossibleMoves();
+					List<int[]> possibleMoves = board.getPossibleMoves(row, column);
 					for(int[] move : possibleMoves)
 					{
 						int targetRow = move[0];
 						int targetColumn = move[1];
 						
 						// Salva o estado atual
-						Piece originalPiece = houses[targetRow][targetColumn];
+						Piece originalPiece = tiles[targetRow][targetColumn];
 						
 						// Faz o movimento
-						houses[targetRow][targetColumn] = piece;
-						houses[row][column] = null;
-						piece.setPos(targetRow, targetColumn);
+						tiles[targetRow][targetColumn] = piece;
+						tiles[row][column] = null;
 						
 						// Verifica se ainda está em xeque
 						boolean stillInCheck = isCheck(color);
 						
 						// Desfaz o movimento
-						houses[row][column] = piece;
-						houses[targetRow][targetColumn] = originalPiece;
-						piece.setPos(row, column);
+						tiles[row][column] = piece;
+						tiles[targetRow][targetColumn] = originalPiece;
 						
 						// Se encontrou um movimento que tira do xeque, não é xeque-mate
 						if (!stillInCheck) return false;
@@ -119,11 +99,9 @@ class Game {
 		return true;
 	}
 	
-	// Promoçaõ de peão
-	
 	protected boolean checkPawnPromotion(int row, int column)
 	{
-		Piece piece = houses[row][column];
+		Piece piece = tiles[row][column];
 		
 		// Confere se a peça é um peão
 		if( !(piece instanceof Pawn) ) return false;
@@ -137,9 +115,7 @@ class Game {
 		
 		return false;
 	}
-	
-	// Movimentos especiais
-	
+
 	protected boolean isStalemate(char color)
 	{
 		// Se estiver em xeque, não pode ser congelamento
@@ -150,31 +126,29 @@ class Game {
 		{
 			for(int column=0; column<8; column++)
 			{
-				Piece piece = houses[row][column];
+				Piece piece = tiles[row][column];
 				if(piece != null && piece.getColor() == color)
 				{
 					// Tenta todos os movimentos possíveis da peça
-					List<int[]> possibleMoves = piece.getPossibleMoves();
+					List<int[]> possibleMoves = board.getPossibleMoves(row, column);
 					for(int[] move : possibleMoves)
 					{
 						int targetRow = move[0];
 						int targetColumn = move[1];
 						
 						// Salva o estado atual
-						Piece originalPiece = houses[targetRow][targetColumn];
+						Piece originalPiece = tiles[targetRow][targetColumn];
 						
 						// Faz o movimento
-						houses[targetRow][targetColumn] = piece;
-						houses[row][column] = null;
-						piece.setPos(targetRow, targetColumn);
+						tiles[targetRow][targetColumn] = piece;
+						tiles[row][column] = null;
 						
 						// Verifica se o movimento coloca o rei em xeque
 						boolean putsInCheck = isCheck(color);
 						
 						// Desfaz o movimento
-						houses[row][column] = piece;
-						houses[targetRow][targetColumn] = originalPiece;
-						piece.setPos(row, column);
+						tiles[row][column] = piece;
+						tiles[targetRow][targetColumn] = originalPiece;
 						
 						// Se encontrou um movimento legal, não é congelamento
 						if (!putsInCheck) return false;
@@ -196,8 +170,8 @@ class Game {
 		int rookCol = isKingside ? 7 : 0;
 		
 		// Verifica se o rei e a torre estão nas posições iniciais
-		Piece king = houses[row][kingCol];
-		Piece rook = houses[row][rookCol];
+		Piece king = tiles[row][kingCol];
+		Piece rook = tiles[row][rookCol];
 		
 		if (!(king instanceof King) || !(rook instanceof Rook) || 
 			king.getColor() != color || rook.getColor() != color) {
@@ -210,7 +184,7 @@ class Game {
 		int step = isKingside ? 1 : -1;
 		
 		for (int col = start; col != end; col += step) {
-			if (houses[row][col] != null) {
+			if (tiles[row][col] != null) {
 				return false;
 			}
 		}
@@ -219,21 +193,19 @@ class Game {
 		int targetKingCol = isKingside ? kingCol + 2 : kingCol - 2;
 		for (int col = kingCol; col != targetKingCol; col += step) {
 			// Salva o estado atual
-			Piece originalKing = houses[row][kingCol];
-			Piece originalTarget = houses[row][col];
+			Piece originalKing = tiles[row][kingCol];
+			Piece originalTarget = tiles[row][col];
 			
 			// Move o rei temporariamente
-			houses[row][col] = king;
-			houses[row][kingCol] = null;
-			king.setPos(row, col);
+			tiles[row][col] = king;
+			tiles[row][kingCol] = null;
 			
 			// Verifica se está em xeque
 			boolean inCheck = isCheck(color);
 			
 			// Desfaz o movimento
-			houses[row][kingCol] = originalKing;
-			houses[row][col] = originalTarget;
-			king.setPos(row, kingCol);
+			tiles[row][kingCol] = originalKing;
+			tiles[row][col] = originalTarget;
 			
 			if (inCheck) return false;
 		}
@@ -247,21 +219,17 @@ class Game {
 		int kingCol = 4;
 		int rookCol = isKingside ? 7 : 0;
 		
-		Piece king = houses[row][kingCol];
-		Piece rook = houses[row][rookCol];
+		Piece king = tiles[row][kingCol];
+		Piece rook = tiles[row][rookCol];
 		
 		// Move o rei
 		int targetKingCol = isKingside ? kingCol + 2 : kingCol - 2;
-		houses[row][targetKingCol] = king;
-		houses[row][kingCol] = null;
-		king.setPos(row, targetKingCol);
+		tiles[row][targetKingCol] = king;
+		tiles[row][kingCol] = null;
 		
 		// Move a torre
 		int targetRookCol = isKingside ? targetKingCol - 1 : targetKingCol + 1;
-		houses[row][targetRookCol] = rook;
-		houses[row][rookCol] = null;
-		rook.setPos(row, targetRookCol);
+		tiles[row][targetRookCol] = rook;
+		tiles[row][rookCol] = null;
 	}
-
-	
 }

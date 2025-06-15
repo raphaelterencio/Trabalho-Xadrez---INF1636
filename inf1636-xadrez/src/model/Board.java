@@ -6,13 +6,31 @@ import java.util.List;
 class Board 
 {
 	private Piece[][] tiles;
+	private Piece[] captured_whites;
+	private Piece[] captured_blacks;
+	private int count_captured_whites;
+	private int count_captured_blacks;
 	
 	protected Board()
 	{
 		tiles = new Piece[8][8];
+		captured_whites = new Piece[16];
+		captured_blacks = new Piece[16];
+		count_captured_whites = 0;
+		count_captured_blacks = 0;
 	}
 
+	protected void capturePiece(int row, int column)
+	{
+		if(tiles[row][column].getColor() == 'W')
+			captured_whites[count_captured_whites++] = tiles[row][column];
+		else 
+			captured_blacks[count_captured_blacks++] = tiles[row][column];
+	}
+	
 	protected Piece getPiece(int row, int column){ return tiles[row][column]; }
+	
+	protected Piece[][] getTiles() { return tiles; }
 	
 	protected void setUp()
 	{
