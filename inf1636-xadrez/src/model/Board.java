@@ -5,57 +5,57 @@ import java.util.List;
 
 class Board 
 {
-	private Piece[][] houses;
+	private Piece[][] tiles;
 	
 	protected Board()
 	{
-		houses = new Piece[8][8];
+		tiles = new Piece[8][8];
 	}
 
-	protected Piece getPiece(int row, int column){ return houses[row][column]; }
+	protected Piece getPiece(int row, int column){ return tiles[row][column]; }
 	
 	protected void setUp()
 	{
 		// Bispos
-		houses[0][2] = new Bishop('B');
-		houses[0][5] = new Bishop('B');
-		houses[7][2] = new Bishop('W');
-		houses[7][5] = new Bishop('W');
+		tiles[0][2] = new Bishop('B');
+		tiles[0][5] = new Bishop('B');
+		tiles[7][2] = new Bishop('W');
+		tiles[7][5] = new Bishop('W');
 		
 		// Cavalos
-		houses[0][1] = new Horse('B');
-		houses[0][6] = new Horse('B');
-		houses[7][1] = new Horse('W');
-		houses[7][6] = new Horse('W');
+		tiles[0][1] = new Horse('B');
+		tiles[0][6] = new Horse('B');
+		tiles[7][1] = new Horse('W');
+		tiles[7][6] = new Horse('W');
 		
 		// Reis
-		houses[0][4] = new King('B');
-		houses[7][4] = new King('W');
+		tiles[0][4] = new King('B');
+		tiles[7][4] = new King('W');
 		
 		// Peões
 		for(int column=0; column<8; column++)
 		{
-			houses[1][column] = new Pawn('B');
-			houses[6][column] = new Pawn('W');
+			tiles[1][column] = new Pawn('B');
+			tiles[6][column] = new Pawn('W');
 		}
 		
 		// Rainhas
-		houses[0][3] = new Queen('B');
-		houses[7][3] = new Queen('W');
+		tiles[0][3] = new Queen('B');
+		tiles[7][3] = new Queen('W');
 		
 		// Torres
-		houses[0][0] = new Rook('B');
-		houses[0][7] = new Rook('B');
-		houses[7][0] = new Rook('W');
-		houses[7][7] = new Rook('W');
+		tiles[0][0] = new Rook('B');
+		tiles[0][7] = new Rook('B');
+		tiles[7][0] = new Rook('W');
+		tiles[7][7] = new Rook('W');
 	}
 
 	protected boolean movePiece(int row, int column, int target_row, int target_column)
 	{
 		if ( isValidMove(row, column, target_row, target_column) ) 
 		{
-			houses[target_row][target_column] = houses[row][column];
-			houses[row][column] = null;
+			tiles[target_row][target_column] = tiles[row][column];
+			tiles[row][column] = null;
 			return true;
 		}
 		return false;
@@ -75,7 +75,7 @@ class Board
 	
 	protected List<int[]> getFixedPath(int row, int column, int target_row, int target_column)
 	{
-		Piece piece = houses[row][column]; 
+		Piece piece = tiles[row][column]; 
 		Piece cmp_piece;
 		
 		List<int[]> path = piece.getPath(row, column, target_row, target_column);
