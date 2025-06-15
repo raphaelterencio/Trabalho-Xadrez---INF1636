@@ -40,4 +40,11 @@ class Horse extends Piece{
 		path.add(new int[] {current_row, current_column});
 		return path;
 	}
+	
+	@Override
+	protected Piece clone()
+	{
+		Horse copy = new Horse(this.color);
+		return copy;
+	}
 }

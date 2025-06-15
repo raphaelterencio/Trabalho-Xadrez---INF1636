@@ -27,4 +27,11 @@ class King extends Piece{
 	{ 
 		return null; 
 	}
+	
+	@Override
+	protected King clone()
+	{
+		King copy = new King(this.color);
+		return copy;
+	}
 }

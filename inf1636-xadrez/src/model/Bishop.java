@@ -43,4 +43,11 @@ class Bishop extends Piece{
 		
 		return path;
 	}
+	
+	@Override
+	protected Piece clone()
+	{
+		Bishop copy = new Bishop(this.color);
+		return copy;
+	}
 } 

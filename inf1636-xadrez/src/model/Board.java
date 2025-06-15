@@ -19,14 +19,6 @@ class Board
 		count_captured_whites = 0;
 		count_captured_blacks = 0;
 	}
-
-	protected void capturePiece(int row, int column)
-	{
-		if(tiles[row][column].getColor() == 'W')
-			captured_whites[count_captured_whites++] = tiles[row][column];
-		else 
-			captured_blacks[count_captured_blacks++] = tiles[row][column];
-	}
 	
 	protected Piece getPiece(int row, int column){ return tiles[row][column]; }
 	
@@ -72,8 +64,16 @@ class Board
 	{
 		if ( isValidMove(row, column, target_row, target_column) ) 
 		{
+			Piece piece = tiles[row][column];
+			Piece cmp_piece = tiles[target_row][target_column];
+			
+			// Confere se houve uma captura de peça
+			if (cmp_piece != null && piece.getColor() != cmp_piece.getColor())
+				capturePiece(target_row, target_column);
+				
 			tiles[target_row][target_column] = tiles[row][column];
 			tiles[row][column] = null;
+			
 			return true;
 		}
 		
@@ -88,7 +88,8 @@ class Board
 		// Confere se é possível chegar até a posição desejada
 	    for (int[] coords : list) 
 	    {
-	        if (coords[0] == target_row && coords[1] == target_column) { return true; }
+	        if (coords[0] == target_row && coords[1] == target_column) 
+	        	return true;
 	    }
 	    
 	    return false;
@@ -109,19 +110,23 @@ class Board
 			cmp_piece = getPiece(coords[0], coords[1]);
 			
 			// Se não houver uma peça no caminho
-			if(cmp_piece == null) { fixed_path.add(new int[] { coords[0], coords[1] }); }
+			if(cmp_piece == null) 
+				fixed_path.add(new int[] { coords[0], coords[1] });
 			
 			// Se houver uma peça no caminho
 			else 
 			{ 
 				// Se casa não for o destino final
-				if ( coords[0] == target_row && coords[1] == target_column) { break; }
+				if ( coords[0] == target_row && coords[1] == target_column) 
+					break;
 				
 				// Se a casa for o destino final
 				else
 				{  
 					// Se for uma peça de cor diferente
-					if ( piece.getColor() != cmp_piece.getColor() ) fixed_path.add(new int[] { coords[0], coords[1] });
+					if ( piece.getColor() != cmp_piece.getColor() ) 
+						fixed_path.add(new int[] { coords[0], coords[1] });
+					
 					break;
 				} 
 			}
@@ -140,7 +145,8 @@ class Board
             for (int target_column = 0; target_column < 8; target_column++) {
             	
                 // Ignora a posição atual da peça
-                if (row == target_row && column == target_column) continue;
+                if (row == target_row && column == target_column) 
+                	continue;
 
                 // Se for uma posição possível de se chegar
                 if (piece.canMove(row, column, target_row, target_column)) 
@@ -153,11 +159,16 @@ class Board
                 	    // Confere se a posição já foi selecionada
                 	    for (int[] existing : possibleMoves) 
                 	    {
-                	        if (move[0] == existing[0] && move[1] == existing[1]) { alreadyExists = true; break; }
+                	        if (move[0] == existing[0] && move[1] == existing[1]) 
+                	        { 
+                	        	alreadyExists = true; 
+                	        	break; 
+                	        }
                 	    }
                 	    
                 	    // Se a posição ainda não foi selecionada, adicionar ela à lista
-                	    if (!alreadyExists) { possibleMoves.add(move); }
+                	    if (!alreadyExists)
+                	    	possibleMoves.add(move);
                 	}
                     
                 }
@@ -166,4 +177,13 @@ class Board
 
         return possibleMoves;
     }
+    
+	protected void capturePiece(int row, int column)
+	{
+		if(tiles[row][column].getColor() == 'W')
+			captured_whites[count_captured_whites++] = tiles[row][column].clone();
+		else 
+			captured_blacks[count_captured_blacks++] = tiles[row][column].clone();
+	}
+	
 } 
