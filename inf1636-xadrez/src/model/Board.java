@@ -58,13 +58,16 @@ class Board
 			tiles[row][column] = null;
 			return true;
 		}
+		
 		return false;
 	}
 	
 	protected boolean isValidMove(int row, int column, int target_row, int target_column)
 	{
+		// Obtém o caminho até a posição desejada
 		List<int[]> list = getFixedPath(row, column, target_row, target_column);
 		
+		// Confere se é possível chegar até a posição desejada
 	    for (int[] coords : list) 
 	    {
 	        if (coords[0] == target_row && coords[1] == target_column) { return true; }
@@ -78,6 +81,7 @@ class Board
 		Piece piece = tiles[row][column]; 
 		Piece cmp_piece;
 		
+		// Obtém o caminho a ser percorrido desconsiderando colisão
 		List<int[]> path = piece.getPath(row, column, target_row, target_column);
 		List<int[]> fixed_path = new ArrayList<>();
 		
@@ -107,4 +111,41 @@ class Board
 		
 		return fixed_path;
 	}
+
+    protected List<int[]> getPossibleMoves(int row, int column) 
+    {
+        List<int[]> possibleMoves = new ArrayList<>();
+        Piece piece = tiles[row][column];
+        boolean alreadyExists;
+
+        for (int target_row = 0; target_row < 8; target_row++) {
+            for (int target_column = 0; target_column < 8; target_column++) {
+            	
+                // Ignora a posição atual da peça
+                if (row == target_row && column == target_column) continue;
+
+                // Se for uma posição possível de se chegar
+                if (piece.canMove(row, column, target_row, target_column)) 
+                {
+                	// Percorre o caminho até a posição
+                	for (int[] move : getFixedPath(row, column, target_row, target_column)) 
+                	{
+                	    alreadyExists = false;
+                	    
+                	    // Confere se a posição já foi selecionada
+                	    for (int[] existing : possibleMoves) 
+                	    {
+                	        if (move[0] == existing[0] && move[1] == existing[1]) { alreadyExists = true; break; }
+                	    }
+                	    
+                	    // Se a posição ainda não foi selecionada, adicionar ela à lista
+                	    if (!alreadyExists) { possibleMoves.add(move); }
+                	}
+                    
+                }
+            }
+        }
+
+        return possibleMoves;
+    }
 } 
