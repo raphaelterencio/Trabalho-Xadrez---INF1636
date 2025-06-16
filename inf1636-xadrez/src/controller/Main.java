@@ -23,6 +23,9 @@ public class Main
 	static int origin_row = -1;
 	static int origin_column = -1;
 	
+	static int backup_row = -1;
+	static int backup_column = -1;
+	
 	static List<int[]> highlighted_path = new ArrayList<>();
 	
 	public static void main(String[] args)
@@ -30,12 +33,13 @@ public class Main
 		model_api = new ModelAPI();
 		view_api = new ViewAPI();
 		
-		model_api.newGame();
 		view_api.openWindow();
 		view_api.registerObserver();
-		
+	
 		userLeftClickHandler();
 		userRightClickHandler();
+		pawnPromotionHandler();
+		menuHandler();
 	}
 	
 	// Métodos get()
@@ -53,9 +57,9 @@ public class Main
 	                int x = e.getX();
 	                int y = e.getY();
 	                
-	                selected_row = y / 64;
-	                selected_column = x / 64;
-	                
+	                backup_row = selected_row = y / 64;
+	                backup_column = selected_column = x / 64;
+	                	                
 	                if ( !isPieceSelected )
 	                {
 	                	if (model_api.isThereAPiece(selected_row, selected_column))
@@ -107,6 +111,20 @@ public class Main
 	    });
 	}
 	
+	private static void pawnPromotionHandler()
+	{
+		view_api.getMenuItem("Queen").addActionListener(e -> formalizePawnPromotion("Queen"));
+		view_api.getMenuItem("Rook").addActionListener(e -> formalizePawnPromotion("Rook"));
+		view_api.getMenuItem("Bishop").addActionListener(e -> formalizePawnPromotion("Bishop"));
+		view_api.getMenuItem("Horse").addActionListener(e -> formalizePawnPromotion("Horse"));
+	}
+	
+	private static void menuHandler()
+	{
+		view_api.getButton("NewGame").addActionListener(e -> newGame());
+		view_api.getButton("LoadGame").addActionListener(e -> loadGame());
+	}
+	
 	// Auxiliares
 	
     private static boolean isHighlighted(int row, int column)
@@ -127,4 +145,27 @@ public class Main
     	model_api.isStaleMate(round_color);
     	model_api.checkPawnPromotion();    	
     } 
+    
+    private static void formalizePawnPromotion(String piece)
+    {
+    	model_api.promotePawn(piece, backup_row, backup_column);
+    }
+    
+    private static void newGame()
+    {
+		model_api.newGame();
+		view_api.showBoard();
+    }
+    
+    private static void loadGame()
+    {
+    	String game_state = view_api.loadGameCallback();
+    	
+    	if (game_state != null)
+    	{
+    		model_api.newGame();
+    		round_color = model_api.setGameState(game_state);
+    		view_api.showBoard();
+    	}
+    }
 }

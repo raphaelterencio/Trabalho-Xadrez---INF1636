@@ -1,5 +1,7 @@
 package view;
 
+import java.util.ArrayList;
+
 // JSwing
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
@@ -11,8 +13,10 @@ import javax.swing.JPopupMenu;
 // Java 2d
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.Color;
-import java.util.ArrayList;
+import java.awt.Dimension;
 
 // Imagens
 import java.util.HashMap;
@@ -30,17 +34,43 @@ import controller.Event;
 
 // Arquivo
 import javax.swing.filechooser.FileNameExtensionFilter;
+
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 
-class WindowComponent extends JComponent implements Observer
+class BoardComponent extends JComponent implements Observer
 {
 	private HashMap<String, BufferedImage> image_map = new HashMap<>();
 	private ModelAPI model_api = new ModelAPI();
+	private ViewAPI view_api = new ViewAPI();
 	
 	private List<int[]> highlighted_path = new ArrayList<>();
 	
-	protected WindowComponent() {}
+	JMenuItem queen = new JMenuItem("Rainha");
+	JMenuItem rook = new JMenuItem("Torre");
+	JMenuItem bishop = new JMenuItem("Bispo");
+	JMenuItem horse = new JMenuItem("Cavalo");
+	
+	protected BoardComponent() {}
+	
+	protected JMenuItem getMenuItem(String item)
+	{ 
+		switch (item)
+		{
+			case "Queen":
+				return queen;
+			case "Rook":
+				return rook;
+			case "Bishop":
+				return bishop;
+			case "Horse":
+				return horse;
+		}
+		
+		return null;
+	}
 	
 	protected void setUp()
 	{
@@ -52,30 +82,29 @@ class WindowComponent extends JComponent implements Observer
 	
 	@Override
 	public void update(Event event)
-	{
-		System.out.println("Notificação recebida");
-		
+	{		
 		repaint();
 		
 		String event_name = Event.getEvent(event);
 		
 		switch (event_name)
 		{
-			case "PIECE_MOVEMENT":
-				break;
-			case "CHECK":
-				System.out.println("Cheque");
-				checkCallback();
-				break;
-			case "CHECKMATE":
-				checkMateCallback();
-				break;
-			case "STALEMATE":
-				staleMateCallback();
-				break;
-			case "PAWN_PROMOTION":
-				pawnPromotionCallback();
-				break;	
+		case "PIECE_MOVEMENT":
+			break;
+		case "CHECK":
+			checkCallback();
+			break;
+		case "CHECKMATE":
+			checkMateCallback();
+			break;
+		case "STALEMATE":
+			staleMateCallback();
+			break;
+		case "PAWN_PROMOTION":
+			pawnPromotionCallback();
+			break;	
+		case "PAWN_PROMOTED":
+			break;
 		}
 		
 	}
@@ -180,6 +209,8 @@ class WindowComponent extends JComponent implements Observer
     		    "Fim de jogo",
     		    JOptionPane.INFORMATION_MESSAGE
     		);
+    	
+    	view_api.showMenu();
     }
     
     private void checkCallback()
@@ -200,6 +231,8 @@ class WindowComponent extends JComponent implements Observer
     		    "Fim de jogo",
     		    JOptionPane.INFORMATION_MESSAGE
     		);
+    	
+    	view_api.showMenu();
     }
     
     private void pawnPromotionCallback()
@@ -211,23 +244,55 @@ class WindowComponent extends JComponent implements Observer
         pawnPromotionMenu.add(label);
         pawnPromotionMenu.addSeparator();
     	
-    	JMenuItem queen = new JMenuItem("Rainha");
-    	JMenuItem rook = new JMenuItem("Torre");
-    	JMenuItem bishop = new JMenuItem("Bispo");
-    	JMenuItem horse = new JMenuItem("Cavalo");
-    	
     	pawnPromotionMenu.add(queen);
     	pawnPromotionMenu.add(rook);
     	pawnPromotionMenu.add(bishop);
     	pawnPromotionMenu.add(horse);
     	
-        int width = this.getWidth();
-        int height = this.getHeight();
+        // Centro da tela
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int centerX = screenSize.width / 2;
+        int centerY = screenSize.height / 2;
 
-        int x = width / 2;
-        int y = height / 2;
+        // Coordenadas absolutas -> Coordenadas relativas
+        Point componentLocationOnScreen = this.getLocationOnScreen();
+        int x = centerX - componentLocationOnScreen.x;
+        int y = centerY - componentLocationOnScreen.y;
     	
         pawnPromotionMenu.show(this, x, y);
+    }
+    
+    protected String loadGameCallback() 
+    {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Carregar partida");
+
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Arquivo de texto (*.txt)", "txt");
+        fileChooser.setFileFilter(filter);
+
+        int userSelection = fileChooser.showOpenDialog(this);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION)
+        {
+            File selectedFile = fileChooser.getSelectedFile();
+
+            try (BufferedReader reader = new BufferedReader(new FileReader(selectedFile))) 
+            {
+                StringBuilder content = new StringBuilder();
+                String line;
+
+                while ((line = reader.readLine()) != null) 
+                {
+                    content.append(line).append("\n");
+                }
+
+                return content.toString();
+                
+            } 
+            catch (IOException ex) {}
+        }
+
+        return null;
     }
     
     protected void saveGameCallback()
@@ -235,7 +300,6 @@ class WindowComponent extends JComponent implements Observer
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Salvar partida");
         
-        // Filtra para arquivos .txt
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Arquivo de texto (*.txt)", "txt");
         fileChooser.setFileFilter(filter);
 
@@ -250,7 +314,6 @@ class WindowComponent extends JComponent implements Observer
             }
             
             try (FileWriter writer = new FileWriter(fileToSave)) {
-                // Aqui você escreve o estado da partida. Exemplo fictício:
                 String gameState = model_api.getGameState();
                 
                 writer.write(gameState);

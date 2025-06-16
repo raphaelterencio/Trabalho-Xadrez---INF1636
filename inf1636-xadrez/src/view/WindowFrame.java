@@ -1,22 +1,35 @@
 package view;
 
+import java.awt.Component;
 import javax.swing.JFrame;
 
 class WindowFrame extends JFrame
 {
-	private WindowComponent window_component = new WindowComponent();
+	private MenuComponent menu_component = new MenuComponent();
+	private BoardComponent board_component = new BoardComponent();
 	
 	protected WindowFrame()
 	{
 		super("Xadrez");
 		
-		window_component.setUp();
-		add(window_component);
+		menu_component.setUp();
+		board_component.setUp();
+		
+		showComponent(menu_component);
 		
 		setUp();
 	}
 	
-	protected void setUp()
+	protected void showComponent(Component target_component)
+	{
+	    getContentPane().removeAll();
+	    getContentPane().add(target_component);
+
+	    revalidate();
+	    repaint();
+	}
+
+	private void setUp()
 	{
 		pack();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -27,5 +40,7 @@ class WindowFrame extends JFrame
 	 
 	// Métodos get()
 	
-	protected WindowComponent getWindowComponent() { return window_component; } 
+	protected MenuComponent getMenuComponent() { return menu_component; } 
+	
+	protected BoardComponent getBoardComponent() { return board_component; } 
 }

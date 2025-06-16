@@ -23,7 +23,6 @@ public class ModelAPI
 
     private void notifyObservers(Event event) 
     {
-    	System.out.println("Enviando notificação");
         for (Observer obs : observers) 
         {
             obs.update(event);
@@ -41,6 +40,8 @@ public class ModelAPI
 	public char getPieceColor(int row, int column) { return board.getPieceColor(row, column); }
 	
 	public char getPieceSymbol(int row, int column) { return board.getPieceSymbol(row, column); }
+	
+	public char setGameState(String game_state) { return board.setGameState(game_state); }
 	
 	public String getGameState() { return board.getGameState(); }
 	
@@ -103,6 +104,12 @@ public class ModelAPI
 			notifyObservers(Event.getEvent("PAWN_PROMOTION"));
 		
 		return flag;
+	}
+	
+	public void promotePawn(String piece, int row, int column) 
+	{ 
+		board.promotePawn(piece, row, column); 
+		notifyObservers(Event.getEvent("PAWN_PROMOTED"));
 	}
 	
 	// Movimentos especiais

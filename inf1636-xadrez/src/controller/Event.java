@@ -5,7 +5,8 @@ public enum Event {
 	CHECK,
 	CHECKMATE,
 	STALEMATE,
-	PAWN_PROMOTION;
+	PAWN_PROMOTION,
+	PAWN_PROMOTED;
 	
 	public static Event getEvent(String key) { return Event.valueOf(key); }
 	
