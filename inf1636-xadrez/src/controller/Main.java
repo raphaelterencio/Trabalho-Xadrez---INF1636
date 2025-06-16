@@ -33,7 +33,7 @@ public class Main
                 
                 int row = y / 64;
                 int column = x / 64;
-
+                
                 if (model_api.isThereAPiece(row, column))
                 	view_api.highlightPath(row, column);
                 else
