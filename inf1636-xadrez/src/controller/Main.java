@@ -32,9 +32,12 @@ public class Main
                 int y = e.getY();
                 
                 int row = y / 64;
-                int col = x / 64;
+                int column = x / 64;
 
-                System.out.println("Clique em: (" + row + ", " + col + ")");
+                if (model_api.isThereAPiece(row, column))
+                	view_api.highlightPath(row, column);
+                else
+                	view_api.clearHighlightedPath();
             }
         });
     }

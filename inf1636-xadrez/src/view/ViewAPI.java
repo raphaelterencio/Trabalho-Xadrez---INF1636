@@ -15,7 +15,9 @@ public class ViewAPI
 		window_component = window_frame.getWindowComponent();
 	}
 	
-    public void addMouseListener(MouseListener listener) {
-        window_component.addMouseListener(listener);
-    }
+    public void addMouseListener(MouseListener listener) { window_component.addMouseListener(listener); }
+    
+    public void highlightPath(int row, int column) { window_component.highlightPath(row, column); }
+    
+    public void clearHighlightedPath() { window_component.clearHighlightedPath(); }
 }

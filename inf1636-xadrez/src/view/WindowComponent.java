@@ -6,9 +6,11 @@ import javax.swing.JComponent;
 // Java 2d
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-
+import java.awt.Color;
+import java.util.ArrayList;
 // Imagens
 import java.util.HashMap;
+import java.util.List;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.IOException;
@@ -21,6 +23,8 @@ class WindowComponent extends JComponent
 	private HashMap<String, BufferedImage> image_map = new HashMap<>();
 	private ModelAPI model_api = new ModelAPI();
 	
+	private List<int[]> highlighted_path = new ArrayList<>();
+	
 	protected WindowComponent() {}
 	
 	protected void setUp()
@@ -28,6 +32,8 @@ class WindowComponent extends JComponent
 		setPreferredSize(new java.awt.Dimension(64 * 8, 64 * 8));
 		loadImages();
 	}
+	
+	// Paint
 	
     @Override
     protected void paintComponent(Graphics g)
@@ -41,15 +47,27 @@ class WindowComponent extends JComponent
         {
         	for(int column=0; column<8; column++)
         	{
+        		// Pinta as casas
+        		
         		if ( (row+column) % 2 == 0 )
         			g2d.setColor(java.awt.Color.WHITE);
         		else
         			g2d.setColor(java.awt.Color.BLACK);
         		
-        		x = column * 64;
+        		x = column * 64;	
         		y = row * 64;
         		
         		g2d.fillRect(x, y, 64, 64);
+        		
+                // Pinta os possíveis caminhos
+        		
+                if ( isHighlighted(row,column) )
+                {
+                    g2d.setColor(new Color(0, 100, 255, 100));
+                    g2d.fillRect(x, y, 64, 64);
+                }
+        		
+        		// Pinta as imagens
         		
         		char color = model_api.getPieceColor(row, column);
         		char symbol = model_api.getPieceSymbol(row, column);
@@ -67,6 +85,8 @@ class WindowComponent extends JComponent
         	}
         }
     }
+    
+    // Imagens
     
     private void loadImages() 
     {
@@ -90,6 +110,22 @@ class WindowComponent extends JComponent
             }
         }
     }
+    
+    // Callbacks
+    
+    public void highlightPath(int row, int column)
+    {
+    	highlighted_path = model_api.getPossibleMoves(row, column);
+    	repaint();
+    }
+    
+    public void clearHighlightedPath()
+    {
+    	highlighted_path.clear();
+    	repaint();
+    }
+    
+    // Auxiliares
     
     private String colorString(char color)
     {
@@ -121,5 +157,16 @@ class WindowComponent extends JComponent
     			return "Rook";
     	}
     	return null;
+    }
+
+    private boolean isHighlighted(int row, int column)
+    {
+        for (int[] pos : highlighted_path) {
+            if (pos[0] == row && pos[1] == column) {
+                return true;
+            }
+        }
+        
+        return false;
     }
 }
