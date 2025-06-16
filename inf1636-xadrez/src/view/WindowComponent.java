@@ -53,6 +53,8 @@ class WindowComponent extends JComponent implements Observer
 	@Override
 	public void update(Event event)
 	{
+		System.out.println("Notificação recebida");
+		
 		repaint();
 		
 		String event_name = Event.getEvent(event);
@@ -62,6 +64,7 @@ class WindowComponent extends JComponent implements Observer
 			case "PIECE_MOVEMENT":
 				break;
 			case "CHECK":
+				System.out.println("Cheque");
 				checkCallback();
 				break;
 			case "CHECKMATE":

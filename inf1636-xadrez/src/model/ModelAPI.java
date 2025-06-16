@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class ModelAPI
 {
 	static Board board;
-	private List<Observer> observers = new ArrayList<>();
+	private static List<Observer> observers = new ArrayList<>();
 	
 	public ModelAPI() { }
 	
@@ -23,6 +23,7 @@ public class ModelAPI
 
     private void notifyObservers(Event event) 
     {
+    	System.out.println("Enviando notificação");
         for (Observer obs : observers) 
         {
             obs.update(event);
