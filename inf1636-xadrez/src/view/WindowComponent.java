@@ -2,6 +2,7 @@ package view;
 
 // JSwing
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -12,6 +13,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Color;
 import java.util.ArrayList;
+
 // Imagens
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +23,11 @@ import java.io.IOException;
 
 // ModelAPI
 import model.ModelAPI;
+
+// Arquivo
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.File;
+import java.io.FileWriter;
 
 class WindowComponent extends JComponent
 {
@@ -185,6 +192,41 @@ class WindowComponent extends JComponent
         int y = height / 2;
     	
         pawnPromotionMenu.show(this, x, y);
+    }
+    
+    protected void saveGameCallback()
+    {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Salvar partida");
+        
+        // Filtra para arquivos .txt
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Arquivo de texto (*.txt)", "txt");
+        fileChooser.setFileFilter(filter);
+
+        int userSelection = fileChooser.showSaveDialog(this);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            
+            // Garante que o arquivo tenha a extensão .txt
+            if (!fileToSave.getName().toLowerCase().endsWith(".txt")) {
+                fileToSave = new File(fileToSave.getParentFile(), fileToSave.getName() + ".txt");
+            }
+            
+            try (FileWriter writer = new FileWriter(fileToSave)) {
+                // Aqui você escreve o estado da partida. Exemplo fictício:
+                String gameState = model_api.getGameState();
+                
+                writer.write(gameState);
+                
+                System.out.println("Jogo salvo em: " + fileToSave.getAbsolutePath());
+            } 
+            catch (IOException ex) 
+            {
+                ex.printStackTrace();
+                // Informar o usuário de um erro
+            }
+        }
     }
     
     // Auxiliares

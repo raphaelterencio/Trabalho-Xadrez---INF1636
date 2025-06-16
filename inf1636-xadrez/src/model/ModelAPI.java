@@ -22,6 +22,8 @@ public class ModelAPI
 	
 	public char getPieceSymbol(int row, int column) { return board.getPieceSymbol(row, column); }
 	
+	public String getGameState() { return board.getGameState(); }
+	
 	// Peças
 	
 	public boolean isThereAPiece(int row, int column) { return board.isThereAPiece(row, column); }

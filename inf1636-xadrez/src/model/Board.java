@@ -3,21 +3,15 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import controller.Main;
+
 class Board 
 {
 	private Piece[][] tiles;
-	private Piece[] captured_whites;
-	private Piece[] captured_blacks;
-	private int count_captured_whites;
-	private int count_captured_blacks;
 	
 	protected Board()
 	{
 		tiles = new Piece[8][8];
-		captured_whites = new Piece[16];
-		captured_blacks = new Piece[16];
-		count_captured_whites = 0;
-		count_captured_blacks = 0;
 		setUp();
 	}
 	
@@ -106,6 +100,39 @@ class Board
 			return '-';
 		return piece.getSymbol(); 
 	}
+	
+	protected String getGameState()
+	{
+	    StringBuilder sb = new StringBuilder();
+
+	    char round_color = Main.getRoundColor();
+	    sb.append(round_color);
+	    sb.append("\n");
+	    
+	    for (int row = 0; row < 8; row++) 
+	    {
+	        for (int col = 0; col < 8; col++) 
+	        {
+	            Piece piece = tiles[row][col];
+
+	            if (piece == null)
+	                sb.append(".");
+	            else 
+	            {
+	                char color = piece.getColor();
+	                char symbol = piece.getSymbol();
+	                sb.append(color).append(symbol);
+	            }
+
+	            if (col < 7)
+	                sb.append(" ");
+	        }
+	        
+	        sb.append("\n");
+	    }
+
+	    return sb.toString();
+	}
 
 	// Peças
 	
@@ -123,10 +150,6 @@ class Board
 		
 		Piece piece = tiles[row][column];
 		Piece cmp_piece = tiles[target_row][target_column];
-		
-		// Confere se houve uma captura de peça
-		if (cmp_piece != null && piece.getColor() != cmp_piece.getColor())
-			capturePiece(target_row, target_column);
 			
 		tiles[target_row][target_column] = tiles[row][column];
 		tiles[row][column] = null;			
@@ -144,16 +167,6 @@ class Board
         
         return false;
     }
-	
-	// Captura de peças
-	
-	private void capturePiece(int row, int column)
-	{
-		if(tiles[row][column].getColor() == 'W')
-			captured_whites[count_captured_whites++] = tiles[row][column].clone();
-		else 
-			captured_blacks[count_captured_blacks++] = tiles[row][column].clone();
-	}
 	
 	// Movimentação
 	

@@ -31,4 +31,6 @@ public class ViewAPI
     
     public void pawnPromotionCallback() { window_component.pawnPromotionCallback(); }
     
+    public void saveGameCallback() { window_component.saveGameCallback(); } 
+    
 }
