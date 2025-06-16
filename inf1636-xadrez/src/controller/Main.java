@@ -6,8 +6,6 @@ import view.ViewAPI;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JMenuItem;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +22,9 @@ public class Main
 	
 	static int origin_row = -1;
 	static int origin_column = -1;
+	
+	static int backup_row = -1;
+	static int backup_column = -1;
 	
 	static List<int[]> highlighted_path = new ArrayList<>();
 	
@@ -56,9 +57,9 @@ public class Main
 	                int x = e.getX();
 	                int y = e.getY();
 	                
-	                selected_row = y / 64;
-	                selected_column = x / 64;
-	                
+	                backup_row = selected_row = y / 64;
+	                backup_column = selected_column = x / 64;
+	                	                
 	                if ( !isPieceSelected )
 	                {
 	                	if (model_api.isThereAPiece(selected_row, selected_column))
@@ -141,6 +142,6 @@ public class Main
     
     private static void formalizePawnPromotion(String piece)
     {
-    	model_api.promotePawn(piece, selected_row, selected_column);
+    	model_api.promotePawn(piece, backup_row, backup_column);
     }
 }

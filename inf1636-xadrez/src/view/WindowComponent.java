@@ -78,30 +78,29 @@ class WindowComponent extends JComponent implements Observer
 	
 	@Override
 	public void update(Event event)
-	{
-		System.out.println("Notificação recebida");
-		
+	{		
 		repaint();
 		
 		String event_name = Event.getEvent(event);
 		
 		switch (event_name)
 		{
-			case "PIECE_MOVEMENT":
-				break;
-			case "CHECK":
-				System.out.println("Cheque");
-				checkCallback();
-				break;
-			case "CHECKMATE":
-				checkMateCallback();
-				break;
-			case "STALEMATE":
-				staleMateCallback();
-				break;
-			case "PAWN_PROMOTION":
-				pawnPromotionCallback();
-				break;	
+		case "PIECE_MOVEMENT":
+			break;
+		case "CHECK":
+			checkCallback();
+			break;
+		case "CHECKMATE":
+			checkMateCallback();
+			break;
+		case "STALEMATE":
+			staleMateCallback();
+			break;
+		case "PAWN_PROMOTION":
+			pawnPromotionCallback();
+			break;	
+		case "PAWN_PROMOTED":
+			break;
 		}
 		
 	}

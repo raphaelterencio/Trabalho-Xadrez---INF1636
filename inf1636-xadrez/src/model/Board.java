@@ -437,7 +437,7 @@ class Board
 	}
 	
 	protected void promotePawn(String piece, int row, int column)
-	{
+	{		
 		char color = tiles[row][column].getColor();
 		
 		switch (piece)

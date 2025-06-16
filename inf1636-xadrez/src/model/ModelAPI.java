@@ -23,7 +23,6 @@ public class ModelAPI
 
     private void notifyObservers(Event event) 
     {
-    	System.out.println("Enviando notificação");
         for (Observer obs : observers) 
         {
             obs.update(event);
@@ -105,7 +104,11 @@ public class ModelAPI
 		return flag;
 	}
 	
-	public void promotePawn(String piece, int row, int column) { board.promotePawn(piece, row, column); }
+	public void promotePawn(String piece, int row, int column) 
+	{ 
+		board.promotePawn(piece, row, column); 
+		notifyObservers(Event.getEvent("PAWN_PROMOTED"));
+	}
 	
 	// Movimentos especiais
 	
