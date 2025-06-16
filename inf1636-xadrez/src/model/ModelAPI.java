@@ -4,35 +4,48 @@ import java.util.List;
 
 public class ModelAPI
 {
-	static Game game;
+	static Board board;
 	
 	public ModelAPI() {}
 	
-	public void newGame() { game = new Game(); }
+	public void newGame() { board = new Board(); }
 	
-	public char getRoundColor() { return game.getRoundColor(); }
+	// Testes
 	
-	public boolean movePiece(int row, int column, int target_row, int target_column){ return game.movePiece(row, column, target_row, target_column); }
+	public void testMode() { board.TestSetUp(); }
 	
-	public List<int[]> getPossibleMoves(int row, int column){ return game.getPossibleMoves(row, column); }
+	public void testSetPiece(char type, char color, int row, int column) { board.TestSetPiece(type, color, row, column); }
+		
+	// Métodos get()
 	
-	public boolean isCheck() { return game.isCheck(game.getRoundColor()); } 
+	public char getPieceColor(int row, int column) { return board.getPieceColor(row, column); }
 	
-	public boolean isCheckMate() { return game.isCheckMate(game.getRoundColor()); } 
+	public char getPieceSymbol(int row, int column) { return board.getPieceSymbol(row, column); }
 	
-	public boolean checkPawnPromotion() { return game.checkPawnPromotion(); }
+	// Peças
 	
-	public boolean isStalemate() { return game.isStalemate(getRoundColor()); } 
+	public boolean isThereAPiece(int row, int column) { return board.isThereAPiece(row, column); }
 	
-	public void testGame(char round_color) { game.testMode(round_color); }
+	public boolean movePiece(int row, int column, int target_row, int target_column) { return board.movePiece(row, column, target_row, target_column); }
 	
-	public void setPiece(char type, char color, int row, int column) { game.setPiece(type, color, row, column); } 
+	// Movimentação
 	
-	// 
+	public List<int[]> getPossibleMoves(int row, int column) { return board.getPossibleMoves(row, column); }
 	
-	public char getPieceColor(int row, int column) { return game.getPieceColor(row, column); }
+	// Regras
 	
-	public boolean isThereAPiece(int row, int column) { return game.isThereAPiece(row, column); }
+	public boolean isCheck(char color) { return board.isCheck(color); }
 	
-	public char getPieceSymbol(int row, int column) { return game.getPieceSymbol(row, column); }
+	public boolean isCheckMate(char color) { return board.isCheckMate(color); }
+	
+	public boolean isStalemate(char color) { return board.isStalemate(color); }
+	
+	public boolean checkPawnPromotion() { return board.checkPawnPromotion(); }
+	
+	// Movimentos especiais
+	
+	public boolean canCastle(char color, boolean isKingside) { return board.canCastle(color, isKingside); }
+	
+	public void performCastle(char color, boolean isKingside) { board.performCastle(color, isKingside); }
+	
 }

@@ -13,8 +13,8 @@ public class BishopTest {
 	public void setUpOnce()
 	{
 		model_api.newGame();
-		model_api.testGame('W');
-		model_api.setPiece('B', 'W', 4, 4); // Centro do tabuleiro
+		model_api.testMode();
+		model_api.testSetPiece('B', 'W', 4, 4); // Centro do tabuleiro
 	}
 	
 	@Test
