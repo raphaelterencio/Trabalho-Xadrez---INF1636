@@ -5,27 +5,26 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.Before;
 
-public class BishopTest {
-
-	ModelAPI model_api = new ModelAPI();
+public class BishopTest 
+{
 	
 	@Before
 	public void setUpOnce()
 	{
-		model_api.newGame();
-		model_api.testMode();
-		model_api.testSetPiece('B', 'W', 4, 4); // Centro do tabuleiro
+		ModelAPI.newGame();
+		ModelAPI.testMode();
+		ModelAPI.testSetPiece('B', 'W', 4, 4); // Centro do tabuleiro
 	}
 	
 	@Test
 	public void testBishopValidMove() 
 	{
-		assertTrue(model_api.movePiece(4, 4, 5, 5));
+		assertTrue(ModelAPI.movePiece(4, 4, 5, 5));
 	}
 	
 	@Test
 	public void testBishopInvalidMove()
 	{
-		assertFalse(model_api.movePiece(4, 4, 4, 5));
+		assertFalse(ModelAPI.movePiece(4, 4, 4, 5));
 	}
 }

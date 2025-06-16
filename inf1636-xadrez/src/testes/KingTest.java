@@ -5,27 +5,25 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.Before;
 
-public class KingTest {
-	
-	ModelAPI model_api = new ModelAPI();
-	
+public class KingTest 
+{	
 	@Before
 	public void setUpOnce()
 	{
-		model_api.newGame();
-		model_api.testMode();
-		model_api.testSetPiece('K', 'W', 4, 4); // Centro do tabuleiro
+		ModelAPI.newGame();
+		ModelAPI.testMode();
+		ModelAPI.testSetPiece('K', 'W', 4, 4); // Centro do tabuleiro
 	}
 	
 	@Test
 	public void testKingValidMove() 
 	{
-		assertTrue(model_api.movePiece(4, 4, 5, 5));
+		assertTrue(ModelAPI.movePiece(4, 4, 5, 5));
 	}
 	
 	@Test
 	public void testKingInvalidMove()
 	{
-		assertFalse(model_api.movePiece(4, 4, 2, 5));
+		assertFalse(ModelAPI.movePiece(4, 4, 2, 5));
 	}
 }

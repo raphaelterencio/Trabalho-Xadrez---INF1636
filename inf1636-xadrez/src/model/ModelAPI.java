@@ -13,15 +13,15 @@ public class ModelAPI
 	
 	public ModelAPI() { }
 	
-	public void newGame() { board = new Board(); }
+	public static void newGame() { board = new Board(); }
 	
 	// Observer
 	
-    public void addObserver(Observer obs) { observers.add(obs); }
+    public static void addObserver(Observer obs) { observers.add(obs); }
 
-    public void removeObserver(Observer obs) { observers.remove(obs); }
+    public static void removeObserver(Observer obs) { observers.remove(obs); }
 
-    private void notifyObservers(Event event) 
+    private static void notifyObservers(Event event) 
     {
         for (Observer obs : observers) 
         {
@@ -31,25 +31,25 @@ public class ModelAPI
 	
 	// Testes
 	
-	public void testMode() { board.TestSetUp(); }
+	public static void testMode() { board.TestSetUp(); }
 	
-	public void testSetPiece(char type, char color, int row, int column) { board.TestSetPiece(type, color, row, column); }
+	public static void testSetPiece(char type, char color, int row, int column) { board.TestSetPiece(type, color, row, column); }
 		
 	// Métodos get()
 	
-	public char getPieceColor(int row, int column) { return board.getPieceColor(row, column); }
+	public static char getPieceColor(int row, int column) { return board.getPieceColor(row, column); }
 	
-	public char getPieceSymbol(int row, int column) { return board.getPieceSymbol(row, column); }
+	public static char getPieceSymbol(int row, int column) { return board.getPieceSymbol(row, column); }
 	
-	public char setGameState(String game_state) { return board.setGameState(game_state); }
+	public static char setGameState(String game_state) { return board.setGameState(game_state); }
 	
-	public String getGameState() { return board.getGameState(); }
+	public static String getGameState() { return board.getGameState(); }
 	
 	// Peças
 	
-	public boolean isThereAPiece(int row, int column) { return board.isThereAPiece(row, column); }
+	public static boolean isThereAPiece(int row, int column) { return board.isThereAPiece(row, column); }
 	
-	public boolean movePiece(int row, int column, int target_row, int target_column)
+	public static boolean movePiece(int row, int column, int target_row, int target_column)
 	{ 
 		boolean flag = board.movePiece(row, column, target_row, target_column); 
 		
@@ -61,11 +61,11 @@ public class ModelAPI
 	
 	// Movimentação
 	
-	public List<int[]> getPossibleMoves(int row, int column) { return board.getPossibleMoves(row, column); }
+	public static List<int[]> getPossibleMoves(int row, int column) { return board.getPossibleMoves(row, column); }
 	
 	// Regras
 	
-	public boolean isCheck(char color)
+	public static boolean isCheck(char color)
 	{ 
 		boolean flag = board.isCheck(color); 
 
@@ -76,7 +76,7 @@ public class ModelAPI
 		
 	}
 	
-	public boolean isCheckMate(char color) 
+	public static boolean isCheckMate(char color) 
 	{ 
 		boolean flag = board.isCheckMate(color); 
 		
@@ -86,7 +86,7 @@ public class ModelAPI
 		return flag;
 	}
 	
-	public boolean isStaleMate(char color) 
+	public static boolean isStaleMate(char color) 
 	{ 
 		boolean flag = board.isStaleMate(color); 
 		
@@ -96,7 +96,7 @@ public class ModelAPI
 		return flag;
 	}
 	
-	public boolean checkPawnPromotion() 
+	public static boolean checkPawnPromotion() 
 	{
 		boolean flag = board.checkPawnPromotion(); 
 		
@@ -106,7 +106,7 @@ public class ModelAPI
 		return flag;
 	}
 	
-	public void promotePawn(String piece, int row, int column) 
+	public static void promotePawn(String piece, int row, int column) 
 	{ 
 		board.promotePawn(piece, row, column); 
 		notifyObservers(Event.getEvent("PAWN_PROMOTED"));
@@ -114,8 +114,8 @@ public class ModelAPI
 	
 	// Movimentos especiais
 	
-	public boolean canCastle(char color, boolean isKingside) { return board.canCastle(color, isKingside); }
+	public static boolean canCastle(char color, boolean isKingside) { return board.canCastle(color, isKingside); }
 	
-	public void performCastle(char color, boolean isKingside) { board.performCastle(color, isKingside); }
+	public static void performCastle(char color, boolean isKingside) { board.performCastle(color, isKingside); }
 	
 }
