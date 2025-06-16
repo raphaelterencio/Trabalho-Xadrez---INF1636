@@ -1,5 +1,7 @@
 package view;
 
+import java.util.ArrayList;
+
 // JSwing
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
@@ -11,8 +13,10 @@ import javax.swing.JPopupMenu;
 // Java 2d
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.Color;
-import java.util.ArrayList;
+import java.awt.Dimension;
 
 // Imagens
 import java.util.HashMap;
@@ -40,7 +44,29 @@ class WindowComponent extends JComponent implements Observer
 	
 	private List<int[]> highlighted_path = new ArrayList<>();
 	
+	JMenuItem queen = new JMenuItem("Rainha");
+	JMenuItem rook = new JMenuItem("Torre");
+	JMenuItem bishop = new JMenuItem("Bispo");
+	JMenuItem horse = new JMenuItem("Cavalo");
+	
 	protected WindowComponent() {}
+	
+	protected JMenuItem getMenuItem(String item)
+	{ 
+		switch (item)
+		{
+			case "Queen":
+				return queen;
+			case "Rook":
+				return rook;
+			case "Bishop":
+				return bishop;
+			case "Horse":
+				return horse;
+		}
+		
+		return null;
+	}
 	
 	protected void setUp()
 	{
@@ -211,21 +237,20 @@ class WindowComponent extends JComponent implements Observer
         pawnPromotionMenu.add(label);
         pawnPromotionMenu.addSeparator();
     	
-    	JMenuItem queen = new JMenuItem("Rainha");
-    	JMenuItem rook = new JMenuItem("Torre");
-    	JMenuItem bishop = new JMenuItem("Bispo");
-    	JMenuItem horse = new JMenuItem("Cavalo");
-    	
     	pawnPromotionMenu.add(queen);
     	pawnPromotionMenu.add(rook);
     	pawnPromotionMenu.add(bishop);
     	pawnPromotionMenu.add(horse);
     	
-        int width = this.getWidth();
-        int height = this.getHeight();
+        // Centro da tela
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int centerX = screenSize.width / 2;
+        int centerY = screenSize.height / 2;
 
-        int x = width / 2;
-        int y = height / 2;
+        // Coordenadas absolutas -> Coordenadas relativas
+        Point componentLocationOnScreen = this.getLocationOnScreen();
+        int x = centerX - componentLocationOnScreen.x;
+        int y = centerY - componentLocationOnScreen.y;
     	
         pawnPromotionMenu.show(this, x, y);
     }

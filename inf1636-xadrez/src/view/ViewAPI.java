@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.event.MouseListener;
+import javax.swing.JMenuItem;
 import model.ModelAPI;
 
 public class ViewAPI 
@@ -19,6 +20,8 @@ public class ViewAPI
 	}
 	
     public void addMouseListener(MouseListener listener) { window_component.addMouseListener(listener); }
+    
+    public JMenuItem getMenuItem(String item) { return window_component.getMenuItem(item); }
     
     // Observer
     

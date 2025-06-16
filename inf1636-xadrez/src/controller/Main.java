@@ -6,6 +6,8 @@ import view.ViewAPI;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.JMenuItem;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,9 +35,10 @@ public class Main
 		model_api.newGame();
 		view_api.openWindow();
 		view_api.registerObserver();
-		
+	
 		userLeftClickHandler();
 		userRightClickHandler();
+		pawnPromotionHandler();
 	}
 	
 	// Métodos get()
@@ -107,6 +110,14 @@ public class Main
 	    });
 	}
 	
+	private static void pawnPromotionHandler()
+	{
+		view_api.getMenuItem("Queen").addActionListener(e -> formalizePawnPromotion("Queen"));
+		view_api.getMenuItem("Rook").addActionListener(e -> formalizePawnPromotion("Rook"));
+		view_api.getMenuItem("Bishop").addActionListener(e -> formalizePawnPromotion("Bishop"));
+		view_api.getMenuItem("Horse").addActionListener(e -> formalizePawnPromotion("Horse"));
+	}
+	
 	// Auxiliares
 	
     private static boolean isHighlighted(int row, int column)
@@ -127,4 +138,9 @@ public class Main
     	model_api.isStaleMate(round_color);
     	model_api.checkPawnPromotion();    	
     } 
+    
+    private static void formalizePawnPromotion(String piece)
+    {
+    	
+    }
 }
