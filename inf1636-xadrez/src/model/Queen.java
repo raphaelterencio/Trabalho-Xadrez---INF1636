@@ -45,19 +45,16 @@ class Queen extends Piece{
 	
 		int current_row = row + step_row; 
 		int current_column = column + step_column;
-		
-		System.out.println("Entrando no loop pra obter o caminho");
-		
+				
 		while(current_row != target_row || current_column != target_column)
 		{
 			path.add(new int[] {current_row, current_column});
 			current_row += step_row;
 			current_column += step_column;
 		}
+		
 		path.add(new int[] {current_row, current_column});
-		
-		System.out.println("Saindo do loop pra obter o caminho");
-		
+				
 		return path;
 	}
 	

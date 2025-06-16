@@ -35,7 +35,7 @@ class Pawn extends Piece{
 			path.add(new int[] {target_row, target_column});
 		
 		// Confere se é a primeira jogada
-		if( (this.getColor() == 'W' && row != 6) || (this.getColor() == 'B' && row != 1) )
+		if( (this.getColor() == 'W' && row == 6) || (this.getColor() == 'B' && row == 1) )
 			path.add(new int[] {target_row, target_column});
 		
 		// Obtém a direção que o peão deve andar

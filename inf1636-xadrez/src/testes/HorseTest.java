@@ -13,8 +13,8 @@ public class HorseTest {
 	public void setUpOnce()
 	{
 		model_api.newGame();
-		model_api.testGame('W');
-		model_api.setPiece('H', 'W', 4, 4); // Centro do tabuleiro
+		model_api.testMode();
+		model_api.testSetPiece('H', 'W', 4, 4); // Centro do tabuleiro
 	}
 	
 	@Test

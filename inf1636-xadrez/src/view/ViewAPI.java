@@ -1,36 +1,36 @@
 package view;
 
 import java.awt.event.MouseListener;
-import java.util.List;
 
-public class ViewAPI {
-    private final Interface tabuleiro;
+public class ViewAPI 
+{
+	static WindowFrame window_frame;
+	static WindowComponent window_component;
+	
+	public ViewAPI() {}
 
-    public ViewAPI() {
-        this.tabuleiro = new Interface();
-    }
-
-    public Interface getCanvas() {
-        return tabuleiro;
-    }
-
-    public void setMovimentos(List<int[]> movimentos) {
-    	tabuleiro.setMovimentos(movimentos);
-    }
-
-    public void clearMovimentos() {
-    	tabuleiro.clearMovimentos();
-    }
-
-    public void setSelecionado(int row, int col) {
-    	tabuleiro.setSelecionado(row, col);
-    }
-
-    public void adicionarClickListener(MouseListener listener) {
-    	tabuleiro.adicionarClickListener(listener);
-    }
-
-    public void repaint() {
-    	tabuleiro.repaint();
-    }
+	public void openWindow()
+	{ 
+		window_frame = new WindowFrame();
+		window_component = window_frame.getWindowComponent();
+	}
+	
+    public void addMouseListener(MouseListener listener) { window_component.addMouseListener(listener); }
+    
+    // Calbacks
+    
+    public void highlightPath(int row, int column) { window_component.highlightPath(row, column); }
+    
+    public void clearHighlightedPath() { window_component.clearHighlightedPath(); }
+    
+    public void checkMateCallback() { window_component.checkMateCallback(); }
+    
+    public void checkCallback() { window_component.checkCallback(); }
+    
+    public void staleMateCallback() { window_component.staleMateCallback(); }
+    
+    public void pawnPromotionCallback() { window_component.pawnPromotionCallback(); }
+    
+    public void saveGameCallback() { window_component.saveGameCallback(); } 
+    
 }

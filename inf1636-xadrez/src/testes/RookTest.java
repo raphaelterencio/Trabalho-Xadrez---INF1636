@@ -13,8 +13,8 @@ public class RookTest {
 	public void setUpOnce()
 	{
 		model_api.newGame();
-		model_api.testGame('W');
-		model_api.setPiece('R', 'W', 4, 4); // Centro do tabuleiro
+		model_api.testMode();
+		model_api.testSetPiece('R', 'W', 4, 4); // Centro do tabuleiro
 	}
 	
 	@Test
