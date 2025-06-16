@@ -199,8 +199,22 @@ class Board
 				{  
 					// Se for uma peça de cor diferente
 					if ( piece.getColor() != cmp_piece.getColor() ) 
-						fixed_path.add(new int[] { coords[0], coords[1] });
-					
+					{
+						// Se não for um peão
+						if( !(piece instanceof Pawn) )
+							fixed_path.add(new int[] { coords[0], coords[1] });
+						
+						// Se for um peão, conferir se ele não está tentando comer pra frente
+						else
+						{
+							int row_diff = Math.abs(coords[0] - row);
+							int column_diff = Math.abs(coords[1] - column);
+							
+							if (row_diff == 1 && column_diff == 1) 
+								fixed_path.add(new int[] { coords[0], coords[1] });
+						}
+							
+					}
 					break;
 				} 
 			}
