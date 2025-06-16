@@ -354,7 +354,7 @@ class Board
 		return true;
 	}
 
-	protected boolean isStalemate(char color)
+	protected boolean isStaleMate(char color)
 	{
 		// Se estiver em xeque, não pode ser congelamento
 		if (isCheck(color)) return false;

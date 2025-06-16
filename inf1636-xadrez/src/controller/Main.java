@@ -68,9 +68,10 @@ public class Main
                 	if ( isHighlighted(selected_row, selected_column) )
                 	{
                 		model_api.movePiece(origin_row, origin_column, selected_row, selected_column);
+                		round_color = (round_color == 'W') ? 'B' : 'W';
+                		afterMoveProcedures();
                 		selected_row = -1; selected_column = -1;
                 		origin_row = -1; origin_column = -1;
-                		round_color = (round_color == 'W') ? 'B' : 'W';
                 		view_api.clearHighlightedPath();
                 	}
                 	else
@@ -99,4 +100,19 @@ public class Main
         
         return false;
     }
+    
+    private static void afterMoveProcedures() 
+    {
+    	
+    	if( model_api.isCheckMate(round_color) )
+    		view_api.checkMateCallback();
+    	else if( model_api.isCheck(round_color) )
+    		view_api.checkCallback();
+    	else if( model_api.isStaleMate(round_color) )
+    		view_api.staleMateCallback();
+    	
+    	if( model_api.checkPawnPromotion() )
+    		view_api.pawnPromotionCallback();
+    	
+    } 
 }

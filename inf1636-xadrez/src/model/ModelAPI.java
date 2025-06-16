@@ -38,7 +38,7 @@ public class ModelAPI
 	
 	public boolean isCheckMate(char color) { return board.isCheckMate(color); }
 	
-	public boolean isStalemate(char color) { return board.isStalemate(color); }
+	public boolean isStaleMate(char color) { return board.isStaleMate(color); }
 	
 	public boolean checkPawnPromotion() { return board.checkPawnPromotion(); }
 	

@@ -2,6 +2,10 @@ package view;
 
 // JSwing
 import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 
 // Java 2d
 import java.awt.Graphics;
@@ -113,16 +117,74 @@ class WindowComponent extends JComponent
     
     // Callbacks
     
-    public void highlightPath(int row, int column)
+    protected void highlightPath(int row, int column)
     {
     	highlighted_path = model_api.getPossibleMoves(row, column);
     	repaint();
     }
     
-    public void clearHighlightedPath()
+    protected void clearHighlightedPath()
     {
     	highlighted_path.clear();
     	repaint();
+    }
+    
+    protected void checkMateCallback()
+    {
+    	JOptionPane.showMessageDialog(
+    		    this,
+    		    "Xeque-mate!",
+    		    "Fim de jogo",
+    		    JOptionPane.INFORMATION_MESSAGE
+    		);
+    }
+    
+    protected void checkCallback()
+    {
+    	JOptionPane.showMessageDialog(
+    		    this,
+    		    "Xeque!",
+    		    "Jogador em xeque",
+    		    JOptionPane.INFORMATION_MESSAGE
+    		);
+    }
+    
+    protected void staleMateCallback()
+    {
+    	JOptionPane.showMessageDialog(
+    		    this,
+    		    "Congelamento!",
+    		    "Fim de jogo",
+    		    JOptionPane.INFORMATION_MESSAGE
+    		);
+    }
+    
+    protected void pawnPromotionCallback()
+    {
+    	JPopupMenu pawnPromotionMenu = new JPopupMenu();
+    	
+        JLabel label = new JLabel("Promoção do peão: escolha uma peça");
+        label.setEnabled(false);
+        pawnPromotionMenu.add(label);
+        pawnPromotionMenu.addSeparator();
+    	
+    	JMenuItem queen = new JMenuItem("Rainha");
+    	JMenuItem rook = new JMenuItem("Torre");
+    	JMenuItem bishop = new JMenuItem("Bispo");
+    	JMenuItem horse = new JMenuItem("Cavalo");
+    	
+    	pawnPromotionMenu.add(queen);
+    	pawnPromotionMenu.add(rook);
+    	pawnPromotionMenu.add(bishop);
+    	pawnPromotionMenu.add(horse);
+    	
+        int width = this.getWidth();
+        int height = this.getHeight();
+
+        int x = width / 2;
+        int y = height / 2;
+    	
+        pawnPromotionMenu.show(this, x, y);
     }
     
     // Auxiliares
@@ -169,4 +231,5 @@ class WindowComponent extends JComponent
         
         return false;
     }
+
 }
