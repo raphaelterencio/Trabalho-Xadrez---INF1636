@@ -9,6 +9,7 @@ public class Main
 	{	
 		ModelAPI model_api = new ModelAPI();
 		ViewAPI view_api = new ViewAPI();
+		
 		view_api.newWindow();
 	}
 }
