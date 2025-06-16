@@ -115,24 +115,17 @@ class Board
 		return false;
 	}
 
-	protected boolean movePiece(int row, int column, int target_row, int target_column)
+	protected void movePiece(int row, int column, int target_row, int target_column)
 	{		
-		if ( isValidMove(row, column, target_row, target_column) ) 
-		{
-			Piece piece = tiles[row][column];
-			Piece cmp_piece = tiles[target_row][target_column];
-			
-			// Confere se houve uma captura de peça
-			if (cmp_piece != null && piece.getColor() != cmp_piece.getColor())
-				capturePiece(target_row, target_column);
-				
-			tiles[target_row][target_column] = tiles[row][column];
-			tiles[row][column] = null;
-						
-			return true;
-		}
+		Piece piece = tiles[row][column];
+		Piece cmp_piece = tiles[target_row][target_column];
 		
-		return false;
+		// Confere se houve uma captura de peça
+		if (cmp_piece != null && piece.getColor() != cmp_piece.getColor())
+			capturePiece(target_row, target_column);
+			
+		tiles[target_row][target_column] = tiles[row][column];
+		tiles[row][column] = null;			
 	}
 	
 	// Captura de peças
@@ -146,21 +139,6 @@ class Board
 	}
 	
 	// Movimentação
-	
-	private boolean isValidMove(int row, int column, int target_row, int target_column)
-	{
-		// Obtém o caminho até a posição desejada
-		List<int[]> list = getFixedPath(row, column, target_row, target_column);
-				
-		// Confere se é possível chegar até a posição desejada
-	    for (int[] coords : list) 
-	    {
-	        if (coords[0] == target_row && coords[1] == target_column) 
-	        	return true;
-	    }
-	    
-	    return false;
-	}
 	
 	private List<int[]> getFixedPath(int row, int column, int target_row, int target_column)
 	{
@@ -195,8 +173,8 @@ class Board
 			// Se houver uma peça no caminho
 			else 
 			{ 
-				// Se casa não for o destino final
-				if ( coords[0] == target_row && coords[1] == target_column) 
+				// Se a casa não for o destino final
+				if ( coords[0] != target_row || coords[1] != target_column) 
 					break;
 				
 				// Se a casa for o destino final
