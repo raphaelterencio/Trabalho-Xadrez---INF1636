@@ -40,5 +40,7 @@ class WindowFrame extends JFrame
 	 
 	// Métodos get()
 	
-	protected BoardComponent getWindowComponent() { return board_component; } 
+	protected MenuComponent getMenuComponent() { return menu_component; } 
+	
+	protected BoardComponent getBoardComponent() { return board_component; } 
 }

@@ -33,13 +33,13 @@ public class Main
 		model_api = new ModelAPI();
 		view_api = new ViewAPI();
 		
-		model_api.newGame();
 		view_api.openWindow();
 		view_api.registerObserver();
 	
 		userLeftClickHandler();
 		userRightClickHandler();
 		pawnPromotionHandler();
+		menuHandler();
 	}
 	
 	// Métodos get()
@@ -119,6 +119,12 @@ public class Main
 		view_api.getMenuItem("Horse").addActionListener(e -> formalizePawnPromotion("Horse"));
 	}
 	
+	private static void menuHandler()
+	{
+		view_api.getButton("NewGame").addActionListener(e -> newGame());
+		view_api.getButton("LoadGame").addActionListener(e -> loadGame());
+	}
+	
 	// Auxiliares
 	
     private static boolean isHighlighted(int row, int column)
@@ -143,5 +149,16 @@ public class Main
     private static void formalizePawnPromotion(String piece)
     {
     	model_api.promotePawn(piece, backup_row, backup_column);
+    }
+    
+    private static void newGame()
+    {
+		model_api.newGame();
+		view_api.showBoard();
+    }
+    
+    private static void loadGame()
+    {
+    	
     }
 }

@@ -13,6 +13,19 @@ class MenuComponent extends JComponent
 	
 	protected MenuComponent() {}
 	
+	protected JButton getButton(String button)
+	{
+		switch (button)
+		{
+		case "NewGame":
+			return newGame;
+		case "LoadGame":
+			return loadGame;
+		}
+		
+		return null;
+	}
+	
 	protected void setUp()
 	{
 		setPreferredSize(new Dimension(64 * 8, 64 * 8));
@@ -39,6 +52,8 @@ class MenuComponent extends JComponent
 		add(newGame);
 		add(loadGame);
 	}
+	
+	// Paint
 	
 	@Override
     protected void paintComponent(Graphics g)
