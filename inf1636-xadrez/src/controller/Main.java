@@ -159,6 +159,13 @@ public class Main
     
     private static void loadGame()
     {
+    	String game_state = view_api.loadGameCallback();
     	
+    	if (game_state != null)
+    	{
+    		model_api.newGame();
+    		round_color = model_api.setGameState(game_state);
+    		view_api.showBoard();
+    	}
     }
 }

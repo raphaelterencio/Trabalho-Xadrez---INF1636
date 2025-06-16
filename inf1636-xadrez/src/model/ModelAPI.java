@@ -41,6 +41,8 @@ public class ModelAPI
 	
 	public char getPieceSymbol(int row, int column) { return board.getPieceSymbol(row, column); }
 	
+	public char setGameState(String game_state) { return board.setGameState(game_state); }
+	
 	public String getGameState() { return board.getGameState(); }
 	
 	// Peças

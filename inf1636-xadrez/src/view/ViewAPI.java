@@ -39,6 +39,8 @@ public class ViewAPI
     
     public void clearHighlightedPath() { board_component.clearHighlightedPath(); }
     
+    public String loadGameCallback() { return board_component.loadGameCallback(); }
+    
     public void saveGameCallback() { board_component.saveGameCallback(); } 
     
     // Telas

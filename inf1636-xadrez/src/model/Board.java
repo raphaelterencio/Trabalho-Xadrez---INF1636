@@ -101,6 +101,35 @@ class Board
 		return piece.getSymbol(); 
 	}
 	
+	protected char setGameState(String game_state)
+	{
+	    String[] lines = game_state.split("\n");
+	    
+	    char round_color = lines[0].charAt(0);
+
+	    for (int row = 0; row < 8; row++) 
+	    {
+	        String[] tokens = lines[row + 1].split(" ");
+
+	        for (int col = 0; col < 8; col++) 
+	        {
+	            String token = tokens[col];
+
+	            if (token.equals("."))
+	                tiles[row][col] = null;
+
+	            else if (token.length() == 2)
+	            {
+	                char color = token.charAt(0);
+	                char symbol = token.charAt(1);
+	                tiles[row][col] = Piece.createPiece(color, symbol); 
+	            } 
+	        }
+	    }
+	    
+	    return round_color;
+	}
+	
 	protected String getGameState()
 	{
 	    StringBuilder sb = new StringBuilder();

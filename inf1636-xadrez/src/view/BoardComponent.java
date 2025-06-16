@@ -34,7 +34,10 @@ import controller.Event;
 
 // Arquivo
 import javax.swing.filechooser.FileNameExtensionFilter;
+
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 
 class BoardComponent extends JComponent implements Observer
@@ -259,12 +262,44 @@ class BoardComponent extends JComponent implements Observer
         pawnPromotionMenu.show(this, x, y);
     }
     
+    protected String loadGameCallback() 
+    {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Carregar partida");
+
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Arquivo de texto (*.txt)", "txt");
+        fileChooser.setFileFilter(filter);
+
+        int userSelection = fileChooser.showOpenDialog(this);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION)
+        {
+            File selectedFile = fileChooser.getSelectedFile();
+
+            try (BufferedReader reader = new BufferedReader(new FileReader(selectedFile))) 
+            {
+                StringBuilder content = new StringBuilder();
+                String line;
+
+                while ((line = reader.readLine()) != null) 
+                {
+                    content.append(line).append("\n");
+                }
+
+                return content.toString();
+                
+            } 
+            catch (IOException ex) {}
+        }
+
+        return null;
+    }
+    
     protected void saveGameCallback()
     {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Salvar partida");
         
-        // Filtra para arquivos .txt
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Arquivo de texto (*.txt)", "txt");
         fileChooser.setFileFilter(filter);
 
@@ -279,7 +314,6 @@ class BoardComponent extends JComponent implements Observer
             }
             
             try (FileWriter writer = new FileWriter(fileToSave)) {
-                // Aqui você escreve o estado da partida. Exemplo fictício:
                 String gameState = model_api.getGameState();
                 
                 writer.write(gameState);
