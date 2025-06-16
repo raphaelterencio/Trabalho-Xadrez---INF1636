@@ -24,12 +24,16 @@ import java.io.IOException;
 // ModelAPI
 import model.ModelAPI;
 
+// Observer
+import model.Observer;
+import controller.Event;
+
 // Arquivo
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 import java.io.FileWriter;
 
-class WindowComponent extends JComponent
+class WindowComponent extends JComponent implements Observer
 {
 	private HashMap<String, BufferedImage> image_map = new HashMap<>();
 	private ModelAPI model_api = new ModelAPI();
@@ -44,6 +48,35 @@ class WindowComponent extends JComponent
 		loadImages();
 	}
 	
+	// Observer
+	
+	@Override
+	public void update(Event event)
+	{
+		repaint();
+		
+		String event_name = Event.getEvent(event);
+		
+		switch (event_name)
+		{
+			case "PIECE_MOVEMENT":
+				break;
+			case "CHECK":
+				checkCallback();
+				break;
+			case "CHECKMATE":
+				checkMateCallback();
+				break;
+			case "STALEMATE":
+				staleMateCallback();
+				break;
+			case "PAWN_PROMOTION":
+				pawnPromotionCallback();
+				break;	
+		}
+		
+	}
+
 	// Paint
 	
     @Override
@@ -136,7 +169,7 @@ class WindowComponent extends JComponent
     	repaint();
     }
     
-    protected void checkMateCallback()
+    private void checkMateCallback()
     {
     	JOptionPane.showMessageDialog(
     		    this,
@@ -146,7 +179,7 @@ class WindowComponent extends JComponent
     		);
     }
     
-    protected void checkCallback()
+    private void checkCallback()
     {
     	JOptionPane.showMessageDialog(
     		    this,
@@ -156,7 +189,7 @@ class WindowComponent extends JComponent
     		);
     }
     
-    protected void staleMateCallback()
+    private void staleMateCallback()
     {
     	JOptionPane.showMessageDialog(
     		    this,
@@ -166,7 +199,7 @@ class WindowComponent extends JComponent
     		);
     }
     
-    protected void pawnPromotionCallback()
+    private void pawnPromotionCallback()
     {
     	JPopupMenu pawnPromotionMenu = new JPopupMenu();
     	

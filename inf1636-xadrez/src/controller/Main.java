@@ -30,6 +30,8 @@ public class Main
 		model_api = new ModelAPI();
 		view_api = new ViewAPI();
 		
+		view_api.registerObserver();
+		
 		model_api.newGame();
 		view_api.openWindow();
 		
@@ -75,7 +77,6 @@ public class Main
 	                	{
 	                		model_api.movePiece(origin_row, origin_column, selected_row, selected_column);
 	                		round_color = (round_color == 'W') ? 'B' : 'W';
-	                		afterMoveProcedures();
 	                		selected_row = -1; selected_column = -1;
 	                		origin_row = -1; origin_column = -1;
 	                		view_api.clearHighlightedPath();
@@ -118,19 +119,4 @@ public class Main
         
         return false;
     }
-    
-    private static void afterMoveProcedures() 
-    {
-    	
-    	if( model_api.isCheckMate(round_color) )
-    		view_api.checkMateCallback();
-    	else if( model_api.isCheck(round_color) )
-    		view_api.checkCallback();
-    	else if( model_api.isStaleMate(round_color) )
-    		view_api.staleMateCallback();
-    	
-    	if( model_api.checkPawnPromotion() )
-    		view_api.pawnPromotionCallback();
-    	
-    } 
 }

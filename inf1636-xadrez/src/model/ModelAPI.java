@@ -2,13 +2,32 @@ package model;
 
 import java.util.List;
 
+import controller.Event;
+
+import java.util.ArrayList;
+
 public class ModelAPI
 {
 	static Board board;
+	private List<Observer> observers = new ArrayList<>();
 	
-	public ModelAPI() {}
+	public ModelAPI() { }
 	
 	public void newGame() { board = new Board(); }
+	
+	// Observer
+	
+    public void addObserver(Observer obs) { observers.add(obs); }
+
+    public void removeObserver(Observer obs) { observers.remove(obs); }
+
+    private void notifyObservers(Event event) 
+    {
+        for (Observer obs : observers) 
+        {
+            obs.update(event);
+        }
+    }
 	
 	// Testes
 	
@@ -28,7 +47,15 @@ public class ModelAPI
 	
 	public boolean isThereAPiece(int row, int column) { return board.isThereAPiece(row, column); }
 	
-	public boolean movePiece(int row, int column, int target_row, int target_column) { return board.movePiece(row, column, target_row, target_column); }
+	public boolean movePiece(int row, int column, int target_row, int target_column)
+	{ 
+		boolean flag = board.movePiece(row, column, target_row, target_column); 
+		
+		if (flag)
+			notifyObservers(Event.getEvent("PIECE_MOVEMENT"));
+		
+		return flag;
+	}
 	
 	// Movimentação
 	
@@ -36,13 +63,46 @@ public class ModelAPI
 	
 	// Regras
 	
-	public boolean isCheck(char color) { return board.isCheck(color); }
+	public boolean isCheck(char color)
+	{ 
+		boolean flag = board.isCheck(color); 
+
+		if (flag)
+			notifyObservers(Event.getEvent("CHECK"));
+		
+		return flag;
+		
+	}
 	
-	public boolean isCheckMate(char color) { return board.isCheckMate(color); }
+	public boolean isCheckMate(char color) 
+	{ 
+		boolean flag = board.isCheckMate(color); 
+		
+		if (flag)
+			notifyObservers(Event.getEvent("CHECKMATE"));
+		
+		return flag;
+	}
 	
-	public boolean isStaleMate(char color) { return board.isStaleMate(color); }
+	public boolean isStaleMate(char color) 
+	{ 
+		boolean flag = board.isStaleMate(color); 
+		
+		if (flag)
+			notifyObservers(Event.getEvent("STALEMATE"));
+		
+		return flag;
+	}
 	
-	public boolean checkPawnPromotion() { return board.checkPawnPromotion(); }
+	public boolean checkPawnPromotion() 
+	{
+		boolean flag = board.checkPawnPromotion(); 
+		
+		if (flag)
+			notifyObservers(Event.getEvent("PAWN_PROMOTION"));
+		
+		return flag;
+	}
 	
 	// Movimentos especiais
 	
