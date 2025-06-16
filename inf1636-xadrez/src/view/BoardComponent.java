@@ -41,6 +41,7 @@ class BoardComponent extends JComponent implements Observer
 {
 	private HashMap<String, BufferedImage> image_map = new HashMap<>();
 	private ModelAPI model_api = new ModelAPI();
+	private ViewAPI view_api = new ViewAPI();
 	
 	private List<int[]> highlighted_path = new ArrayList<>();
 	
@@ -205,6 +206,8 @@ class BoardComponent extends JComponent implements Observer
     		    "Fim de jogo",
     		    JOptionPane.INFORMATION_MESSAGE
     		);
+    	
+    	view_api.showMenu();
     }
     
     private void checkCallback()
@@ -225,6 +228,8 @@ class BoardComponent extends JComponent implements Observer
     		    "Fim de jogo",
     		    JOptionPane.INFORMATION_MESSAGE
     		);
+    	
+    	view_api.showMenu();
     }
     
     private void pawnPromotionCallback()
