@@ -26,7 +26,7 @@ public class ModelAPI
 	
 	public boolean isThereAPiece(int row, int column) { return board.isThereAPiece(row, column); }
 	
-	public void movePiece(int row, int column, int target_row, int target_column) {  board.movePiece(row, column, target_row, target_column); }
+	public boolean movePiece(int row, int column, int target_row, int target_column) { return board.movePiece(row, column, target_row, target_column); }
 	
 	// Movimentação
 	

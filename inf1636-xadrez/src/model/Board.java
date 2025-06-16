@@ -115,8 +115,12 @@ class Board
 		return false;
 	}
 
-	protected void movePiece(int row, int column, int target_row, int target_column)
+	protected boolean movePiece(int row, int column, int target_row, int target_column)
 	{		
+		List<int[]> possibleMoves = getPossibleMoves(row, column);
+		if ( !isPossibleMove(target_row, target_column, possibleMoves) )
+			return false;
+		
 		Piece piece = tiles[row][column];
 		Piece cmp_piece = tiles[target_row][target_column];
 		
@@ -126,7 +130,20 @@ class Board
 			
 		tiles[target_row][target_column] = tiles[row][column];
 		tiles[row][column] = null;			
+		
+		return true;
 	}
+	
+    private boolean isPossibleMove(int row, int column, List<int[]> possibleMoves)
+    {
+        for (int[] pos : possibleMoves) {
+            if (pos[0] == row && pos[1] == column) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
 	
 	// Captura de peças
 	
