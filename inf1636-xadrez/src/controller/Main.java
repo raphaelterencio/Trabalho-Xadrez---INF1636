@@ -10,12 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main
-{
-	static ModelAPI model_api;
-	static ViewAPI view_api;
-	
+{	
 	static char round_color = 'W';
-	
+			
 	static boolean isPieceSelected = false;
 	static int selected_row = -1;
 	static int selected_column = -1;
@@ -29,12 +26,9 @@ public class Main
 	static List<int[]> highlighted_path = new ArrayList<>();
 	
 	public static void main(String[] args)
-	{	
-		model_api = new ModelAPI();
-		view_api = new ViewAPI();
-		
-		view_api.openWindow();
-		view_api.registerObserver();
+	{			
+		ViewAPI.openWindow();
+		ViewAPI.registerObserver();
 	
 		userLeftClickHandler();
 		userRightClickHandler();
@@ -50,7 +44,7 @@ public class Main
 	
 	private static void userLeftClickHandler()
 	{
-        view_api.addMouseListener(new MouseAdapter() {
+        ViewAPI.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
             	if (e.getButton() == MouseEvent.BUTTON1) 
             	{
@@ -62,14 +56,14 @@ public class Main
 	                	                
 	                if ( !isPieceSelected )
 	                {
-	                	if (model_api.isThereAPiece(selected_row, selected_column))
+	                	if (ModelAPI.isThereAPiece(selected_row, selected_column))
 	                	{
-	                		if ( model_api.getPieceColor(selected_row, selected_column) == round_color )
+	                		if ( ModelAPI.getPieceColor(selected_row, selected_column) == round_color )
 	                		{
 		                		origin_row = selected_row;
 		                		origin_column = selected_column;
-		                		view_api.highlightPath(selected_row, selected_column);
-		                		highlighted_path = model_api.getPossibleMoves(selected_row, selected_column);
+		                		ViewAPI.highlightPath(selected_row, selected_column);
+		                		highlighted_path = ModelAPI.getPossibleMoves(selected_row, selected_column);
 		                		isPieceSelected = !isPieceSelected;
 	                		}
 	                	}
@@ -78,18 +72,18 @@ public class Main
 	                {
 	                	if ( isHighlighted(selected_row, selected_column) )
 	                	{
-	                		model_api.movePiece(origin_row, origin_column, selected_row, selected_column);
+	                		ModelAPI.movePiece(origin_row, origin_column, selected_row, selected_column);
 	                		round_color = (round_color == 'W') ? 'B' : 'W';
 	                		afterMoveProcedures();
 	                		selected_row = -1; selected_column = -1;
 	                		origin_row = -1; origin_column = -1;
-	                		view_api.clearHighlightedPath();
+	                		ViewAPI.clearHighlightedPath();
 	                	}
 	                	else
 	                	{
 	                		selected_row = -1; selected_column = -1;
 	                		origin_row = -1; origin_column = -1;
-	                		view_api.clearHighlightedPath();
+	                		ViewAPI.clearHighlightedPath();
 	                	}
 	                	isPieceSelected = !isPieceSelected;
 	                }
@@ -100,12 +94,12 @@ public class Main
 	
 	private static void userRightClickHandler()
 	{
-	    view_api.addMouseListener(new MouseAdapter() {
+	    ViewAPI.addMouseListener(new MouseAdapter() {
 	        @Override
 	        public void mousePressed(MouseEvent e) {
 	            if (e.getButton() == MouseEvent.BUTTON3) 
 	            {
-	                view_api.saveGameCallback();
+	                ViewAPI.saveGameCallback();
 	            }
 	        }
 	    });
@@ -113,16 +107,16 @@ public class Main
 	
 	private static void pawnPromotionHandler()
 	{
-		view_api.getMenuItem("Queen").addActionListener(e -> formalizePawnPromotion("Queen"));
-		view_api.getMenuItem("Rook").addActionListener(e -> formalizePawnPromotion("Rook"));
-		view_api.getMenuItem("Bishop").addActionListener(e -> formalizePawnPromotion("Bishop"));
-		view_api.getMenuItem("Horse").addActionListener(e -> formalizePawnPromotion("Horse"));
+		ViewAPI.getMenuItem("Queen").addActionListener(e -> formalizePawnPromotion("Queen"));
+		ViewAPI.getMenuItem("Rook").addActionListener(e -> formalizePawnPromotion("Rook"));
+		ViewAPI.getMenuItem("Bishop").addActionListener(e -> formalizePawnPromotion("Bishop"));
+		ViewAPI.getMenuItem("Horse").addActionListener(e -> formalizePawnPromotion("Horse"));
 	}
 	
 	private static void menuHandler()
 	{
-		view_api.getButton("NewGame").addActionListener(e -> newGame());
-		view_api.getButton("LoadGame").addActionListener(e -> loadGame());
+		ViewAPI.getButton("NewGame").addActionListener(e -> newGame());
+		ViewAPI.getButton("LoadGame").addActionListener(e -> loadGame());
 	}
 	
 	// Auxiliares
@@ -140,32 +134,32 @@ public class Main
     
     private static void afterMoveProcedures() 
     {
-    	model_api.isCheckMate(round_color);
-    	model_api.isCheck(round_color);
-    	model_api.isStaleMate(round_color);
-    	model_api.checkPawnPromotion();    	
+    	ModelAPI.isCheckMate(round_color);
+    	ModelAPI.isCheck(round_color);
+    	ModelAPI.isStaleMate(round_color);
+    	ModelAPI.checkPawnPromotion();    	
     } 
     
     private static void formalizePawnPromotion(String piece)
     {
-    	model_api.promotePawn(piece, backup_row, backup_column);
+    	ModelAPI.promotePawn(piece, backup_row, backup_column);
     }
     
     private static void newGame()
     {
-		model_api.newGame();
-		view_api.showBoard();
+		ModelAPI.newGame();
+		ViewAPI.showBoard();
     }
     
     private static void loadGame()
     {
-    	String game_state = view_api.loadGameCallback();
+    	String game_state = ViewAPI.loadGameCallback();
     	
     	if (game_state != null)
     	{
-    		model_api.newGame();
-    		round_color = model_api.setGameState(game_state);
-    		view_api.showBoard();
+    		ModelAPI.newGame();
+    		round_color = ModelAPI.setGameState(game_state);
+    		ViewAPI.showBoard();
     	}
     }
 }

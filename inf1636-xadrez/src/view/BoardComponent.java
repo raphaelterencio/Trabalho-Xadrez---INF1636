@@ -43,8 +43,6 @@ import java.io.FileWriter;
 class BoardComponent extends JComponent implements Observer
 {
 	private HashMap<String, BufferedImage> image_map = new HashMap<>();
-	private ModelAPI model_api = new ModelAPI();
-	private ViewAPI view_api = new ViewAPI();
 	
 	private List<int[]> highlighted_path = new ArrayList<>();
 	
@@ -145,8 +143,8 @@ class BoardComponent extends JComponent implements Observer
         		
         		// Pinta as imagens
         		
-        		char color = model_api.getPieceColor(row, column);
-        		char symbol = model_api.getPieceSymbol(row, column);
+        		char color = ModelAPI.getPieceColor(row, column);
+        		char symbol = ModelAPI.getPieceSymbol(row, column);
         		
                 if (symbol != '-') 
                 {
@@ -191,7 +189,7 @@ class BoardComponent extends JComponent implements Observer
     
     protected void highlightPath(int row, int column)
     {
-    	highlighted_path = model_api.getPossibleMoves(row, column);
+    	highlighted_path = ModelAPI.getPossibleMoves(row, column);
     	repaint();
     }
     
@@ -210,7 +208,7 @@ class BoardComponent extends JComponent implements Observer
     		    JOptionPane.INFORMATION_MESSAGE
     		);
     	
-    	view_api.showMenu();
+    	ViewAPI.showMenu();
     }
     
     private void checkCallback()
@@ -232,7 +230,7 @@ class BoardComponent extends JComponent implements Observer
     		    JOptionPane.INFORMATION_MESSAGE
     		);
     	
-    	view_api.showMenu();
+    	ViewAPI.showMenu();
     }
     
     private void pawnPromotionCallback()
@@ -314,7 +312,7 @@ class BoardComponent extends JComponent implements Observer
             }
             
             try (FileWriter writer = new FileWriter(fileToSave)) {
-                String gameState = model_api.getGameState();
+                String gameState = ModelAPI.getGameState();
                 
                 writer.write(gameState);
                 

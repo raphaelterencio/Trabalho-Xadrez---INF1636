@@ -35,11 +35,4 @@ class Horse extends Piece{
 		
 		return path;
 	}
-	
-	@Override
-	protected Piece clone()
-	{
-		Horse copy = new Horse(this.getColor());
-		return copy;
-	}
 }

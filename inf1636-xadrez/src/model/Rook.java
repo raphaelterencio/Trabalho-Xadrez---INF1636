@@ -53,11 +53,4 @@ class Rook extends Piece{
 
 		return path;
 	}
-	
-	@Override
-	protected Piece clone()
-	{
-		Rook copy = new Rook(this.getColor());
-		return copy;
-	}
 }

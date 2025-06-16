@@ -57,11 +57,4 @@ class Queen extends Piece{
 				
 		return path;
 	}
-	
-	@Override
-	protected Piece clone()
-	{
-		Queen copy = new Queen(this.getColor());
-		return copy;
-	}
 }

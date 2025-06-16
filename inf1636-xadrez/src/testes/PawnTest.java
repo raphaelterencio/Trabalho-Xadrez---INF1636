@@ -5,27 +5,25 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.Before;
 
-public class PawnTest {
-
-	ModelAPI model_api = new ModelAPI();
-	
+public class PawnTest 
+{
 	@Before
 	public void setUpOnce()
 	{
-		model_api.newGame();
-		model_api.testMode();
-		model_api.testSetPiece('P', 'W', 4, 4); // Centro do tabuleiro
+		ModelAPI.newGame();
+		ModelAPI.testMode();
+		ModelAPI.testSetPiece('P', 'W', 4, 4); // Centro do tabuleiro
 	}
 	
 	@Test
 	public void testPawnValidMove() 
 	{
-		assertTrue(model_api.movePiece(4, 4, 3, 4));
+		assertTrue(ModelAPI.movePiece(4, 4, 3, 4));
 	}
 	
 	@Test
 	public void testPawnInvalidMove()
 	{
-		assertFalse(model_api.movePiece(4, 4, 4, 5));
+		assertFalse(ModelAPI.movePiece(4, 4, 4, 5));
 	}
 }

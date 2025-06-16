@@ -36,11 +36,4 @@ class King extends Piece{
 		
 		return path;
 	}
-	
-	@Override
-	protected King clone()
-	{
-		King copy = new King(this.getColor());
-		return copy;
-	}
 }
