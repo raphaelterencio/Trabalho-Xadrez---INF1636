@@ -37,7 +37,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 import java.io.FileWriter;
 
-class WindowComponent extends JComponent implements Observer
+class BoardComponent extends JComponent implements Observer
 {
 	private HashMap<String, BufferedImage> image_map = new HashMap<>();
 	private ModelAPI model_api = new ModelAPI();
@@ -49,7 +49,7 @@ class WindowComponent extends JComponent implements Observer
 	JMenuItem bishop = new JMenuItem("Bispo");
 	JMenuItem horse = new JMenuItem("Cavalo");
 	
-	protected WindowComponent() {}
+	protected BoardComponent() {}
 	
 	protected JMenuItem getMenuItem(String item)
 	{ 

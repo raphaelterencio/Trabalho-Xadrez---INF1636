@@ -7,7 +7,7 @@ import model.ModelAPI;
 public class ViewAPI 
 {
 	static WindowFrame window_frame;
-	static WindowComponent window_component;
+	static BoardComponent board_component;
 	
 	static ModelAPI model_api = new ModelAPI();
 	
@@ -16,23 +16,23 @@ public class ViewAPI
 	public void openWindow()
 	{ 
 		window_frame = new WindowFrame();
-		window_component = window_frame.getWindowComponent();
+		board_component = window_frame.getWindowComponent();
 	}
 	
-    public void addMouseListener(MouseListener listener) { window_component.addMouseListener(listener); }
+    public void addMouseListener(MouseListener listener) { board_component.addMouseListener(listener); }
     
-    public JMenuItem getMenuItem(String item) { return window_component.getMenuItem(item); }
+    public JMenuItem getMenuItem(String item) { return board_component.getMenuItem(item); }
     
     // Observer
     
-    public void registerObserver() { model_api.addObserver(window_component); }
+    public void registerObserver() { model_api.addObserver(board_component); }
     
     // Calbacks
     
-    public void highlightPath(int row, int column) { window_component.highlightPath(row, column); }
+    public void highlightPath(int row, int column) { board_component.highlightPath(row, column); }
     
-    public void clearHighlightedPath() { window_component.clearHighlightedPath(); }
+    public void clearHighlightedPath() { board_component.clearHighlightedPath(); }
     
-    public void saveGameCallback() { window_component.saveGameCallback(); } 
+    public void saveGameCallback() { board_component.saveGameCallback(); } 
     
 }
