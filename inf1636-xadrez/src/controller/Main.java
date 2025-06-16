@@ -3,14 +3,39 @@ package controller;
 import model.ModelAPI;
 import view.ViewAPI;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 public class Main
 {
+	static ModelAPI model_api;
+	static ViewAPI view_api;
+	
 	public static void main(String[] args)
 	{	
-		ModelAPI model_api = new ModelAPI();
-		ViewAPI view_api = new ViewAPI();
+		model_api = new ModelAPI();
+		view_api = new ViewAPI();
 		
 		model_api.newGame();
 		view_api.openWindow();
+		
+		userClickHandler();
 	}
+	
+	private static void userClickHandler()
+	{
+        view_api.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+            	
+                int x = e.getX();
+                int y = e.getY();
+                
+                int row = y / 64;
+                int col = x / 64;
+
+                System.out.println("Clique em: (" + row + ", " + col + ")");
+            }
+        });
+    }
 }

@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 
 class WindowFrame extends JFrame
 {
-	WindowComponent window_component = new WindowComponent();
+	private WindowComponent window_component = new WindowComponent();
 	
 	protected WindowFrame()
 	{
@@ -24,4 +24,8 @@ class WindowFrame extends JFrame
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}
+	 
+	// Métodos get()
+	
+	protected WindowComponent getWindowComponent() { return window_component; } 
 }

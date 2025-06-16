@@ -19,7 +19,7 @@ import model.ModelAPI;
 class WindowComponent extends JComponent
 {
 	private HashMap<String, BufferedImage> image_map = new HashMap<>();
-	ModelAPI model_api = new ModelAPI();
+	private ModelAPI model_api = new ModelAPI();
 	
 	protected WindowComponent() {}
 	
