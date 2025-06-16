@@ -141,6 +141,6 @@ public class Main
     
     private static void formalizePawnPromotion(String piece)
     {
-    	
+    	model_api.promotePawn(piece, selected_row, selected_column);
     }
 }

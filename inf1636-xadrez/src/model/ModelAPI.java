@@ -105,6 +105,8 @@ public class ModelAPI
 		return flag;
 	}
 	
+	public void promotePawn(String piece, int row, int column) { board.promotePawn(piece, row, column); }
+	
 	// Movimentos especiais
 	
 	public boolean canCastle(char color, boolean isKingside) { return board.canCastle(color, isKingside); }

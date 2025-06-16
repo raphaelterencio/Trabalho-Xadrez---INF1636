@@ -436,6 +436,27 @@ class Board
 		return false;
 	}
 	
+	protected void promotePawn(String piece, int row, int column)
+	{
+		char color = tiles[row][column].getColor();
+		
+		switch (piece)
+		{
+		case "Queen":
+			tiles[row][column] = new Queen(color);
+			break;
+		case "Rook":
+			tiles[row][column] = new Rook(color);
+			break;
+		case "Bishop":
+			tiles[row][column] = new Bishop(color);
+			break;
+		case "Horse":
+			tiles[row][column] = new Horse(color);
+			break;
+		}
+	}
+	
 	// Movimentos especiais
 	
 	// Verifica se o rei pode realizar um roque
