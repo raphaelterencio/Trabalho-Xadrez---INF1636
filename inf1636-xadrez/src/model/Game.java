@@ -12,8 +12,8 @@ class Game{
 	protected Game()
 	{
 		board = new Board();
-		tiles = board.getTiles();
 		board.setUp();
+		tiles = board.getTiles();
 		round = 1;
 		round_color = 'W';
 	}

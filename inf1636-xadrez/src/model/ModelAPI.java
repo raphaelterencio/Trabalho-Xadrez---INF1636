@@ -4,7 +4,7 @@ import java.util.List;
 
 public class ModelAPI
 {
-	Game game;
+	static Game game;
 	
 	public ModelAPI() {}
 	
