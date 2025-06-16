@@ -32,6 +32,7 @@ public class Main
 		
 		model_api.newGame();
 		view_api.openWindow();
+		view_api.registerObserver();
 		
 		userLeftClickHandler();
 		userRightClickHandler();
@@ -121,16 +122,9 @@ public class Main
     
     private static void afterMoveProcedures() 
     {
-    	
-    	if( model_api.isCheckMate(round_color) )
-    		view_api.checkMateCallback();
-    	else if( model_api.isCheck(round_color) )
-    		view_api.checkCallback();
-    	else if( model_api.isStaleMate(round_color) )
-    		view_api.staleMateCallback();
-    	
-    	if( model_api.checkPawnPromotion() )
-    		view_api.pawnPromotionCallback();
-    	
+    	model_api.isCheckMate(round_color);
+    	model_api.isCheck(round_color);
+    	model_api.isStaleMate(round_color);
+    	model_api.checkPawnPromotion();    	
     } 
 }
