@@ -6,66 +6,75 @@ import view.ViewAPI;
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
+import java.util.List;
+import java.awt.event.MouseListener;
+import model.ModelAPI;
 public class Main {
 
     private static int selectedRow = -1;
     private static int selectedCol = -1;
-    private static char currentTurn = 'W';
-
+    private static char currentTurn = 'W'; 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Jogo de Xadrez");
-        Interface tabuleiro = new Interface();
-        ViewAPI api = new ViewAPI(tabuleiro);
+        ModelAPI modelApi = new ModelAPI();
+        modelApi.startGame();
 
-        api.adicionarClickListener(new MouseAdapter() {
+        Interface interfaceView = new Interface(modelApi); 
+        ViewAPI viewApi = new ViewAPI(interfaceView);     
+
+    
+
+        viewApi.adicionarClickListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int col = e.getX() / 64;
                 int row = e.getY() / 64;
 
                 if (selectedRow == -1) {
-                    if (api.isThereAPiece(row, col) && api.getPieceColor(row, col) == currentTurn) {
+                    if (modelApi.isThereAPiece(row, col) && modelApi.getPieceColor(row, col) == currentTurn) {
                         selectedRow = row;
                         selectedCol = col;
-                        api.setMovimentos(api.getPossibleMoves(row, col));
-                        api.setSelecionado(row, col);
-                        tabuleiro.repaint();
+                        viewApi.setMovimentos(modelApi.getPossibleMoves(row, col));
+                        viewApi.setSelecionado(row, col);
+                        viewApi.repaint();
                     }
                 } else {
                     if (selectedRow == row && selectedCol == col) {
                         selectedRow = -1;
                         selectedCol = -1;
-                        api.clearMovimentos();
-                        tabuleiro.repaint();
+                        viewApi.clearMovimentos();
+                        viewApi.repaint();
                         return;
                     }
 
-                    if (api.getPossibleMoves(selectedRow, selectedCol).stream().anyMatch(m -> m[0] == row && m[1] == col)) {
-                        api.movePiece(selectedRow, selectedCol, row, col);
+                    if (modelApi.getPossibleMoves(selectedRow, selectedCol).stream().anyMatch(m -> m[0] == row && m[1] == col)) {
+                    	modelApi.movePiece(selectedRow, selectedCol, row, col);
                         currentTurn = (currentTurn == 'W') ? 'B' : 'W';
 
-                        if (api.isCheckMate(currentTurn)) {
+                        // alerta de xeque
+                        if (modelApi.isCheckMate()) {
                             JOptionPane.showMessageDialog(null, "Xeque-mate nas " + (currentTurn == 'W' ? "brancas" : "pretas") + "!");
-                        } else if (api.isStalemate(currentTurn)) {
+                        } else if (modelApi.isStalemate()) {
                             JOptionPane.showMessageDialog(null, "Congelamento! As " + (currentTurn == 'W' ? "brancas" : "pretas") + " não têm movimentos válidos.");
-                        } else if (api.isCheck(currentTurn)) {
+                        } else if (modelApi.isCheck()) {
                             JOptionPane.showMessageDialog(null, "Xeque em " + (currentTurn == 'W' ? "brancas" : "pretas") + "!");
                         }
+
+
                     }
 
                     selectedRow = -1;
                     selectedCol = -1;
-                    api.clearMovimentos();
-                    api.setSelecionado(-1, -1);
-                    tabuleiro.repaint();
+                    viewApi.clearMovimentos();
+                    viewApi.setSelecionado(-1, -1);
+                    viewApi.repaint();
                 }
             }
         });
 
-        frame.add(tabuleiro);
+        frame.add(viewApi.getCanvas());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(8 * 64 + 16, 8 * 64 + 39);
+        frame.setSize(8 * 64 + 16, 8 * 64 + 39); 
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
