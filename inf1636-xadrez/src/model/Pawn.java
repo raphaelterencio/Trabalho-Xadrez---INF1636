@@ -86,11 +86,4 @@ class Pawn extends Piece{
 		
 		return false;
 	}
-	
-	@Override
-	protected Piece clone()
-	{
-		Pawn copy = new Pawn(this.getColor());
-		return copy;
-	}
 }

@@ -39,6 +39,4 @@ abstract class Piece
     protected abstract boolean canMove(int row, int column, int target_row, int target_column);
     
     protected abstract List<int[]> getPath(int row, int column, int target_row, int target_column);
-    
-    protected abstract Piece clone();
 }
