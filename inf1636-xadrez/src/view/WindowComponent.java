@@ -54,8 +54,8 @@ class WindowComponent extends JComponent
         		char color = model_api.getPieceColor(row, column);
         		char symbol = model_api.getPieceSymbol(row, column);
         		
-                if (symbol != '-') {
-                	
+                if (symbol != '-') 
+                {
                 	String color_string = colorString(color);
                 	String piece_string = pieceString(symbol);
                 	
@@ -71,7 +71,7 @@ class WindowComponent extends JComponent
     private void loadImages() 
     {
         String[] colors = {"White", "Black"};
-        String[] pieces = {"Bishop", "Horse", "King", "Pawn", "Queen", "King"};
+        String[] pieces = {"Bishop", "Horse", "King", "Pawn", "Queen", "Rook"};
 
         for (String color : colors) 
         {

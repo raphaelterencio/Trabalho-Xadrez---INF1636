@@ -18,6 +18,7 @@ class Board
 		captured_blacks = new Piece[16];
 		count_captured_whites = 0;
 		count_captured_blacks = 0;
+		setUp();
 	}
 	
 	protected void setUp()
@@ -90,9 +91,21 @@ class Board
 	
 	// Métodos get()
 	
-	protected char getPieceColor(int row, int column) { return tiles[row][column].getColor(); }
+	protected char getPieceColor(int row, int column)
+	{ 
+		Piece piece = tiles[row][column];
+		if (piece == null)
+			return '-';
+		return piece.getColor(); 
+	}
 	
-	protected char getPieceSymbol(int row, int column) { return tiles[row][column].getSymbol(); }
+	protected char getPieceSymbol(int row, int column) 
+	{ 
+		Piece piece = tiles[row][column];
+		if (piece == null)
+			return '-';
+		return piece.getSymbol(); 
+	}
 
 	// Peças
 	

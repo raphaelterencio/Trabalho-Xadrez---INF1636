@@ -2,7 +2,7 @@ package view;
 
 public class ViewAPI 
 {
-	WindowFrame window;
+	static WindowFrame window;
 	
 	public ViewAPI() {}
 
