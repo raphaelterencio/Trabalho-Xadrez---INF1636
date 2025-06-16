@@ -6,5 +6,5 @@ public class ViewAPI
 	
 	public ViewAPI() {}
 
-	public void newWindow() { window = new WindowFrame(); }
+	public void openWindow() { window = new WindowFrame(); }
 }

@@ -7,9 +7,9 @@ public class Main
 {
 	public static void main(String[] args)
 	{	
-		ModelAPI model_api = new ModelAPI();
+		// ModelAPI model_api = new ModelAPI();
 		ViewAPI view_api = new ViewAPI();
 		
-		view_api.newWindow();
+		view_api.openWindow();
 	}
 }
