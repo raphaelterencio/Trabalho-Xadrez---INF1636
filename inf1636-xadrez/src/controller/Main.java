@@ -13,6 +13,8 @@ public class Main
 	static ModelAPI model_api;
 	static ViewAPI view_api;
 	
+	static char round_color = 'W';
+	
 	static boolean isPieceSelected = false;
 	static int selected_row = -1;
 	static int selected_column = -1;
@@ -51,11 +53,14 @@ public class Main
                 {
                 	if (model_api.isThereAPiece(selected_row, selected_column))
                 	{
-                		origin_row = selected_row;
-                		origin_column = selected_column;
-                		view_api.highlightPath(selected_row, selected_column);
-                		highlighted_path = model_api.getPossibleMoves(selected_row, selected_column);
-                		isPieceSelected = !isPieceSelected;
+                		if ( model_api.getPieceColor(selected_row, selected_column) == round_color )
+                		{
+	                		origin_row = selected_row;
+	                		origin_column = selected_column;
+	                		view_api.highlightPath(selected_row, selected_column);
+	                		highlighted_path = model_api.getPossibleMoves(selected_row, selected_column);
+	                		isPieceSelected = !isPieceSelected;
+                		}
                 	}
                 }
                 else 
@@ -65,6 +70,7 @@ public class Main
                 		model_api.movePiece(origin_row, origin_column, selected_row, selected_column);
                 		selected_row = -1; selected_column = -1;
                 		origin_row = -1; origin_column = -1;
+                		round_color = (round_color == 'W') ? 'B' : 'W';
                 		view_api.clearHighlightedPath();
                 	}
                 	else
