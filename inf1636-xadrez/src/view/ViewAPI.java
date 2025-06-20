@@ -4,7 +4,8 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
-import model.ModelAPI;
+
+import controller.Main;
 
 public class ViewAPI 
 {
@@ -29,7 +30,7 @@ public class ViewAPI
     
     // Observer
     
-    public static void registerObserver() { ModelAPI.addObserver(game_panel); }
+    public static void registerObserver() { Main.addObserver(game_panel); }
     
     // Callbacks
     

@@ -1,6 +1,4 @@
-package model;
-
-import controller.Event;
+package controller;
 
 public interface Observer 
 {

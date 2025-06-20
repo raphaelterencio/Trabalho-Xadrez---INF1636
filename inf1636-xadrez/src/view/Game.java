@@ -27,10 +27,8 @@ import java.io.IOException;
 
 // ModelAPI
 import model.ModelAPI;
-
-// Observer
-import model.Observer;
 import controller.Event;
+import controller.Observer;
 
 // Arquivo
 import javax.swing.filechooser.FileNameExtensionFilter;
