@@ -4,14 +4,14 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 
 import javax.swing.JButton;
-import javax.swing.JComponent;
+import javax.swing.JPanel;
 
-class MenuComponent extends JComponent
+class Menu extends JPanel
 {
 	private JButton newGame;
 	private JButton loadGame;
 	
-	protected MenuComponent() {}
+	protected Menu() {}
 	
 	protected JButton getButton(String button)
 	{

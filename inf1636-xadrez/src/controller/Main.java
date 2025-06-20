@@ -5,9 +5,16 @@ import view.ViewAPI;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Main
 {	
@@ -25,6 +32,8 @@ public class Main
 	
 	static List<int[]> highlighted_path = new ArrayList<>();
 	
+	private static List<Observer> observers = new ArrayList<>();
+	
 	public static void main(String[] args)
 	{			
 		ViewAPI.openWindow();
@@ -39,6 +48,20 @@ public class Main
 	// Métodos get()
 	
 	public static char getRoundColor() { return round_color; }
+	
+	// Observer
+	
+    public static void addObserver(Observer obs) { observers.add(obs); }
+
+    public static void removeObserver(Observer obs) { observers.remove(obs); }
+
+    private static void notifyObservers(Event event) 
+    {
+        for (Observer obs : observers) 
+        {
+            obs.update(event);
+        }
+    }
 	
 	// Callbacks
 	
@@ -73,6 +96,9 @@ public class Main
 	                	if ( isHighlighted(selected_row, selected_column) )
 	                	{
 	                		ModelAPI.movePiece(origin_row, origin_column, selected_row, selected_column);
+	            			notifyObservers(Event.getEvent("PIECE_MOVEMENT"));
+	            	    	if (ModelAPI.checkPawnPromotion(round_color))
+	            				notifyObservers(Event.getEvent("PAWN_PROMOTION"));
 	                		round_color = (round_color == 'W') ? 'B' : 'W';
 	                		afterMoveProcedures();
 	                		selected_row = -1; selected_column = -1;
@@ -99,7 +125,7 @@ public class Main
 	        public void mousePressed(MouseEvent e) {
 	            if (e.getButton() == MouseEvent.BUTTON3) 
 	            {
-	                ViewAPI.saveGameCallback();
+	                saveGame();
 	            }
 	        }
 	    });
@@ -133,17 +159,30 @@ public class Main
     }
     
     private static void afterMoveProcedures() 
-    {
-    	ModelAPI.isCheckMate(round_color);
-    	ModelAPI.isCheck(round_color);
-    	ModelAPI.isStaleMate(round_color);
-    	ModelAPI.checkPawnPromotion();    	
+    {	
+    	if (ModelAPI.isCheckMate(round_color))
+    	{
+    		notifyObservers(Event.getEvent("CHECKMATE"));
+    		return;
+    	}
+    	
+    	if (ModelAPI.isCheck(round_color))
+    		notifyObservers(Event.getEvent("CHECK"));
+    	
+    	if (ModelAPI.isStaleMate(round_color))
+    	{
+			notifyObservers(Event.getEvent("STALEMATE"));
+			return;
+    	}
     } 
     
     private static void formalizePawnPromotion(String piece)
     {
     	ModelAPI.promotePawn(piece, backup_row, backup_column);
+    	notifyObservers(Event.getEvent("PAWN_PROMOTED"));
     }
+    
+    // Estado do jogo
     
     private static void newGame()
     {
@@ -153,7 +192,7 @@ public class Main
     
     private static void loadGame()
     {
-    	String game_state = ViewAPI.loadGameCallback();
+    	String game_state = getGameState();
     	
     	if (game_state != null)
     	{
@@ -161,5 +200,71 @@ public class Main
     		round_color = ModelAPI.setGameState(game_state);
     		ViewAPI.showBoard();
     	}
+    }
+    
+    private static void saveGame()
+    {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Salvar partida");
+        
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Arquivo de texto (*.txt)", "txt");
+        fileChooser.setFileFilter(filter);
+
+        int userSelection = fileChooser.showSaveDialog(null);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            
+            // Garante que o arquivo tenha a extensão .txt
+            if (!fileToSave.getName().toLowerCase().endsWith(".txt")) {
+                fileToSave = new File(fileToSave.getParentFile(), fileToSave.getName() + ".txt");
+            }
+            
+            try (FileWriter writer = new FileWriter(fileToSave)) {
+                String gameState = ModelAPI.getGameState();
+                
+                writer.write(gameState);
+                
+                System.out.println("Jogo salvo em: " + fileToSave.getAbsolutePath());
+            } 
+            catch (IOException ex) 
+            {
+                ex.printStackTrace();
+                // Informar o usuário de um erro
+            }
+        }
+    }
+    
+    private static String getGameState() 
+    {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Carregar partida");
+
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Arquivo de texto (*.txt)", "txt");
+        fileChooser.setFileFilter(filter);
+
+        int userSelection = fileChooser.showOpenDialog(null);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION)
+        {
+            File selectedFile = fileChooser.getSelectedFile();
+
+            try (BufferedReader reader = new BufferedReader(new FileReader(selectedFile))) 
+            {
+                StringBuilder content = new StringBuilder();
+                String line;
+
+                while ((line = reader.readLine()) != null) 
+                {
+                    content.append(line).append("\n");
+                }
+
+                return content.toString();
+                
+            } 
+            catch (IOException ex) {}
+        }
+
+        return null;
     }
 }

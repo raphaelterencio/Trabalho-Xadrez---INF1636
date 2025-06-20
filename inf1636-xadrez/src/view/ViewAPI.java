@@ -4,47 +4,44 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
-import model.ModelAPI;
+
+import controller.Main;
 
 public class ViewAPI 
 {
 	static WindowFrame window_frame;
-	static MenuComponent menu_component;
-	static BoardComponent board_component;
+	static Menu menu_panel;
+	static Game game_panel;
 	
 	public ViewAPI() {}
 
 	public static void openWindow()
 	{ 
 		window_frame = new WindowFrame();
-		menu_component = window_frame.getMenuComponent();
-		board_component = window_frame.getBoardComponent();
+		menu_panel = window_frame.getMenuPanel();
+		game_panel = window_frame.getGamePanel();
 	}
 	
-    public static void addMouseListener(MouseListener listener) { board_component.addMouseListener(listener); }
+    public static void addMouseListener(MouseListener listener) { game_panel.addMouseListener(listener); }
     
-    public static JMenuItem getMenuItem(String item) { return board_component.getMenuItem(item); }
+    public static JMenuItem getMenuItem(String item) { return game_panel.getMenuItem(item); }
     
-    public static JButton getButton(String button) { return menu_component.getButton(button); }
+    public static JButton getButton(String button) { return menu_panel.getButton(button); }
     
     // Observer
     
-    public static void registerObserver() { ModelAPI.addObserver(board_component); }
+    public static void registerObserver() { Main.addObserver(game_panel); }
     
     // Callbacks
     
-    public static void highlightPath(int row, int column) { board_component.highlightPath(row, column); }
+    public static void highlightPath(int row, int column) { game_panel.highlightPath(row, column); }
     
-    public static void clearHighlightedPath() { board_component.clearHighlightedPath(); }
-    
-    public static String loadGameCallback() { return board_component.loadGameCallback(); }
-    
-    public static void saveGameCallback() { board_component.saveGameCallback(); } 
+    public static void clearHighlightedPath() { game_panel.clearHighlightedPath(); }
     
     // Telas
     
-    public static void showMenu() { window_frame.showComponent(menu_component); }
+    public static void showMenu() { window_frame.showPanel(menu_panel); }
     
-    public static void showBoard() { window_frame.showComponent(board_component); }
+    public static void showBoard() { window_frame.showPanel(game_panel); }
     
 }

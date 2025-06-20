@@ -1,32 +1,42 @@
 package view;
 
+import java.awt.CardLayout;
 import java.awt.Component;
+
 import javax.swing.JFrame;
 
 class WindowFrame extends JFrame
 {
-	private MenuComponent menu_component = new MenuComponent();
-	private BoardComponent board_component = new BoardComponent();
+	private Menu menu_panel = new Menu();
+	private Game game_panel = new Game();
+	private CardLayout layout = new CardLayout();
 	
 	protected WindowFrame()
 	{
 		super("Xadrez");
 		
-		menu_component.setUp();
-		board_component.setUp();
+		getContentPane().setLayout(layout);
 		
-		showComponent(menu_component);
+		menu_panel.setUp();
+		game_panel.setUp();
+		
+		menu_panel.setBounds(0, 0, 512, 512);
+		game_panel.setBounds(0, 0, 512, 512);
+		
+		showPanel(menu_panel);
 		
 		setUp();
 	}
 	
-	protected void showComponent(Component target_component)
+	protected void showPanel(Component target_component)
 	{
-	    getContentPane().removeAll();
-	    getContentPane().add(target_component);
+		getContentPane().removeAll();
+		getContentPane().add(target_component);
 
-	    revalidate();
-	    repaint();
+		target_component.setVisible(true);
+
+		revalidate();
+		repaint();
 	}
 
 	private void setUp()
@@ -40,7 +50,7 @@ class WindowFrame extends JFrame
 	 
 	// Métodos get()
 	
-	protected MenuComponent getMenuComponent() { return menu_component; } 
+	protected Menu getMenuPanel() { return menu_panel; } 
 	
-	protected BoardComponent getBoardComponent() { return board_component; } 
+	protected Game getGamePanel() { return game_panel; } 
 }
