@@ -51,8 +51,6 @@ public class Main
 	
 	// Observer
 	
-	// Observer
-	
     public static void addObserver(Observer obs) { observers.add(obs); }
 
     public static void removeObserver(Observer obs) { observers.remove(obs); }
@@ -99,6 +97,8 @@ public class Main
 	                	{
 	                		ModelAPI.movePiece(origin_row, origin_column, selected_row, selected_column);
 	            			notifyObservers(Event.getEvent("PIECE_MOVEMENT"));
+	            	    	if (ModelAPI.checkPawnPromotion(round_color))
+	            				notifyObservers(Event.getEvent("PAWN_PROMOTION"));
 	                		round_color = (round_color == 'W') ? 'B' : 'W';
 	                		afterMoveProcedures();
 	                		selected_row = -1; selected_column = -1;
@@ -161,16 +161,19 @@ public class Main
     private static void afterMoveProcedures() 
     {	
     	if (ModelAPI.isCheckMate(round_color))
+    	{
     		notifyObservers(Event.getEvent("CHECKMATE"));
+    		return;
+    	}
     	
     	if (ModelAPI.isCheck(round_color))
     		notifyObservers(Event.getEvent("CHECK"));
     	
     	if (ModelAPI.isStaleMate(round_color))
+    	{
 			notifyObservers(Event.getEvent("STALEMATE"));
-
-    	if (ModelAPI.checkPawnPromotion())
-			notifyObservers(Event.getEvent("PAWN_PROMOTION"));
+			return;
+    	}
     } 
     
     private static void formalizePawnPromotion(String piece)
@@ -179,7 +182,7 @@ public class Main
     	notifyObservers(Event.getEvent("PAWN_PROMOTED"));
     }
     
-    // Salvamento
+    // Estado do jogo
     
     private static void newGame()
     {

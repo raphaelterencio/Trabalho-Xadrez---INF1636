@@ -440,29 +440,21 @@ class Board
 		return true;
 	}
 
-	protected boolean checkPawnPromotion()
+	protected boolean checkPawnPromotion(char color)
 	{
-	    for (int row = 0; row < 8; row++) {
-	        for (int column = 0; column < 8; column++) 
+	    for (int column = 0; column < 8; column++) 
+	    {
+	        int row = (color == 'W') ? 0 : 7;
+
+	        Piece piece = tiles[row][column];
+
+	        if (piece instanceof Pawn && piece.getColor() == color) 
 	        {
-				Piece piece = tiles[row][column];
-				
-				// Confere se a peça é um peão
-				if( piece instanceof Pawn )
-				{
-					// Pega a cor a peça
-					char color = piece.getColor();
-					
-					// Confere se o peão alcançou a última fileira
-					if (color == 'W' && row == 0) return true;
-					if (color == 'B' && row == 7) return true;
-				}
-				
-				
+	            return true;
 	        }
 	    }
-	    
-		return false;
+
+	    return false;
 	}
 	
 	protected void promotePawn(String piece, int row, int column)

@@ -257,7 +257,6 @@ class Game extends JPanel implements Observer
     	
         pawnPromotionMenu.show(this, x, y);
     }
-
     
     // Auxiliares
     

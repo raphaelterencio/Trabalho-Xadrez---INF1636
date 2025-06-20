@@ -44,7 +44,7 @@ public class ModelAPI
 	
 	public static boolean isStaleMate(char color) { return board.isStaleMate(color); }
 	
-	public static boolean checkPawnPromotion() { return board.checkPawnPromotion(); }
+	public static boolean checkPawnPromotion(char color) { return board.checkPawnPromotion(color); }
 	
 	public static void promotePawn(String piece, int row, int column) { board.promotePawn(piece, row, column); }
 	
