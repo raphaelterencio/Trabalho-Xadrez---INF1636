@@ -257,72 +257,7 @@ class Game extends JPanel implements Observer
     	
         pawnPromotionMenu.show(this, x, y);
     }
-    
-    protected String loadGameCallback() 
-    {
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Carregar partida");
 
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Arquivo de texto (*.txt)", "txt");
-        fileChooser.setFileFilter(filter);
-
-        int userSelection = fileChooser.showOpenDialog(this);
-
-        if (userSelection == JFileChooser.APPROVE_OPTION)
-        {
-            File selectedFile = fileChooser.getSelectedFile();
-
-            try (BufferedReader reader = new BufferedReader(new FileReader(selectedFile))) 
-            {
-                StringBuilder content = new StringBuilder();
-                String line;
-
-                while ((line = reader.readLine()) != null) 
-                {
-                    content.append(line).append("\n");
-                }
-
-                return content.toString();
-                
-            } 
-            catch (IOException ex) {}
-        }
-
-        return null;
-    }
-    
-    protected void saveGameCallback()
-    {
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Salvar partida");
-        
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Arquivo de texto (*.txt)", "txt");
-        fileChooser.setFileFilter(filter);
-
-        int userSelection = fileChooser.showSaveDialog(this);
-
-        if (userSelection == JFileChooser.APPROVE_OPTION) {
-            File fileToSave = fileChooser.getSelectedFile();
-            
-            // Garante que o arquivo tenha a extensão .txt
-            if (!fileToSave.getName().toLowerCase().endsWith(".txt")) {
-                fileToSave = new File(fileToSave.getParentFile(), fileToSave.getName() + ".txt");
-            }
-            
-            try (FileWriter writer = new FileWriter(fileToSave)) {
-                String gameState = ModelAPI.getGameState();
-                
-                writer.write(gameState);
-                
-                System.out.println("Jogo salvo em: " + fileToSave.getAbsolutePath());
-            } 
-            catch (IOException ex) 
-            {
-                ex.printStackTrace();
-                // Informar o usuário de um erro
-            }
-        }
-    }
     
     // Auxiliares
     

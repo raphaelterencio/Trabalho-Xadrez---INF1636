@@ -1,6 +1,7 @@
 package controller;
 
-public enum Event {
+public enum Event 
+{
 	PIECE_MOVEMENT,
 	CHECK,
 	CHECKMATE,

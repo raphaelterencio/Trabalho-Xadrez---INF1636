@@ -38,10 +38,6 @@ public class ViewAPI
     
     public static void clearHighlightedPath() { game_panel.clearHighlightedPath(); }
     
-    public static String loadGameCallback() { return game_panel.loadGameCallback(); }
-    
-    public static void saveGameCallback() { game_panel.saveGameCallback(); } 
-    
     // Telas
     
     public static void showMenu() { window_frame.showPanel(menu_panel); }
