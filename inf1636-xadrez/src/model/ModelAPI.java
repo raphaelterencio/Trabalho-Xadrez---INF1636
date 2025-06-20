@@ -10,12 +10,6 @@ public class ModelAPI
 	
 	public static void newGame() { board = new Board(); }
 	
-	// Testes
-	
-	public static void testMode() { board.TestSetUp(); }
-	
-	public static void testSetPiece(char type, char color, int row, int column) { board.TestSetPiece(type, color, row, column); }
-		
 	// Métodos get()
 	
 	public static char getPieceColor(int row, int column) { return board.getPieceColor(row, column); }
