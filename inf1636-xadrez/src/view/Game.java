@@ -3,7 +3,7 @@ package view;
 import java.util.ArrayList;
 
 // JSwing
-import javax.swing.JComponent;
+import javax.swing.JPanel;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
@@ -40,7 +40,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 
-class BoardComponent extends JComponent implements Observer
+class Game extends JPanel implements Observer
 {
 	private HashMap<String, BufferedImage> image_map = new HashMap<>();
 	
@@ -51,7 +51,7 @@ class BoardComponent extends JComponent implements Observer
 	JMenuItem bishop = new JMenuItem("Bispo");
 	JMenuItem horse = new JMenuItem("Cavalo");
 	
-	protected BoardComponent() {}
+	protected Game() {}
 	
 	protected JMenuItem getMenuItem(String item)
 	{ 
