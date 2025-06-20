@@ -43,8 +43,8 @@ public class ViewAPI
     
     // Telas
     
-    public static void showMenu() { window_frame.showPanel("MENU"); }
+    public static void showMenu() { window_frame.showPanel(menu_panel); }
     
-    public static void showBoard() { window_frame.showPanel("GAME"); }
+    public static void showBoard() { window_frame.showPanel(game_panel); }
     
 }

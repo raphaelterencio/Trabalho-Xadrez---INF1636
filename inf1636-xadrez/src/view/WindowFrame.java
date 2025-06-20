@@ -1,6 +1,8 @@
 package view;
 
 import java.awt.CardLayout;
+import java.awt.Component;
+
 import javax.swing.JFrame;
 
 class WindowFrame extends JFrame
@@ -18,17 +20,23 @@ class WindowFrame extends JFrame
 		menu_panel.setUp();
 		game_panel.setUp();
 		
-		getContentPane().add(menu_panel, "MENU");
-		getContentPane().add(game_panel, "GAME");
+		menu_panel.setBounds(0, 0, 512, 512);
+		game_panel.setBounds(0, 0, 512, 512);
 		
-		showPanel("MENU");
+		showPanel(menu_panel);
 		
 		setUp();
 	}
 	
-	protected void showPanel(String panel)
+	protected void showPanel(Component target_component)
 	{
-		layout.show(getContentPane(), panel);
+		getContentPane().removeAll();
+		getContentPane().add(target_component);
+
+		target_component.setVisible(true);
+
+		revalidate();
+		repaint();
 	}
 
 	private void setUp()
